@@ -3,6 +3,10 @@
 *.ipynb_checkpoints
 *.ipynb
 *.csv
+*.zip
+*.xlsx
+*.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
