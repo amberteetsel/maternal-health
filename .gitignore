@@ -6,6 +6,7 @@
 *.zip
 *.xlsx
 *.txt
+*.dta
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
