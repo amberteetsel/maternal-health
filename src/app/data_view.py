@@ -102,13 +102,23 @@ def data_source_section(
         with col_v1:
             if "visual_1" in visuals:
                 st.markdown(f"💡 **{visuals['visual_1']['title']}**")
-                st.pyplot(visuals['visual_1']['fig'])
+                # Check if the asset is a path string or a live matplotlib figure
+                if isinstance(visuals['visual_1']['fig'], str):
+                    st.image(visuals['visual_1']['fig'], use_container_width=True)
+                else:
+                    st.pyplot(visuals['visual_1']['fig'])
+                
                 st.caption(visuals['visual_1']['caption'])
 
         with col_v2:
             if "visual_2" in visuals:
                 st.markdown(f"💡 **{visuals['visual_2']['title']}**")
-                st.pyplot(visuals['visual_2']['fig'])
+                # Check if the asset is a path string or a live matplotlib figure
+                if isinstance(visuals['visual_2']['fig'], str):
+                    st.image(visuals['visual_2']['fig'], use_container_width=True)
+                else:
+                    st.pyplot(visuals['visual_1']['fig'])
+                
                 st.caption(visuals['visual_2']['caption'])
 
 

@@ -5,6 +5,8 @@ import streamlit as st
 import pandas as pd
 import json
 import os
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Dependencies - Helper Modules
 
@@ -78,6 +80,12 @@ policy_clean = pd.read_csv(os.path.join(clean_data_path, "LawAtlas", "policy.csv
 health_clean = pd.read_csv(os.path.join(clean_data_path, "HealthRankings", "health.csv"))
 birth_clean = pd.read_csv(os.path.join(clean_data_path, "NCHS-Birth", "births2024.csv.zip"))
 
+# Visuals
+viz_path = os.path.join(BASE_DIR, "resources", "visuals_eda")
+er_v1 = os.path.join(viz_path, 'er_v1.png')
+er_v2 = os.path.join(viz_path, 'er_v2.png')
+
+
 ### Emergency Room Data
 title_er = "National Hospital Ambulatory Medical Care Survey (NHAMCS)"
 source_name_er = "National Center for Health Statistics (NCHS)"
@@ -92,6 +100,17 @@ description_er = """
     During years of interest (2018-2022), NHAMCS only collected data about ambulatory visits to emergency departments.
     Visits were filtered to focus only on pregnancy-related emergency room data.
 """
+er_visuals={}
+er_visuals['visual_1'] = {
+    'title': "Top 5 Primary Reasons for Pregnancy ER Visits",
+    'fig': er_v1,
+    'caption': "Distribution of most common Reasons for Visit (RFV) parsed from emergency records (2018-22)."
+}
+er_visuals['visual_2'] = {
+    'title': 'Top 5 Primary Diagnoses for Pregnancy ER Visits',
+    'fig': er_v2,
+    'caption': "Distribution of most common diagnoses parsed from emergency records (2018-22)."
+}
 
 ### Pregnancy Data
 title_preg = "Pregnancies, Births and Abortions in the United States: National and State Trends by Age"
@@ -226,7 +245,8 @@ with t3:
             title=title_er, source_name=source_name_er, source_link=source_link_er,
             api_collect=api_collect_er, collection_method=collection_method_er,
             description=description_er,
-            raw=er_raw, clean=er_clean
+            raw=er_raw, clean=er_clean,
+            visuals=er_visuals
         )
 
     # Pregnancy Data
