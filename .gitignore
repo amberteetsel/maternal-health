@@ -2,7 +2,7 @@
 .DS_Store
 *.ipynb_checkpoints
 *.ipynb
-*.csv
+# *.csv
 *.zip
 *.xlsx
 *.txt
@@ -11,6 +11,8 @@
 # API Key
 .env 
 
+# Large Files
+data/clean/NCHS-Birth/births2024.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
