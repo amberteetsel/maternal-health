@@ -5,11 +5,15 @@
 # *.csv
 # *.zip
 *.xlsx
-*.txt
+# *.txt
 *.dta
 
 # API Key
 .env 
+
+# Specific Files to Ignore
+data/raw/CDC-ER/icd10cm-04012026.txt
+data/raw/NCHS-Birth/births2024_raw.txt
 
 # Large Files
 data/clean/NCHS-Birth/births2024.csv
