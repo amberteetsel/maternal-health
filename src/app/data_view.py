@@ -7,7 +7,7 @@ def data_source_section(
         source_name: str, source_link: str,
         api_collect: bool,
         collection_method: str,
-        description: str,
+        description,
         raw, clean,
         cleaning_steps: dict=None,
         api_code: str=None,
@@ -29,7 +29,15 @@ def data_source_section(
     
     ## Data description
     with col_meta2:
-        st.write(f"**Description:** {description}")
+        st.write(f"**Description:**")
+
+        if isinstance(description, dict):
+            for sub_title, sub_desc in description.items():
+                st.markdown(f"#### {sub_title}")
+                st.write(sub_desc)
+
+        else:
+            st.write(description)
 
     # Raw vs. Clean Snapshots
     col_raw, col_clean = st.columns(2)
@@ -46,8 +54,20 @@ def data_source_section(
                 st.code(raw.dtypes)
 
         # JSON
+        elif isinstance(raw, (dict, list)):
+            st.json(raw, expanded=False)
+            st.caption("Raw JSON schema.")
+            with st.expander("View Payload Object Type"):
+                st.code(f"Type: {type(raw).__name__}\nKeys/Elements: {len(raw)}")
 
         # .txt
+        elif isinstance(raw, str):
+            preview_lines = "\n".join(raw.splitlines()[:15])
+            st.code(preview_lines, language='text')
+            st.caption("First 15 lines of raw character-spaced mainframe text block.")
+            with st.expander("View Metadata Diagnostics"):
+                st.code(f"Total Characters: {len(raw)}\nEstimated Rows: {len(raw.splitlines())}")
+
 
     ## Clean
     with col_clean:
