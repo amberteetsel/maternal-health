@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 # Function to Display Data Exploration Results
 def data_source_section(
@@ -102,9 +104,13 @@ def data_source_section(
         with col_v1:
             if "visual_1" in visuals:
                 st.markdown(f"💡 **{visuals['visual_1']['title']}**")
-                # Check if the asset is a path string or a live matplotlib figure
+                # 1. Handle image file paths
                 if isinstance(visuals['visual_1']['fig'], str):
                     st.image(visuals['visual_1']['fig'], use_container_width=True)
+                # 2. Handle interactive Plotly Figures safely
+                elif isinstance(visuals['visual_1']['fig'], go.Figure):
+                    st.plotly_chart(visuals['visual_1']['fig'], use_container_width=True)
+                # 3. Fallback to Matplotlib/Seaborn
                 else:
                     st.pyplot(visuals['visual_1']['fig'])
                 
@@ -113,11 +119,15 @@ def data_source_section(
         with col_v2:
             if "visual_2" in visuals:
                 st.markdown(f"💡 **{visuals['visual_2']['title']}**")
-                # Check if the asset is a path string or a live matplotlib figure
+                # 1. Handle image file paths
                 if isinstance(visuals['visual_2']['fig'], str):
                     st.image(visuals['visual_2']['fig'], use_container_width=True)
+                # 2. Handle interactive Plotly Figures safely
+                elif isinstance(visuals['visual_2']['fig'], go.Figure):
+                    st.plotly_chart(visuals['visual_2']['fig'], use_container_width=True)
+                # 3. Fallback to Matplotlib/Seaborn
                 else:
-                    st.pyplot(visuals['visual_1']['fig'])
+                    st.pyplot(visuals['visual_2']['fig'])
                 
                 st.caption(visuals['visual_2']['caption'])
 

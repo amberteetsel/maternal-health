@@ -3,7 +3,7 @@
 *.ipynb_checkpoints
 *.ipynb
 # *.csv
-*.zip
+# *.zip
 *.xlsx
 *.txt
 *.dta
@@ -13,6 +13,8 @@
 
 # Large Files
 data/clean/NCHS-Birth/births2024.csv
+data/raw/NCHS-Birth/Nat2023us.zip
+data/raw/NCHS-Birth/Nat2024us.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

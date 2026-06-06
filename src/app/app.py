@@ -1,4 +1,7 @@
 # Website Code
+import sys
+print("--- LOG: STREAMLIT IS RUNNING ON PYTHON EXECUTABLE:", sys.executable)
+print("--- LOG: LOOKING FOR PACKAGES IN PATHS:", sys.path)
 
 # Dependencies - Packages
 import streamlit as st
@@ -7,6 +10,8 @@ import json
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 # Dependencies - Helper Modules
 
@@ -61,6 +66,7 @@ with t1:
 #### TAB 3: DATA PREP, EDA ####
 ###############################
 from data_view import data_source_section
+from stacked_maps import generate_stacked_us_maps
 
 # Raw Data
 raw_data_path = os.path.join(BASE_DIR, "data", "raw")
@@ -84,7 +90,35 @@ birth_clean = pd.read_csv(os.path.join(clean_data_path, "NCHS-Birth", "births202
 viz_path = os.path.join(BASE_DIR, "resources", "visuals_eda")
 er_v1 = os.path.join(viz_path, 'er_v1.png')
 er_v2 = os.path.join(viz_path, 'er_v2.png')
-
+birth_v1 = os.path.join(viz_path, 'birth_v1.png')
+birth_v2 = os.path.join(viz_path, 'birth_v2.png')
+preg_v1 = os.path.join(viz_path, "preg_v1.png")
+preg_v2 = os.path.join(viz_path, "preg_v2.png")
+## Health Rankings Interactive Maps
+health_v1 = generate_stacked_us_maps(
+    df=health_clean, 
+    measure_name="Adequate Prenatal Care", 
+    color_scale="OrRd", 
+    title_text="Prenatal Care Quality Comparison (2018 vs. 2023)"
+)
+health_v2 = generate_stacked_us_maps(
+    df=health_clean, 
+    measure_name="Severe Maternal Morbidity", 
+    color_scale="Reds", 
+    title_text="Severe Maternal Morbidity Comparison (2018 vs. 2023)"
+)
+health_visuals = {
+    "visual_1": {
+        "title": "Maternity Care Desert Distribution",
+        "fig": health_v1,  # Live Plotly Figure object
+        "caption": "Choropleth comparison tracking the evolution of care desert classifications between 2018 and 2023."
+    },
+    "visual_2": {
+        "title": "Severe Maternal Morbidity Trends",
+        "fig": health_v2,  # Live Plotly Figure object
+        "caption": "Multi-year tracking showing shift intensities in severe clinical morbidity prevalence by state over 5 years."
+    }
+}
 
 ### Emergency Room Data
 title_er = "National Hospital Ambulatory Medical Care Survey (NHAMCS)"
@@ -119,11 +153,29 @@ source_link_preg = "https://osf.io/kthnf/overview"
 api_collect_preg = False
 collection_method_preg = "Direct Download (.csv file)"
 description_preg = """
-    A data set of comprehensive historical statistics on the incidence of pregnancy, birth and abortion for people 
+    A data set of comprehensive historical statistics on the incidence of pregnancy, birth, abortion, and miscarriage for people 
     of all reproductive ages in the United States. National statistics cover the period from 1973 to 2020, the most 
     recent year for which comparable data are available; state-level statistics are for selected years from 1988 to 2020.
     Rate data is per 100,000 population.
 """
+preg_visuals={}
+preg_visuals['visual_1'] = {
+    'title': "Historic Reproductive Outcome Shifts (1988-present)",
+    'fig': preg_v1,
+    'caption': """
+        Comparing overall rates (per 1,000 women) of pregnancy, birth, abortion, and miscarriage.
+        Note the declining birth rate beginning in 2007.
+        """
+}
+preg_visuals['visual_2'] = {
+    'title': "Mean Historic Abortion and Miscarriage Rates",
+    'fig': preg_v2,
+    'caption': """
+        Comparing rates of abortion and miscarriage (per pregnancy) across maternal age cohorts.
+        Incidence of miscarriage is fairly consistent across age groups, whereas abortion is more prevalent among very young mothers
+        and mothers over 40 years of age.
+        """
+}
 
 ### Policy Data
 policy_datasets = {
@@ -226,7 +278,17 @@ collection_method_birth = "Direct Download (.txt files)"
 description_birth = """
     Natality statistics for births occurring within the United States.
 """
-
+birth_visuals={}
+birth_visuals['visual_1'] = {
+    'title': "Maternal Age Cohort Distribution (2024)",
+    'fig': birth_v1,
+    'caption': "Age group breakdown across all recorded births in 2024."
+}
+birth_visuals['visual_2'] = {
+    'title': "Maternal ICU Admission Risk",
+    'fig': birth_v2,
+    'caption': "Incidence rate of intensive care admissions across maternal age groups."
+}
 
 with t3:
     st.header("Data Sources")
@@ -255,7 +317,8 @@ with t3:
             title=title_preg, source_name=source_name_preg, source_link=source_link_preg,
             api_collect=api_collect_preg, collection_method=collection_method_preg,
             description=description_preg,
-            raw=pregnancy_raw, clean=pregnancy_clean
+            raw=pregnancy_raw, clean=pregnancy_clean,
+            visuals=preg_visuals
         )
 
     # Policy Data
@@ -273,7 +336,8 @@ with t3:
             title=title_health, source_name=source_name_health, source_link=source_link_health,
             api_collect=api_collect_health, collection_method=collection_method_er,
             description=description_health, api_code=api_code_health,
-            raw=health_raw, clean=health_clean
+            raw=health_raw, clean=health_clean,
+            visuals=health_visuals
         )
 
     # Birth Data
@@ -282,7 +346,8 @@ with t3:
             title=title_birth, source_name=source_name_birth, source_link=source_link_birth,
             api_collect=api_collect_birth, collection_method=collection_method_birth,
             description=description_birth,
-            raw=birth_raw, clean=birth_clean
+            raw=birth_raw, clean=birth_clean,
+            visuals=birth_visuals
         )
 
 ###############################
