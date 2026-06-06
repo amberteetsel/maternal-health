@@ -48,7 +48,7 @@ def data_source_section(
 
         # DataFrames
         if isinstance(raw, pd.DataFrame):
-            st.dataframe(raw.head(10), use_container_width=True)
+            st.dataframe(raw, height=380, use_container_width=True)
             st.caption("Raw data types and values.")
             with st.expander("View Raw Schema"):
                 st.code(raw.dtypes)
@@ -75,8 +75,19 @@ def data_source_section(
 
         # DataFrames
         if isinstance(clean, pd.DataFrame):
-            st.dataframe(clean.head(10), use_container_width=True)
-            st.caption("Post-cleaning")
+            df_size_mb = clean.memory_usage(deep=True).sum() / (1024**2)
+
+            if df_size_mb > 150:
+                st.dataframe(clean.head(10000), height=380, use_container_width=True)
+                st.caption(
+                    f"⚠️ **Truncated Preview:** The full dataset is too large ({df_size_mb:.1f} MB) "
+                    "to render smoothly in the browser. Showing the first 10,000 rows."
+                )
+            else:
+                # Render normally for small datasets
+                st.dataframe(clean, height=380, use_container_width=True)
+                st.caption("Post-cleaning")
+
             with st.expander("View Processed Schema"):
                 st.code(clean.dtypes)
 

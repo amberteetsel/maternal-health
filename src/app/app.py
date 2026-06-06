@@ -94,6 +94,17 @@ description_er = """
 """
 
 ### Pregnancy Data
+title_preg = "Pregnancies, Births and Abortions in the United States: National and State Trends by Age"
+source_name_preg = "Guttmacher Institute"
+source_link_preg = "https://osf.io/kthnf/overview"
+api_collect_preg = False
+collection_method_preg = "Direct Download (.csv file)"
+description_preg = """
+    A data set of comprehensive historical statistics on the incidence of pregnancy, birth and abortion for people 
+    of all reproductive ages in the United States. National statistics cover the period from 1973 to 2020, the most 
+    recent year for which comparable data are available; state-level statistics are for selected years from 1988 to 2020.
+    Rate data is per 100,000 population.
+"""
 
 ### Policy Data
 policy_datasets = {
@@ -188,6 +199,14 @@ payload = response.json()
 """
 
 ### Birth Data
+title_birth = "Birth Data Files"
+source_name_birth = "National Center for Health Statistics (NCHS)"
+source_link_birth = "https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm"
+api_collect_birth = False
+collection_method_birth = "Direct Download (.txt files)"
+description_birth = """
+    Natality statistics for births occurring within the United States.
+"""
 
 
 with t3:
@@ -210,6 +229,15 @@ with t3:
             raw=er_raw, clean=er_clean
         )
 
+    # Pregnancy Data
+    with t_preg:
+        data_source_section(
+            title=title_preg, source_name=source_name_preg, source_link=source_link_preg,
+            api_collect=api_collect_preg, collection_method=collection_method_preg,
+            description=description_preg,
+            raw=pregnancy_raw, clean=pregnancy_clean
+        )
+
     # Policy Data
     with t_pol:
         data_source_section(
@@ -228,6 +256,14 @@ with t3:
             raw=health_raw, clean=health_clean
         )
 
+    # Birth Data
+    with t_birth:
+        data_source_section(
+            title=title_birth, source_name=source_name_birth, source_link=source_link_birth,
+            api_collect=api_collect_birth, collection_method=collection_method_birth,
+            description=description_birth,
+            raw=birth_raw, clean=birth_clean
+        )
 
 ###############################
 ######## TAB 4: MODELS ########
