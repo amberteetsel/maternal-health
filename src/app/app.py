@@ -71,8 +71,7 @@ er_clean = pd.read_csv(os.path.join(clean_data_path, "CDC-ER", "er.csv"))
 pregnancy_clean = pd.read_csv(os.path.join(clean_data_path, "Guttmacher", "pregnancy.csv"))
 policy_clean = pd.read_csv(os.path.join(clean_data_path, "LawAtlas", "policy.csv"))
 health_clean = pd.read_csv(os.path.join(clean_data_path, "HealthRankings", "health.csv"))
-birth_clean_url = "https://drive.google.com/file/d/1LO07ycxmEkyTqwXecnvBSXD_XHZ-FbDr/view?usp=drive_link"
-birth_clean = pd.read_csv(birth_clean_url)
+birth_clean = pd.read_csv(os.path.join(clean_data_path, "NCHS-Birth", "births2024.csv.zip"))
 
 ### Emergency Room Data
 title_er = "National Hospital Ambulatory Medical Care Survey (NHAMCS)"
