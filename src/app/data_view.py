@@ -39,6 +39,8 @@ def data_source_section(
         else:
             st.write(description)
 
+    st.markdown("---")
+
     # Raw vs. Clean Snapshots
     col_raw, col_clean = st.columns(2)
 
@@ -90,4 +92,23 @@ def data_source_section(
 
             with st.expander("View Processed Schema"):
                 st.code(clean.dtypes)
+
+    ## Visuals - EDA
+    if visuals:
+        st.markdown("---")
+        st.write("📊 **Exploratory Data Analysis (EDA)**")
+        col_v1, col_v2 = st.columns(2)
+
+        with col_v1:
+            if "visual_1" in visuals:
+                st.markdown(f"💡 **{visuals['visual_1']['title']}**")
+                st.pyplot(visuals['visual_1']['fig'])
+                st.caption(visuals['visual_1']['caption'])
+
+        with col_v2:
+            if "visual_2" in visuals:
+                st.markdown(f"💡 **{visuals['visual_2']['title']}**")
+                st.pyplot(visuals['visual_2']['fig'])
+                st.caption(visuals['visual_2']['caption'])
+
 
