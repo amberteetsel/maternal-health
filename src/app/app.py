@@ -39,9 +39,53 @@ t1, t2, t3, t4 = st.tabs([
 with t1:
     st.header("Introduction")
 
-    st.subheader("Background")
+    st.subheader("Background & Policy Context")
     st.write("""
-             At least 2 paragraphs (10 sentences each) explaining context for research topic...
+            In June 2022, the Supreme Court of the United States issued its controversial ruling in 
+             Dobbs v. Jackson Women's Health Organization, a historic decision that overturned nearly half a century of 
+             federal precedent established by Roe v. Wade (1973).
+             The Dobbs ruling eliminated the national right to abortion, effectively reverting authority to 
+             regulate, restrict, and outlaw the practice back to individual states.
+             As a result, the United States has become a fractured patchwork of reproductive healthcare access where 
+             an individual's legal rights and medical choices are dependent on geographic location.
+             According to policy tracking by the Guttmacher Institute (2024), more than a dozen states immediately 
+             enacted total or near-total bans on abortion. 
+             Conversely, many states moved to enshrine abortion protections in state law or state constitutions. This divergence
+              in policy has created severe clinical confusion and legal gridlock, with healthcare providers left to navigate 
+             vague and sometimes contradictory language regarding exceptions for the life or health of the mother.
+
+             The Dobbs decision occurred during a worsening maternal health crisis in the United States, further exacerbating the issue.
+             Data from the Centers for Disease Control and Prevention (CDC, 2023) indicate that the United States has the highest maternal 
+             mortality rate among developed nations. There are also severe disparities affecting maternal mortality 
+             for Black and Indigenous populations.
+             Longitudinal tracking by the Guttmacher Institute demonstrates that unintended pregnancy rates fluctuate closely 
+             with access to comprehensive family planning resources including contraceptive affordability and abortion services. 
+             By exploring how changing state-level abortion restrictions intersect with existing maternal health infrasstructure 
+             and maternal health outcomes, researchers can begin to quantify the real ramifications of restrictive abortion policies.
+        """)
+    
+    st.subheader("Research Significance")
+    st.write("""
+            Examining the direct correlation between restrictive healthcare policies and maternal health outcomes is critically 
+             important because legislative interventions carry profound, life-altering consequences for pregnant individuals, 
+             infants, and medical networks. Public health research consistently warns that the implementation of strict 
+             abortion bans and narrow gestational limits can inadvertently increase maternal morbidity by delaying essential care 
+             for obstetric complications, such as ectopic pregnancies, premature rupture of membranes, or incomplete miscarriages. 
+             Furthermore, states enacting the most stringent restrictions often exhibit pre-existing systemic vulnerabilities, 
+             such as high rates of uninsured residents, severe shortages of obstetricians and gynecologists, 
+             and widespread "maternity care deserts." For example, the restriction of reproductive healthcare services 
+             frequently leads to the closure of local clinics and rural labor units, compounding barriers to 
+             routine prenatal care and leading to higher rates of low-birth-weight infants and preterm births. 
+             The economic and psychological strains placed on individuals forced to carry unintended pregnancies to term, 
+             or travel thousands of miles across state lines for care, introduce significant socioeconomic stressors that 
+             undermine long-term household and community stability. 
+             Additionally, the chilling effect on medical education and physician recruitment in states with
+              severe criminal penalties for doctors threatens to destabilize the broader OB/GYN and pediatric healthcare
+              workforce for decades to come. Quantitative data analysis provides an objective framework to move past polarized 
+             political rhetoric and systematically evaluate the empirical impacts of these legal shifts on 
+             tangible medical outcomes. By aligning longitudinal datasets tracking policy status—such as total bans,
+              heartbeat bans, and protections—with public health records covering infant birth metrics and 
+             emergency room utilization, this study establishes a clear, data-driven narrative.
         """)
     
     # Add figure(s) here, each should have 2 sentence caption/explanation
