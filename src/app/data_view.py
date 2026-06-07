@@ -12,6 +12,7 @@ def data_source_section(
         description,
         raw, clean,
         cleaning_steps: dict=None,
+        cleaning_code: str=None,
         api_code: str=None,
         visuals: dict=None
 ):
@@ -100,6 +101,8 @@ def data_source_section(
         with st.expander("Data Cleaning Summary", expanded=False):
             for step, text in cleaning_steps.items():
                 st.markdown(f"**{step}:** {text}\n")
+            if cleaning_code:
+                st.write(f"[View Full Cleaning Code]({cleaning_code})")
 
     ## Visuals - EDA
     if visuals:

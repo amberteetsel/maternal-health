@@ -122,7 +122,7 @@ with t1:
                     7. What policy features are linked to a decline in rural reproductive healthcare infrastructure?
                     8. How did the 1973 decision in *Roe v. Wade* impact reproductive infrastructure usage and maternal health outcomes?
                     9. How did the 2022 decision in *Dobbs v. Jackson* impact reproductive infrastructure usage and maternal health outcomes?
-                    10. How did the 1992 decision in *Planned Parenthood vs. Casey* impact abortion restrictions and maternal health outcomes?    
+                    10. How did the 1992 decision in *Planned Parenthood v. Casey* impact abortion restrictions and maternal health outcomes?    
                 """)
         
 
@@ -447,8 +447,9 @@ with t3:
             description=description_er,
             raw=er_raw, 
             clean=er_clean,
-            cleaning_steps=cleaning_steps_er,  # Placed cleanly in its signature order
-            api_code=None,                     # Explicitly provide None since ER doesn't use an API
+            cleaning_steps=cleaning_steps_er,
+            cleaning_code = "https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/er_cleaning.py",
+            api_code=None,
             visuals=er_visuals
         )
 
@@ -460,7 +461,8 @@ with t3:
             description=description_preg,
             raw=pregnancy_raw, clean=pregnancy_clean,
             visuals=preg_visuals,
-            cleaning_steps=cleaning_steps_preg
+            cleaning_steps=cleaning_steps_preg,
+            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/pregnancy_cleaning.py"
         )
 
     # Policy Data
@@ -471,7 +473,8 @@ with t3:
             description=description_pol,
             raw=policy_raw, clean=policy_clean,
             visuals=policy_visuals,
-            cleaning_steps=cleaning_steps_pol
+            cleaning_steps=cleaning_steps_pol,
+            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/policy_cleaning.py"
         )
 
     # Health Data
@@ -485,8 +488,9 @@ with t3:
             description=description_health, 
             raw=health_raw, 
             clean=health_clean,
-            cleaning_steps=cleaning_steps_health,               # Explicitly passing None
-            api_code=api_code_health,          # Explicitly bound
+            cleaning_steps=cleaning_steps_health,
+            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/health_cleaning.py",
+            api_code=api_code_health,
             visuals=health_visuals
         )
 
@@ -498,7 +502,8 @@ with t3:
             description=description_birth,
             raw=birth_raw, clean=birth_clean,
             visuals=birth_visuals,
-            cleaning_steps=cleaning_steps_birth
+            cleaning_steps=cleaning_steps_birth,
+            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/birth_cleaning.py"
         )
 
 ###############################
