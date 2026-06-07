@@ -95,6 +95,12 @@ def data_source_section(
             with st.expander("View Processed Schema"):
                 st.code(clean.dtypes)
 
+    ## Cleaning Steps
+    if cleaning_steps:
+        with st.expander("Data Cleaning Summary", expanded=False):
+            for step, text in cleaning_steps.items():
+                st.markdown(f"**{step}:** {text}\n")
+
     ## Visuals - EDA
     if visuals:
         st.markdown("---")

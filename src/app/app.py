@@ -12,8 +12,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import streamlit.components.v1 as components
 
 # Dependencies - Helper Modules
+from data_view import data_source_section
+from stacked_maps import generate_stacked_us_maps
+from policy_maps import create_ban_limit_map, create_protection_map
 
 # Root Directory for File Paths
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -31,6 +35,12 @@ t1, t2, t3, t4 = st.tabs([
     "Data Prep & EDA",          # add sub-tabs inside for each data source
     "Models"                    # add sub-tabs inside for each model type
 ])
+
+# Infographic - Commonwealth Fund, Maternal Mortality Comparison (international)
+infogram_embed_html = """
+<div class="infogram-embed" data-id="80a84092-43ff-46f5-a159-5ec782d8f07b" data-type="interactive" data-title="Insights into the U.S. Maternal Mortality Crisis: An International Comparison: Exhibit 1"></div>
+<script>!function(e,n,i,s){var d="InfogramEmbeds";var o=e.getElementsByTagName(n)[0];if(window[d]&&window[d].initialized)window[d].process&&window[d].process();else if(!e.getElementById(i)){var r=e.createElement(n);r.async=1,r.id=i,r.src=s,o.parentNode.insertBefore(r,o)}}(document,"script","infogram-async","https://e.infogram.com/js/dist/embed-loader-min.js");</script>
+"""
 
 ###############################
 ##### TAB 1: INTRODUCTION #####
@@ -89,6 +99,19 @@ with t1:
         """)
     
     # Add figure(s) here, each should have 2 sentence caption/explanation
+    left_spacer, center_column, right_spacer = st.columns([1, 2, 1])
+
+    with center_column:
+        # Slightly lowered the height to 600px to match the reduced width proportions
+        components.html(infogram_embed_html, height=600, scrolling=False)
+        st.caption("Figure 1.1: The Commonwealth Fund International Comparison")
+
+    # components.html(infogram_embed_html, height=800, scrolling=True)
+    # st.caption("""
+    #            Figure 1.1: The Commonwealth Fund International Maternal Mortality Crisis Comparison Tracking Dashboard.
+    #            The United States has the highest maternal death rate among developed nations, with the rate for Black women
+    #            far exceeding that of any other demographic.
+    #         """)
 
     st.subheader("Research Questions")
     with st.container():
@@ -113,9 +136,6 @@ with t1:
 ###############################
 #### TAB 3: DATA PREP, EDA ####
 ###############################
-from data_view import data_source_section
-from stacked_maps import generate_stacked_us_maps
-from policy_maps import create_ban_limit_map, create_protection_map
 
 # # Raw Data
 # raw_data_path = os.path.join(BASE_DIR, "data", "raw")
@@ -271,6 +291,12 @@ er_visuals['visual_2'] = {
     'fig': er_v2,
     'caption': "Distribution of most common diagnoses parsed from emergency records (2018-22)."
 }
+cleaning_steps_er = {
+    'Multi-Year Data Ingestion': 'Loaded several annual raw Stata datasets (.dta) spanning 2018 to 2022',
+    'ICD-10-CM Standard Mapping': 'Loaded external code index file and parsed line-by-line to construct mapping of codes to their descriptions',
+    'Metadata Extraction': "Bundled structured categorical label configurations for each annual file's metadata dictionaries",
+    'Data Consolidation': "Compiled individual annual files to consolidated, clean flat CSV baseline file"
+}
 
 ### Pregnancy Data
 title_preg = "Pregnancies, Births and Abortions in the United States: National and State Trends by Age"
@@ -302,6 +328,11 @@ preg_visuals['visual_2'] = {
         and mothers over 40 years of age.
         """
 }
+cleaning_steps_preg = {
+    'Wide-to-Long Structural Transformation': 'Restructured historical metrics by transforming broad, wide-format table into a uniform long-format dataset',
+    'Label Standardization': 'Standardize raw codes into uniform category names',
+    'Normalization': 'Compute metric rates per 100,000 population'
+}
 
 ### Policy Data
 policy_datasets = {
@@ -325,6 +356,10 @@ source_link_pol = "https://lawatlas.org/explore-topics?_search=Abortion"
 api_collect_pol = False
 collection_method_pol = "Direct Download (Excel files)"
 description_pol = policy_datasets
+cleaning_steps_pol = {
+    'Boolean Feature Derivation': 'Transformed legislative parameters into indicator columns with binary logic tests',
+    'Timeline Engineering': 'Imputed policy indicators for untracked time-periods based on closest available data'
+}
 
 ### Health Data
 title_health = "Health of Women and Children Report"
@@ -337,6 +372,10 @@ description_health = """
     and children nationwide and on a state-by-state basis. Data for this project is pulled from annual reports from 2018-2025;
     ultimately it contains (mostly) complete data from 2018-2023. 
 """
+cleaning_steps_health = {
+    'Feature Selection': 'Filtered metrics down to regional reproductive healthcare criteria',
+    'De-Duplication & Aggregation': "Executed multi-index alignment and sorting functions based on unique groupings"
+}
 api_code_health = """
 # Securely initialize API credentials
 load_dotenv()
@@ -404,6 +443,11 @@ collection_method_birth = "Direct Download (.txt files)"
 description_birth = """
     Natality statistics for births occurring within the United States.
 """
+cleaning_steps_birth = {
+    'Decompression': "Processed massive compressed source archive by dynamically pulling raw internal text data",
+    'Coordinate Slicing': 'Used codebook to isolate relevant demographic and healthcare variables based on pre-defined column bitwise boundaries',
+    'Categorical Value Labels': 'Mapped raw alphanumeric codes to human-readable strings'
+}
 birth_visuals={}
 birth_visuals['visual_1'] = {
     'title': "Maternal Age Cohort Distribution (2024)",
@@ -430,10 +474,16 @@ with t3:
     # Emergency Room Data
     with t_cdc_er:    
         data_source_section(
-            title=title_er, source_name=source_name_er, source_link=source_link_er,
-            api_collect=api_collect_er, collection_method=collection_method_er,
+            title=title_er, 
+            source_name=source_name_er, 
+            source_link=source_link_er,
+            api_collect=api_collect_er, 
+            collection_method=collection_method_er,
             description=description_er,
-            raw=er_raw, clean=er_clean,
+            raw=er_raw, 
+            clean=er_clean,
+            cleaning_steps=cleaning_steps_er,  # Placed cleanly in its signature order
+            api_code=None,                     # Explicitly provide None since ER doesn't use an API
             visuals=er_visuals
         )
 
@@ -444,7 +494,8 @@ with t3:
             api_collect=api_collect_preg, collection_method=collection_method_preg,
             description=description_preg,
             raw=pregnancy_raw, clean=pregnancy_clean,
-            visuals=preg_visuals
+            visuals=preg_visuals,
+            cleaning_steps=cleaning_steps_preg
         )
 
     # Policy Data
@@ -454,16 +505,23 @@ with t3:
             api_collect=api_collect_pol, collection_method=collection_method_pol,
             description=description_pol,
             raw=policy_raw, clean=policy_clean,
-            visuals=policy_visuals
+            visuals=policy_visuals,
+            cleaning_steps=cleaning_steps_pol
         )
 
     # Health Data
     with t_health:
         data_source_section(
-            title=title_health, source_name=source_name_health, source_link=source_link_health,
-            api_collect=api_collect_health, collection_method=collection_method_er,
-            description=description_health, api_code=api_code_health,
-            raw=health_raw, clean=health_clean,
+            title=title_health, 
+            source_name=source_name_health, 
+            source_link=source_link_health,
+            api_collect=api_collect_health, 
+            collection_method=collection_method_health, # Fixed variable typo here too!
+            description=description_health, 
+            raw=health_raw, 
+            clean=health_clean,
+            cleaning_steps=cleaning_steps_health,               # Explicitly passing None
+            api_code=api_code_health,          # Explicitly bound
             visuals=health_visuals
         )
 
@@ -474,7 +532,8 @@ with t3:
             api_collect=api_collect_birth, collection_method=collection_method_birth,
             description=description_birth,
             raw=birth_raw, clean=birth_clean,
-            visuals=birth_visuals
+            visuals=birth_visuals,
+            cleaning_steps=cleaning_steps_birth
         )
 
 ###############################
