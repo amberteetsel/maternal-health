@@ -103,8 +103,9 @@ with t1:
     left_spacer, center_column, right_spacer = st.columns([1, 2, 1])
     with center_column:
         # Slightly lowered the height to 600px to match the reduced width proportions
-        components.html(infogram_embed_html, height=600, scrolling=False)
-        st.caption("Figure 1.1: The Commonwealth Fund International Comparison")
+        # components.html(infogram_embed_html, height=600, scrolling=False)
+        st.iframe(src = infogram_embed_html, height=600)
+        st.caption("The Commonwealth Fund International Comparison")
 
     # Research Qs
     st.subheader("Research Questions")
