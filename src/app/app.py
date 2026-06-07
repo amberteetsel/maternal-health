@@ -450,7 +450,8 @@ with t3:
             cleaning_steps=cleaning_steps_er,
             cleaning_code = "https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/er_cleaning.py",
             api_code=None,
-            visuals=er_visuals
+            visuals=er_visuals,
+            data_link="https://github.com/amberteetsel/maternal-health/blob/cebd0bc60d68f180778fcbd9e47e027b2fd5df7a/data/raw/CDC-ER/er_raw.csv"
         )
 
     # Pregnancy Data
@@ -462,7 +463,8 @@ with t3:
             raw=pregnancy_raw, clean=pregnancy_clean,
             visuals=preg_visuals,
             cleaning_steps=cleaning_steps_preg,
-            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/pregnancy_cleaning.py"
+            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/pregnancy_cleaning.py",
+            data_link = "https://github.com/amberteetsel/maternal-health/blob/cebd0bc60d68f180778fcbd9e47e027b2fd5df7a/data/raw/Guttmacher/NatStatePregnancy.csv"
         )
 
     # Policy Data
@@ -474,7 +476,8 @@ with t3:
             raw=policy_raw, clean=policy_clean,
             visuals=policy_visuals,
             cleaning_steps=cleaning_steps_pol,
-            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/policy_cleaning.py"
+            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/policy_cleaning.py",
+            data_link="https://github.com/amberteetsel/maternal-health/blob/cebd0bc60d68f180778fcbd9e47e027b2fd5df7a/data/raw/LawAtlas/policy_raw.csv"
         )
 
     # Health Data
@@ -491,7 +494,8 @@ with t3:
             cleaning_steps=cleaning_steps_health,
             cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/health_cleaning.py",
             api_code=api_code_health,
-            visuals=health_visuals
+            visuals=health_visuals,
+            data_link="https://github.com/amberteetsel/maternal-health/blob/cebd0bc60d68f180778fcbd9e47e027b2fd5df7a/data/raw/HealthRankings/raw_api_snapshot.json"
         )
 
     # Birth Data
@@ -503,7 +507,8 @@ with t3:
             raw=birth_raw, clean=birth_clean,
             visuals=birth_visuals,
             cleaning_steps=cleaning_steps_birth,
-            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/birth_cleaning.py"
+            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/birth_cleaning.py",
+            data_link="https://github.com/amberteetsel/maternal-health/blob/cebd0bc60d68f180778fcbd9e47e027b2fd5df7a/data/raw/NCHS-Birth/births2024_raw.txt"
         )
 
 ###############################

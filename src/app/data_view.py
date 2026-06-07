@@ -14,7 +14,8 @@ def data_source_section(
         cleaning_steps: dict=None,
         cleaning_code: str=None,
         api_code: str=None,
-        visuals: dict=None
+        visuals: dict=None,
+        data_link: str=None
 ):
     
     # Header
@@ -26,7 +27,10 @@ def data_source_section(
     ## Source/Collection details
     with col_meta1:
         st.write(f"**Data Source:** [{source_name}]({source_link})")
-        st.write(f"**Collection Method:** {collection_method}")
+        if data_link:
+            st.write(f"**Collection Method:** {collection_method}")
+        else:
+            st.write(f"**Collection Method:** {collection_method} - [Raw Data]({data_link})")
         if api_collect:
             st.code(api_code, language='python', line_numbers=True)
     
