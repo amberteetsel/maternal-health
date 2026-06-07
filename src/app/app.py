@@ -26,6 +26,28 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 # Homepage
 st.set_page_config(page_title="MaternalHealth", layout="wide")
 
+# Custom Styling
+# Insert this near the top of src/app/app.py right after st.set_page_config()
+st.markdown(
+    """
+    <style>
+        /* Import premium web fonts */
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+        
+        /* Apply font rules across titles, text, and data layouts */
+        html, body, [data-testid="stMarkdownContainer"], p, h1, h2, h3, h4, h5, h6 {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+        
+        /* Keep code metrics clean with monospacing if desired */
+        code, pre {
+            font-family: 'Fira Code', monospace !important;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("Exploring Maternal Health Outcomes in Relation to Healthcare Policy")
 st.markdown("---")
 

@@ -1,0 +1,16 @@
+[theme]
+# Primary accent color for widgets, active tabs, links, and sliders (Flare Purple)
+primaryColor = "#9b4dca"
+
+# Background color for the main content area
+backgroundColor = "#ffffff"
+
+# Background color for the sidebar and interactive control cards
+secondaryBackgroundColor = "#f8f9fa"
+
+# Main text color for readability against the white background
+textColor = "#212529"
+
+# Font type customization
+# Options include: "sans serif", "serif", or "monospace"
+font = "sans serif"
