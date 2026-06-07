@@ -292,7 +292,7 @@ preg_visuals['visual_1'] = {
         """
 }
 preg_visuals['visual_2'] = {
-    'title': "Mean Historic Abortion and Miscarriage Rates",
+    'title': "Mean Historic Abortion and Miscarriage Rates (1988-present)",
     'fig': preg_v2,
     'caption': """
         Comparing rates of abortion and miscarriage (per pregnancy) across maternal age cohorts.
