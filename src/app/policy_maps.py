@@ -87,8 +87,8 @@ def create_ban_limit_map(df, title_text="Total Bans & Gestational Limits"):
         height=850,
         margin=dict(t=100, b=20, l=20, r=20),
         annotations=[
-            dict(text="As of 2018-12-01", x=0.5, y=1.02, xref="paper", yref="paper", showarrow=False, font=dict(size=14, bold=True)),
-            dict(text="As of 2023-05-31", x=0.5, y=0.47, xref="paper", yref="paper", showarrow=False, font=dict(size=14, bold=True))
+            dict(text="<b>As of 2018-12-01</b>", x=0.5, y=1.02, xref="paper", yref="paper", showarrow=False, font=dict(size=14)),
+            dict(text="<b>As of 2023-05-31</b>", x=0.5, y=0.47, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
         ]
     )
 
