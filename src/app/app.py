@@ -199,9 +199,9 @@ health_visuals = {
         "title": "Maternity Care Desert Distribution",
         "fig": health_v1,  # Live Plotly Figure object
         "caption": """
-            Choropleth comparison tracking the evolution of prenatal care classifications between 2018 and 2023.
+            Tracking the evolution of prenatal care classifications between 2018 and 2023.
             Values represent the percentage of live births in which the mother received prenatal care
-            beginning in the first four months or pregnancy with the appropriate number of visits for the infant's gestational
+            beginning in the first four months of pregnancy with the appropriate number of visits for the infant's gestational
             age.
         """
     },
@@ -211,7 +211,8 @@ health_visuals = {
         "caption": """
             Multi-year tracking showing shift intensities in severe clinical morbidity prevalence by state over 5 years.
             Values represent the number of significant life-threatening maternal complications during delivery
-            per 10,000 delivery hospitalizations.
+            per 10,000 delivery hospitalizations. As evidenced by the darker colors in 2023, rates of severe maternal morbidity
+            *increased* relative to 2018. 
         """
     }
 }
@@ -255,12 +256,12 @@ er_visuals={}
 er_visuals['visual_1'] = {
     'title': "Top 5 Primary Reasons for Pregnancy ER Visits",
     'fig': er_v1,
-    'caption': "Distribution of most common Reasons for Visit (RFV) parsed from emergency records (2018-22)."
+    'caption': "Distribution of most common Reasons for Visit (RFV) parsed from pregnancy-related emergency records (2018-22)."
 }
 er_visuals['visual_2'] = {
     'title': 'Top 5 Primary Diagnoses for Pregnancy ER Visits',
     'fig': er_v2,
-    'caption': "Distribution of most common diagnoses parsed from emergency records (2018-22)."
+    'caption': "Distribution of most common diagnoses parsed from pregnancy-related emergency records (2018-22)."
 }
 cleaning_steps_er = {
     'Multi-Year Data Ingestion': 'Loaded several annual raw Stata datasets (.dta) spanning 2018 to 2022',
@@ -317,7 +318,7 @@ policy_datasets = {
         "case law and attorney general opinions that affect the enforceability of these laws.",
         
     "Statutory and Constitutional Right to Abortion": 
-        "This dataset explores abortion regulations in all 50 U.S. states and the District of "
+        "This dataset explores abortion protections in all 50 U.S. states and the District of "
         "Columbia in effect from December 1, 2018 through November 1, 2022, as well as case law "
         "and attorney general opinions that affect the enforceability of these laws."
 }
@@ -423,12 +424,17 @@ birth_visuals={}
 birth_visuals['visual_1'] = {
     'title': "Maternal Age Cohort Distribution (2024)",
     'fig': birth_v1,
-    'caption': "Age group breakdown across all recorded births in 2024."
+    'caption': """
+        Age group breakdown across all recorded births in 2024. 
+    """
 }
 birth_visuals['visual_2'] = {
     'title': "Maternal ICU Admission Risk",
     'fig': birth_v2,
-    'caption': "Incidence rate of intensive care admissions across maternal age groups."
+    'caption': """
+        Incidence rate of intensive care admissions across maternal age groups. Risk is heightened for very young mothers
+        (less than 15 years of age) and older mothers, with risk dramatically increasing after age 50.
+    """
 }
 
 with t3:
