@@ -52,7 +52,7 @@ def data_source_section(
 
         # DataFrames
         if isinstance(raw, pd.DataFrame):
-            st.dataframe(raw, height=380, use_container_width=True)
+            st.dataframe(raw, height=380, width='stretch')
             st.caption("Raw data types and values.")
             with st.expander("View Raw Schema"):
                 st.code(raw.dtypes)
@@ -82,14 +82,14 @@ def data_source_section(
             df_size_mb = clean.memory_usage(deep=True).sum() / (1024**2)
 
             if df_size_mb > 150:
-                st.dataframe(clean.head(10000), height=380, use_container_width=True)
+                st.dataframe(clean.head(10000), height=380, width='stretch')
                 st.caption(
                     f"⚠️ **Truncated Preview:** The full dataset is too large ({df_size_mb:.1f} MB) "
                     "to render smoothly in the browser. Showing the first 10,000 rows."
                 )
             else:
                 # Render normally for small datasets
-                st.dataframe(clean, height=380, use_container_width=True)
+                st.dataframe(clean, height=380, width='stretch')
                 st.caption("Post-cleaning")
 
             with st.expander("View Processed Schema"):
@@ -106,10 +106,10 @@ def data_source_section(
                 st.markdown(f"💡 **{visuals['visual_1']['title']}**")
                 # 1. Handle image file paths
                 if isinstance(visuals['visual_1']['fig'], str):
-                    st.image(visuals['visual_1']['fig'], use_container_width=True)
+                    st.image(visuals['visual_1']['fig'], width='stretch')
                 # 2. Handle interactive Plotly Figures safely
                 elif isinstance(visuals['visual_1']['fig'], go.Figure):
-                    st.plotly_chart(visuals['visual_1']['fig'], use_container_width=True)
+                    st.plotly_chart(visuals['visual_1']['fig'], width='stretch')
                 # 3. Fallback to Matplotlib/Seaborn
                 else:
                     st.pyplot(visuals['visual_1']['fig'])
@@ -121,10 +121,10 @@ def data_source_section(
                 st.markdown(f"💡 **{visuals['visual_2']['title']}**")
                 # 1. Handle image file paths
                 if isinstance(visuals['visual_2']['fig'], str):
-                    st.image(visuals['visual_2']['fig'], use_container_width=True)
+                    st.image(visuals['visual_2']['fig'], width='stretch')
                 # 2. Handle interactive Plotly Figures safely
                 elif isinstance(visuals['visual_2']['fig'], go.Figure):
-                    st.plotly_chart(visuals['visual_2']['fig'], use_container_width=True)
+                    st.plotly_chart(visuals['visual_2']['fig'], width='stretch')
                 # 3. Fallback to Matplotlib/Seaborn
                 else:
                     st.pyplot(visuals['visual_2']['fig'])
