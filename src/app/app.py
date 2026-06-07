@@ -222,13 +222,18 @@ policy_visuals = {
         "fig": create_ban_limit_map(policy_clean),
         "caption": """
             Red indicates total bans, orange indicates heartbeat bans, and purple indicates varying
-            gestational limits for obtaining an abortion.
+            gestational limits for obtaining an abortion. Note that in 2018, *Roe v. Wade* was still the law of the land
+            and as such, no bans or gestational limitations were permitted.
         """
     },
     "visual_2": {
         "title": "State Legal & Constitutional Protections",
         "fig": create_protection_map(policy_clean),
-        "caption": "Dark blue reflects explicit constitutional safety; light blue indicates legislative protections."
+        "caption": """
+            Dark blue reflects explicit constitutional safety; light blue indicates legislative protections. Post-*Dobbs*,
+            several states amended their constitions to enshrine the right to abortion while many others codified the right
+            into law.
+        """
     }
 }
 

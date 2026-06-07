@@ -30,9 +30,9 @@ def data_source_section(
     with col_meta1:
         st.write(f"**Data Source:** [{source_name}]({source_link})")
         if data_link:
-            st.write(f"**Collection Method:** {collection_method}")
-        else:
             st.write(f"**Collection Method:** {collection_method} - [Raw Data]({data_link})")
+        else:
+            st.write(f"**Collection Method:** {collection_method}")
         if api_collect:
             st.code(api_code, language='python', line_numbers=True)
     
