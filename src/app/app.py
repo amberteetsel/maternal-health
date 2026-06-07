@@ -49,16 +49,20 @@ with t1:
     st.subheader("Research Questions")
     with st.container():
         st.markdown("""
-                    1. RQ1
-                    2. RQ2
-                    3. RQ3
-                    4. 
-                    5. 
-                    6.
-                    7.
-                    8.
-                    9.
-                    10.    
+                    1. Is there a statistically significant difference in maternal mortality/morbidity rates between states
+                        with explicit constitutional/legal protections and states with abortion bans or severe restrictions?
+                    2. Does the enactment of a heartbeat ban or total ban correlate with an increase in emergency room 
+                        visits related to pregnancy complications?
+                    3. What is the average lag between legal enactment of abortion restrictions and measurable changes
+                        in statewide birth outcomes?
+                    4. Do shifts in reproductive policy correspond with changes in prenatal care utilization or
+                        timing of first prenatal visits?
+                    5. Can distinct clusters of states/geographic regions be identified based on reproductive policies?
+                    6. Do clusters reliably predict disparities in maternal health outcomes?
+                    7. What policy features are linked to a decline in rural reproductive healthcare infrastructure?
+                    8. How did the 1973 decision in *Roe v. Wade* impact reproductive infrastructure usage and maternal health outcomes?
+                    9. How did the 2022 decision in *Dobbs v. Jackson* impact reproductive infrastructure usage and maternal health outcomes?
+                    10. How did the 1992 decision in *Planned Parenthood vs. Casey* impact abortion restrictions and maternal health outcomes?    
                 """)
         
 
