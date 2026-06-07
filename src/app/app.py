@@ -69,24 +69,74 @@ from data_view import data_source_section
 from stacked_maps import generate_stacked_us_maps
 from policy_maps import create_ban_limit_map, create_protection_map
 
-# Raw Data
-raw_data_path = os.path.join(BASE_DIR, "data", "raw")
-er_raw = pd.read_csv(os.path.join(raw_data_path, "CDC-ER", "er_raw.csv"))
-pregnancy_raw = pd.read_csv(os.path.join(raw_data_path, "Guttmacher", "NatStatePregnancy.csv"))
-policy_raw = pd.read_csv(os.path.join(raw_data_path, "LawAtlas", "policy_raw.csv"))
-with open(os.path.join(raw_data_path, "HealthRankings", "raw_api_snapshot.json"), 'r') as f:
-    health_raw = json.load(f)
-with open(os.path.join(raw_data_path, "NCHS-Birth", "births2024_raw.txt"), 'r') as f:
-    birth_raw = f.read()
+# # Raw Data
+# raw_data_path = os.path.join(BASE_DIR, "data", "raw")
+# er_raw = pd.read_csv(os.path.join(raw_data_path, "CDC-ER", "er_raw.csv"))
+# pregnancy_raw = pd.read_csv(os.path.join(raw_data_path, "Guttmacher", "NatStatePregnancy.csv"))
+# policy_raw = pd.read_csv(os.path.join(raw_data_path, "LawAtlas", "policy_raw.csv"))
+# with open(os.path.join(raw_data_path, "HealthRankings", "raw_api_snapshot.json"), 'r') as f:
+#     health_raw = json.load(f)
+# with open(os.path.join(raw_data_path, "NCHS-Birth", "births2024_raw.txt"), 'r') as f:
+#     birth_raw = f.read()
 
-# Clean Data
-clean_data_path = os.path.join(BASE_DIR, "data", "clean")
-er_clean = pd.read_csv(os.path.join(clean_data_path, "CDC-ER", "er.csv"))
-pregnancy_clean = pd.read_csv(os.path.join(clean_data_path, "Guttmacher", "pregnancy.csv"))
-policy_clean = pd.read_csv(os.path.join(clean_data_path, "LawAtlas", "policy.csv"))
-health_clean = pd.read_csv(os.path.join(clean_data_path, "HealthRankings", "health.csv"))
-birth_clean = pd.read_csv(os.path.join(clean_data_path, "NCHS-Birth", "births2024.csv.zip"),
-                        low_memory=False)
+# # Clean Data
+# clean_data_path = os.path.join(BASE_DIR, "data", "clean")
+# er_clean = pd.read_csv(os.path.join(clean_data_path, "CDC-ER", "er.csv"))
+# pregnancy_clean = pd.read_csv(os.path.join(clean_data_path, "Guttmacher", "pregnancy.csv"))
+# policy_clean = pd.read_csv(os.path.join(clean_data_path, "LawAtlas", "policy.csv"))
+# health_clean = pd.read_csv(os.path.join(clean_data_path, "HealthRankings", "health.csv"))
+# birth_clean = pd.read_csv(os.path.join(clean_data_path, "NCHS-Birth", "births2024.csv.zip"),
+#                         low_memory=False)
+# ==============================================================================
+# DATA LOADING BLOCK WITH CACHING PERFORMANCE OPTIMIZATION
+# ==============================================================================
+
+@st.cache_data
+def load_project_data():
+    """
+    Safely reads and caches all raw and cleaned project files in memory.
+    Prevents repeated disk I/O reads on every app interaction or state change.
+    """
+    # Base folder directories
+    raw_path = os.path.join(BASE_DIR, "data", "raw")
+    clean_path = os.path.join(BASE_DIR, "data", "clean")
+    
+    # 1. Load Raw Datasets
+    er_raw_df = pd.read_csv(os.path.join(raw_path, "CDC-ER", "er_raw.csv"))
+    pregnancy_raw_df = pd.read_csv(os.path.join(raw_path, "Guttmacher", "NatStatePregnancy.csv"))
+    policy_raw_df = pd.read_csv(os.path.join(raw_path, "LawAtlas", "policy_raw.csv"))
+    
+    with open(os.path.join(raw_path, "HealthRankings", "raw_api_snapshot.json"), 'r') as f:
+        health_raw_obj = json.load(f)
+        
+    with open(os.path.join(raw_path, "NCHS-Birth", "births2024_raw.txt"), 'r') as f:
+        birth_raw_str = f.read()
+
+    # 2. Load Cleaned Datasets
+    er_clean_df = pd.read_csv(os.path.join(clean_path, "CDC-ER", "er.csv"))
+    pregnancy_clean_df = pd.read_csv(os.path.join(clean_path, "Guttmacher", "pregnancy.csv"))
+    policy_clean_df = pd.read_csv(os.path.join(clean_path, "LawAtlas", "policy.csv"))
+    health_clean_df = pd.read_csv(os.path.join(clean_path, "HealthRankings", "health.csv"))
+    
+    # Zip compressed file parsed with explicit column layout optimizations
+    birth_clean_df = pd.read_csv(
+        os.path.join(clean_path, "NCHS-Birth", "births2024.csv.zip"),
+        low_memory=False
+    )
+    
+    return (
+        er_raw_df, pregnancy_raw_df, policy_raw_df, health_raw_obj, birth_raw_str,
+        er_clean_df, pregnancy_clean_df, policy_clean_df, health_clean_df, birth_clean_df
+    )
+
+
+# Safely execute the function and unpack all 10 variables into your layout environment
+(
+    er_raw, pregnancy_raw, policy_raw, health_raw, birth_raw,
+    er_clean, pregnancy_clean, policy_clean, health_clean, birth_clean
+) = load_project_data()
+
+# ==============================================================================
 
 # Visuals
 viz_path = os.path.join(BASE_DIR, "resources", "visuals_eda")
