@@ -157,6 +157,7 @@ def data_source_section(
     st.write("📊 **Exploratory Data Analysis (EDA)**")
 
     if metrics:
+        st.markdown("---")
         render_metrics(metrics)
 
     if visuals:
