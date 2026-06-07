@@ -249,7 +249,7 @@ health_v2 = generate_stacked_us_maps(
 )
 health_visuals = {
     "visual_1": {
-        "title": "Maternity Care Desert Distribution",
+        "title": "Adequate Prenatal Care Trends",
         "fig": health_v1,  # Live Plotly Figure object
         "caption": """
             Tracking the evolution of prenatal care classifications between 2018 and 2023.
@@ -267,6 +267,38 @@ health_visuals = {
             per 10,000 delivery hospitalizations. As evidenced by the darker colors in 2023, rates of severe maternal morbidity
             *increased* relative to 2018. 
         """
+    }
+}
+apc_2018 = health_clean.loc[(health_clean.Year==2018)&(health_clean.Measure=="Adequate Prenatal Care")].Value.mean()
+apc_2023 = health_clean.loc[(health_clean.Year==2023)&(health_clean.Measure=="Adequate Prenatal Care")].Value.mean()
+smm_2018 = health_clean.loc[(health_clean.Year==2018)&(health_clean.Measure=="Severe Maternal Morbidity")].Value.mean()
+smm_2023 = health_clean.loc[(health_clean.Year==2023)&(health_clean.Measure=="Severe Maternal Morbidity")].Value.mean()
+metrics_health = {
+    '1': {
+        'label': 'Adequate Prenatal Care (2018)',
+        'value': round(apc_2018,1),
+        'type': 'percentage'
+    },
+    '2': {
+        'label': 'Adequate Prenatal Care (2023)',
+        'value': round(apc_2023,1),
+        'type': 'percentage',
+        'delta': round(apc_2023-apc_2018, 1),
+        'delta_color': 'red'
+    },
+    '3': { 
+        'label': 'Severe Maternal Morbidity (2018)',
+        'value': round(smm_2018, 1),
+        'type': 'rate',
+        'help': "per 10,000 deliveries"
+    },
+    '4': {
+        'label': 'Severe Maternal Morbidity (2023)',
+        'value': round(smm_2023, 1),
+        'type': 'rate',
+        'delta': round(smm_2023-smm_2018, 1),
+        'delta_color': 'red',
+        'help': "per 10,000 deliveries"
     }
 }
 # Policy Interactive Maps
@@ -560,7 +592,8 @@ with t3:
             cleaning_code="https://github.com/amberteetsel/maternal-health/blob/597d1edc47ef13548676ec8e92e0f1ef33a95ab4/src/cleaning/health_cleaning.py",
             api_code=api_code_health,
             visuals=health_visuals,
-            data_link="https://github.com/amberteetsel/maternal-health/blob/cebd0bc60d68f180778fcbd9e47e027b2fd5df7a/data/raw/HealthRankings/raw_api_snapshot.json"
+            data_link="https://github.com/amberteetsel/maternal-health/blob/cebd0bc60d68f180778fcbd9e47e027b2fd5df7a/data/raw/HealthRankings/raw_api_snapshot.json",
+            metrics=metrics_health
         )
 
     # Birth Data

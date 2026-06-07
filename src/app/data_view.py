@@ -3,6 +3,48 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+# Helper Function to Render Metrics
+def render_metrics(metrics_dict=None):
+    if not metrics_dict:
+        return
+    
+    n = len(metrics_dict)
+    cols = st.columns(n)
+
+    for col, (key, metric_data) in zip(cols, metrics_dict.items()):
+        with col:
+            label = metric_data['label']
+            value = metric_data['value']
+            type = metric_data['type']
+
+            delta = metric_data.get('delta')
+            delta_color = metric_data.get('delta_color')
+            help_txt = metric_data.get('help')
+
+            if type == 'percentage':
+                formatted_val = f"{value}%"
+            elif type == 'rate':
+                formatted_val = float(value)
+            elif isinstance(value, (float, int)):
+                formatted_val = float(value)
+            else:
+                formatted_val = str(value)
+
+            if help_txt is not None:
+                if delta is not None and delta_color is not None:
+                    st.metric(label=label, value=formatted_val, delta=delta, delta_color=delta_color, help=help_txt)
+                elif delta is not None:
+                    st.metric(label=label, value=formatted_val, delta=delta, help=help_txt)
+                else:
+                    st.metric(label=label, value=formatted_val, help=help_txt)
+            else:
+                if delta is not None and delta_color is not None:
+                    st.metric(label=label, value=formatted_val, delta=delta, delta_color=delta_color)
+                elif delta is not None:
+                    st.metric(label=label, value=formatted_val, delta=delta)
+                else:
+                    st.metric(label=label, value=formatted_val)
+
 # Function to Display Data Exploration Results
 def data_source_section(
         title,
@@ -17,7 +59,8 @@ def data_source_section(
         cleaning_code: str=None,
         api_code: str=None,
         visuals: dict=None,
-        data_link: str=None
+        data_link: str=None,
+        metrics: dict=None
 ):
     
     # Header
@@ -110,10 +153,14 @@ def data_source_section(
             if cleaning_code:
                 st.write(f"[View Full Cleaning Code]({cleaning_code})")
 
-    ## Visuals - EDA
+    ## EDA Section
+    st.write("📊 **Exploratory Data Analysis (EDA)**")
+
+    if metrics:
+        render_metrics(metrics)
+
     if visuals:
         st.markdown("---")
-        st.write("📊 **Exploratory Data Analysis (EDA)**")
         col_v1, col_v2 = st.columns(2)
 
         with col_v1:
