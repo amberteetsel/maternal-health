@@ -85,7 +85,8 @@ er_clean = pd.read_csv(os.path.join(clean_data_path, "CDC-ER", "er.csv"))
 pregnancy_clean = pd.read_csv(os.path.join(clean_data_path, "Guttmacher", "pregnancy.csv"))
 policy_clean = pd.read_csv(os.path.join(clean_data_path, "LawAtlas", "policy.csv"))
 health_clean = pd.read_csv(os.path.join(clean_data_path, "HealthRankings", "health.csv"))
-birth_clean = pd.read_csv(os.path.join(clean_data_path, "NCHS-Birth", "births2024.csv.zip"))
+birth_clean = pd.read_csv(os.path.join(clean_data_path, "NCHS-Birth", "births2024.csv.zip"),
+                        low_memory=False)
 
 # Visuals
 viz_path = os.path.join(BASE_DIR, "resources", "visuals_eda")
