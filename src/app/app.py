@@ -12,8 +12,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-import streamlit.components.v1 as components
-# import streamlit.iframe as components
 
 # Dependencies - Helper Modules
 from data_view import data_source_section
