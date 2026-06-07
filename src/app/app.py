@@ -67,6 +67,7 @@ with t1:
 ###############################
 from data_view import data_source_section
 from stacked_maps import generate_stacked_us_maps
+from policy_maps import create_ban_limit_map, create_protection_map
 
 # Raw Data
 raw_data_path = os.path.join(BASE_DIR, "data", "raw")
@@ -98,7 +99,7 @@ preg_v2 = os.path.join(viz_path, "preg_v2.png")
 health_v1 = generate_stacked_us_maps(
     df=health_clean, 
     measure_name="Adequate Prenatal Care", 
-    color_scale="OrRd", 
+    color_scale="blues", 
     title_text="Prenatal Care Quality Comparison (2018 vs. 2023)"
 )
 health_v2 = generate_stacked_us_maps(
@@ -111,12 +112,38 @@ health_visuals = {
     "visual_1": {
         "title": "Maternity Care Desert Distribution",
         "fig": health_v1,  # Live Plotly Figure object
-        "caption": "Choropleth comparison tracking the evolution of care desert classifications between 2018 and 2023."
+        "caption": """
+            Choropleth comparison tracking the evolution of prenatal care classifications between 2018 and 2023.
+            Values represent the percentage of live births in which the mother received prenatal care
+            beginning in the first four months or pregnancy with the appropriate number of visits for the infant's gestational
+            age.
+        """
     },
     "visual_2": {
         "title": "Severe Maternal Morbidity Trends",
         "fig": health_v2,  # Live Plotly Figure object
-        "caption": "Multi-year tracking showing shift intensities in severe clinical morbidity prevalence by state over 5 years."
+        "caption": """
+            Multi-year tracking showing shift intensities in severe clinical morbidity prevalence by state over 5 years.
+            Values represent the number of significant life-threatening maternal complications during delivery
+            per 10,000 delivery hospitalizations.
+        """
+    }
+}
+# Policy Interactive Maps
+# Generate live objects using your loaded policy dataset dataframe 
+policy_visuals = {
+    "visual_1": {
+        "title": "Abortion Bans and Gestational Limits Comparison",
+        "fig": create_ban_limit_map(policy_clean),
+        "caption": """
+            Red indicates total bans, orange indicates heartbeat bans, and purple indicates varying
+            gestational limits for obtaining an abortion.
+        """
+    },
+    "visual_2": {
+        "title": "State Legal & Constitutional Protections",
+        "fig": create_protection_map(policy_clean),
+        "caption": "Dark blue reflects explicit constitutional safety; light blue indicates legislative protections."
     }
 }
 
@@ -327,7 +354,8 @@ with t3:
             title=title_pol, source_name=source_name_pol, source_link=source_link_pol,
             api_collect=api_collect_pol, collection_method=collection_method_pol,
             description=description_pol,
-            raw=policy_raw, clean=policy_clean
+            raw=policy_raw, clean=policy_clean,
+            visuals=policy_visuals
         )
 
     # Health Data
