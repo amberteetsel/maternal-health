@@ -110,13 +110,13 @@ def data_source_section(
         with col_v1:
             if "visual_1" in visuals:
                 st.markdown(f"💡 **{visuals['visual_1']['title']}**")
-                # 1. Handle image file paths
+                # image file paths
                 if isinstance(visuals['visual_1']['fig'], str):
                     st.image(visuals['visual_1']['fig'], width='stretch')
-                # 2. Handle interactive Plotly Figures safely
+                # interactive plotly figs
                 elif isinstance(visuals['visual_1']['fig'], go.Figure):
                     st.plotly_chart(visuals['visual_1']['fig'], width='stretch')
-                # 3. Fallback to Matplotlib/Seaborn
+                # fallback option
                 else:
                     st.pyplot(visuals['visual_1']['fig'])
                 
@@ -125,13 +125,13 @@ def data_source_section(
         with col_v2:
             if "visual_2" in visuals:
                 st.markdown(f"💡 **{visuals['visual_2']['title']}**")
-                # 1. Handle image file paths
+                # image file paths
                 if isinstance(visuals['visual_2']['fig'], str):
                     st.image(visuals['visual_2']['fig'], width='stretch')
-                # 2. Handle interactive Plotly Figures safely
+                # interactive plotly
                 elif isinstance(visuals['visual_2']['fig'], go.Figure):
                     st.plotly_chart(visuals['visual_2']['fig'], width='stretch')
-                # 3. Fallback to Matplotlib/Seaborn
+                # fallback
                 else:
                     st.pyplot(visuals['visual_2']['fig'])
                 
