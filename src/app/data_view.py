@@ -6,11 +6,13 @@ from plotly.subplots import make_subplots
 # Function to Display Data Exploration Results
 def data_source_section(
         title,
-        source_name: str, source_link: str,
+        source_name: str,
+        source_link: str,
         api_collect: bool,
         collection_method: str,
         description,
-        raw, clean,
+        raw,
+        clean,
         cleaning_steps: dict=None,
         cleaning_code: str=None,
         api_code: str=None,
