@@ -200,6 +200,15 @@ for bar, label in zip(ax.patches, clean_labels):
 ax.set_xlabel("Maternal Age Cohort")
 ax.set_ylabel("Live Birth\nVolume", rotation=0, va='center', ha='right')
 
+ax.set_title(
+    "Total Births by Age Group (2024)", 
+    loc='left', 
+    fontsize=14, 
+    fontweight='bold', 
+    pad=22,
+    # color="#111111"
+)
+
 # horizontal x axis labels
 plt.xticks(rotation=0)
 fig.tight_layout()
@@ -249,6 +258,14 @@ for i, row in icu_rate.iterrows():
 
 ax.set_xlabel("Maternal Age Cohort")
 ax.set_ylabel("ICU Admissions\nper 1,000 Births", rotation=0, va='center', ha='right')
+
+ax.set_title(
+    "Severe Morbidity (ICU Admissions) Rate by Age Group", 
+    loc='left', 
+    fontsize=14, 
+    fontweight='bold', 
+    pad=20
+)
 
 plt.xticks(rotation=0)
 fig.tight_layout()

@@ -50,22 +50,41 @@ st.title("Exploring Maternal Health Outcomes in Relation to Healthcare Policy")
 st.markdown("---")
 
 # Initialize Tabs
-t1, t2, t3, t4 = st.tabs([
+t1, t2, t3, t4, t5 = st.tabs([
     "Introduction",
     "Conclusions",
     "Data Prep & EDA",          # add sub-tabs inside for each data source
-    "Models"                    # add sub-tabs inside for each model type
+    "Models",                   # add sub-tabs inside for each model type
+    "References"                # citations
 ])
 
+# if "active_tab" not in st.session_state:
+#     st.session_state['active_tab'] = 'Introduction'
+
+# tab_titles = ["Introduction", 'Conclusions', 'Data Prep & EDA', 'Models', 'References']
+# active_index = tab_titles.index(st.session_state['active_tab'])
+# tabs = st.tabs(tab_titles)
+
+# # The sidebar acts as your new tab switcher controller
+# selected_section = st.sidebar.radio("Navigation", tab_titles, index=active_index, key="nav_menu")
+
+# # Callback function for footnote buttons
+# def jump_to_ref():
+#     st.session_state['active_tab'] = 'References'
+
 # Infographic - Commonwealth Fund, Maternal Mortality Comparison (international)
-infogram_embed_html = """
+infogram_embed_html1 = """
 <div class="infogram-embed" data-id="80a84092-43ff-46f5-a159-5ec782d8f07b" data-type="interactive" data-title="Insights into the U.S. Maternal Mortality Crisis: An International Comparison: Exhibit 1"></div>
 <script>!function(e,n,i,s){var d="InfogramEmbeds";var o=e.getElementsByTagName(n)[0];if(window[d]&&window[d].initialized)window[d].process&&window[d].process();else if(!e.getElementById(i)){var r=e.createElement(n);r.async=1,r.id=i,r.src=s,o.parentNode.insertBefore(r,o)}}(document,"script","infogram-async","https://e.infogram.com/js/dist/embed-loader-min.js");</script>
 """
+infogram_embed_html2 = """
+<div class="infogram-embed" data-id="ef6762be-4964-4388-bac2-58cbb2d821ae" data-type="interactive" data-title="The U.S. Maternal Health Divide: The Limited Maternal Health Services and Worse Outcomes of States Proposing New Abortion Restrictions: Exhibit 4"></div>
+<script>!function(e,n,i,s){var d="InfogramEmbeds";var o=e.getElementsByTagName(n)[0];if(window[d]&&window[d].initialized)window[d].process&&window[d].process();else if(!e.getElementById(i)){var r=e.createElement(n);r.async=1,r.id=i,r.src=s,o.parentNode.insertBefore(r,o)}}(document,"script","infogram-async","https://e.infogram.com/js/dist/embed-loader-min.js");</script>
+"""
 
-###############################
-##### TAB 1: INTRODUCTION #####
-###############################
+##############################################################
+# TAB 1: INTRODUCTION
+##############################################################
 
 with t1:
     st.header("Introduction")
@@ -95,6 +114,17 @@ with t1:
              and maternal health outcomes, researchers can begin to quantify the real ramifications of restrictive abortion policies.
         """)
     
+    # Figure 1: Maternal Deaths, International Comparison
+    left_spacer, center_column, right_spacer = st.columns([1, 2, 1])
+    with center_column:
+        # Slightly lowered the height to 600px to match the reduced width proportions
+        st.iframe(src = infogram_embed_html1, height=600)
+        st.caption("""
+                   Figure 1: The Commonwealth Fund International Comparison of Maternal Deaths.
+                   The overall US maternal death rate (dark green) is 56 percent higher than that of Chile, the developed nation
+                   with the second-highest incidence of maternal death, and over 300 percent higher than that of the United Kingdom.
+                """)
+    
     st.subheader("Research Significance")
     st.write("""
             Examining the direct correlation between restrictive healthcare policies and maternal health outcomes is critically 
@@ -109,7 +139,7 @@ with t1:
              routine prenatal care and leading to higher rates of low-birth-weight infants and preterm births. 
              The economic and psychological strains placed on individuals forced to carry unintended pregnancies to term, 
              or travel thousands of miles across state lines for care, introduce significant socioeconomic stressors that 
-             undermine long-term household and community stability. 
+             undermine long-term household and community stability.<sup><b>[1]</b></sup>
              Additionally, the chilling effect on medical education and physician recruitment in states with
               severe criminal penalties for doctors threatens to destabilize the broader OB/GYN and pediatric healthcare
               workforce for decades to come. Quantitative data analysis provides an objective framework to move past polarized 
@@ -117,15 +147,17 @@ with t1:
              tangible medical outcomes. By aligning longitudinal datasets tracking policy status—such as total bans,
               heartbeat bans, and protections—with public health records covering infant birth metrics and 
              emergency room utilization, this study establishes a clear, data-driven narrative.
-        """)
+        """, unsafe_allow_html=True)
     
-    # Add figure(s) here, each should have 2 sentence caption/explanation
+    # Figure 2: 
     left_spacer, center_column, right_spacer = st.columns([1, 2, 1])
     with center_column:
         # Slightly lowered the height to 600px to match the reduced width proportions
-        # components.html(infogram_embed_html, height=600, scrolling=False)
-        st.iframe(src = infogram_embed_html, height=600)
-        st.caption("The Commonwealth Fund International Comparison")
+        st.iframe(src = infogram_embed_html2, height=520)
+        st.caption("""
+                   Figure 2: The Commonwealth Fund National Comparison of Maternal Deaths by Abortion-Access Status.
+                   There is a clear pattern of increased maternal death rates for abortion-restricted states.
+                """)
 
     # Research Qs
     st.subheader("Research Questions")
@@ -143,14 +175,14 @@ with t1:
                     6. Do clusters reliably predict disparities in maternal health outcomes?
                     7. What policy features are linked to a decline in rural reproductive healthcare infrastructure?
                     8. How did the 1973 decision in *Roe v. Wade* impact reproductive infrastructure usage and maternal health outcomes?
-                    9. How did the 2022 decision in *Dobbs v. Jackson* impact reproductive infrastructure usage and maternal health outcomes?
-                    10. How did the 1992 decision in *Planned Parenthood v. Casey* impact abortion restrictions and maternal health outcomes?    
+                    9. How did the 1992 decision in *Planned Parenthood v. Casey* impact abortion restrictions and maternal health outcomes?
+                    10. How did the 2022 decision in *Dobbs v. Jackson* impact reproductive infrastructure usage and maternal health outcomes?
                 """)
         
 
-###############################
-#### TAB 3: DATA PREP, EDA ####
-###############################
+##############################################################
+# TAB 3: DATA SOURCES, EDA
+##############################################################
 
 @st.cache_data
 def load_project_data():
@@ -544,9 +576,9 @@ with t3:
             data_link="https://github.com/amberteetsel/maternal-health/blob/cebd0bc60d68f180778fcbd9e47e027b2fd5df7a/data/raw/NCHS-Birth/births2024_raw.txt"
         )
 
-###############################
-######## TAB 4: MODELS ########
-###############################
+##############################################################
+# TAB 4: MODELS
+##############################################################
 
 with t4:
     st.header("Modeling Results")
@@ -560,3 +592,59 @@ with t4:
         "Regression",
         "Neural Networks"
     ])
+
+##############################################################
+# TAB 5: REFERENCES
+##############################################################
+
+from references import raw_citations
+sorted_citations = sorted(raw_citations, key=lambda x: x['footnote'])
+
+with t5:
+    st.header("References")
+    st.markdown("---")
+
+    # CSS styles
+    st.markdown(
+        """
+        <style>
+            .footnote-container {
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: 22px;
+                font-family: 'Roboto', sans-serif;
+                font-size: 14.5px;
+                line-height: 1.6;
+            }
+            .footnote-number {
+                min-width: 32px;
+                font-weight: bold;
+                color: #b44391; /* Matches your 'flare' palette index [4] color */
+            }
+            .footnote-body {
+                flex-grow: 1;
+                padding-left: 4px;
+                text-indent: -24px; /* Creates clean secondary alignment hanging indent */
+                margin-left: 24px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    for cite in sorted_citations:
+        # Safely extract dynamic volume details if they are declared in the map
+        details_str = f", {cite['details']}." if cite['details'] else "."
+        
+        html_block = f"""
+        <div class="footnote-container">
+            <div class="footnote-number">[{cite['footnote']}]</div>
+            <div class="footnote-body">
+                {cite['authors']} ({cite['year']}). {cite['title']} 
+                <i>{cite['publication']}</i>{details_str} 
+                <a href="{cite['url']}" target="_blank">{cite['url']}</a>
+            </div>
+        </div>
+        """
+        st.markdown(html_block, unsafe_allow_html=True)
+
