@@ -154,10 +154,10 @@ def data_source_section(
                 st.write(f"[View Full Cleaning Code]({cleaning_code})")
 
     ## EDA Section
+    st.markdown("---")
     st.write("📊 **Exploratory Data Analysis (EDA)**")
 
     if metrics:
-        st.markdown("---")
         render_metrics(metrics)
 
     if visuals:
