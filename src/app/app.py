@@ -1,3 +1,4 @@
+import gc
 # Website Code
 import sys
 print("--- LOG: STREAMLIT IS RUNNING ON PYTHON EXECUTABLE:", sys.executable)
@@ -17,6 +18,7 @@ from plotly.subplots import make_subplots
 from data_view import data_source_section
 from stacked_maps import generate_stacked_us_maps
 from policy_maps import create_ban_limit_map, create_protection_map
+from memory import reduce_df_memory
 
 # Root Directory for File Paths
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -184,7 +186,7 @@ with t1:
 # TAB 3: DATA SOURCES, EDA
 ##############################################################
 
-@st.cache_data
+@st.cache_data(ttl=3600)  # cache dataframes for 1 hour
 def load_project_data():
     """
     Safely reads and caches all raw and cleaned project files in memory.
@@ -195,8 +197,13 @@ def load_project_data():
     
     # raw
     er_raw_df = pd.read_csv(os.path.join(raw_path, "CDC-ER", "er_raw.csv"))
+    er_raw_df = reduce_df_memory(er_raw_df)
+
     pregnancy_raw_df = pd.read_csv(os.path.join(raw_path, "Guttmacher", "NatStatePregnancy.csv"))
+    pregnancy_raw_df = reduce_df_memory(pregnancy_raw_df)
+
     policy_raw_df = pd.read_csv(os.path.join(raw_path, "LawAtlas", "policy_raw.csv"))
+    policy_raw_df = reduce_df_memory(policy_raw_df)
     
     with open(os.path.join(raw_path, "HealthRankings", "raw_api_snapshot.json"), 'r') as f:
         health_raw_obj = json.load(f)
@@ -206,9 +213,17 @@ def load_project_data():
 
     # clean
     er_clean_df = pd.read_csv(os.path.join(clean_path, "CDC-ER", "er.csv"))
+    er_clean_df = reduce_df_memory(er_clean_df)
+
     pregnancy_clean_df = pd.read_csv(os.path.join(clean_path, "Guttmacher", "pregnancy.csv"))
+    pregnancy_clean_df = reduce_df_memory(pregnancy_clean_df)
+    
     policy_clean_df = pd.read_csv(os.path.join(clean_path, "LawAtlas", "policy.csv"))
+    policy_clean_df = reduce_df_memory(policy_clean_df)
+
     health_clean_df = pd.read_csv(os.path.join(clean_path, "HealthRankings", "health.csv"))
+    health_clean_df = reduce_df_memory(health_clean_df)
+
     birth_clean_df = pd.read_csv(
         os.path.join(clean_path, "NCHS-Birth", "births2024.csv.zip"),
         low_memory=False
