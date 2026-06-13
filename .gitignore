@@ -19,6 +19,17 @@ data/raw/CDC-ER/icd10cm-04012026.txt
 data/clean/NCHS-Birth/births2024.csv
 data/raw/NCHS-Birth/Nat2023us.zip
 data/raw/NCHS-Birth/Nat2024us.zip
+data/raw/NCHS-Birth/Nat2018us.zip
+data/raw/NCHS-Birth/Nat2019us.zip
+data/raw/NCHS-Birth/Nat2020us.zip
+data/raw/NCHS-Birth/Nat2021us.zip
+data/raw/NCHS-Birth/Nat2022us.zip
+data/raw/NCHS-Birth/births2018_raw.txt
+data/raw/NCHS-Birth/births2019_raw.txt
+data/raw/NCHS-Birth/births2020_raw.txt
+data/raw/NCHS-Birth/births2021_raw.txt
+data/raw/NCHS-Birth/births2022_raw.txt
+data/raw/NCHS-Birth/births2023_raw.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
