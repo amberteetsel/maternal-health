@@ -5,6 +5,8 @@ import os
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 policy_data_path = os.path.join(BASE_DIR, "data", "raw", "LawAtlas")
 
+print('running pol cleaning')
+
 # Statutory and Constitutional Abortion Protections
 df1 = pd.read_excel(os.path.join(policy_data_path, "AbortionRights.xlsx"),
                    sheet_name="Statistical Data")
@@ -146,7 +148,18 @@ df = df.sort_values(['State', 'Start']).reset_index(drop=True)
 df[all_policy_vars] = df.groupby('State')[all_policy_vars].ffill()
 
 # handle NAs
-df[all_policy_vars] = df[all_policy_vars].fillna(0).astype(int)
+df[all_policy_vars] = df[all_policy_vars].fillna(0).astype(np.int8)
+
+# Reorder columns
+cols_in_order = ['State', 'Start', 'End', 'TotalBan', 'MedBan', 'TeleBan', 'HeartbeatBan',
+               'GestLimit6', 'GestLimit7_14', 'GestLimit15_20',
+               'BanException', 'LifeException', 'HealthException', 'FetalAnomalyException',
+               'LegalRestriction', 'FundRestriction',
+               'FundLifeException', 'FundHealthException', 'FundFetalAnomalyException',
+               'ProviderPenalty', 'PatientPenalty',
+               'CriminalPenalty', 'LicensePenalty','CivilPenalty',
+               'ConstProtection', 'LegalProtection']
+df = df[cols_in_order]
 
 # Export clean data
 output_dir = os.path.abspath(os.path.join(BASE_DIR, "data", "clean", "LawAtlas"))

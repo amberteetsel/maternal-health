@@ -22,11 +22,11 @@ def render_metrics(metrics_dict=None):
             help_txt = metric_data.get('help')
 
             if type == 'percentage':
-                formatted_val = f"{value}%"
+                formatted_val = f"{round(value,2)}%"
             elif type == 'rate':
-                formatted_val = float(value)
+                formatted_val = float(round(value,2))
             elif isinstance(value, (float, int)):
-                formatted_val = float(value)
+                formatted_val = float(round(value,2))
             else:
                 formatted_val = str(value)
 

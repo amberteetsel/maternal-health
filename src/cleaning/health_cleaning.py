@@ -34,7 +34,7 @@ target_measures = [
     "Gender Pay Gap", "Poverty", "Unemployment", "College Graduate", "Infant Child Care Affordability",
     "Voter Participation (Average)", "Adequate Prenatal Care", "Avoided Care Due to Cost",
     "Maternity Care Desert", "Uninsured Women", "Women's Health Providers", "Cervical Cancer Screening",
-    "Postpartum Visit", "Well-Woman Visit", "Low-Risk Cesarean Delivery", "Maternity Practices Score",
+    "Postpartum Visit", "Well-Woman Visit", "Maternity Practices Score",
     "Unintended Pregnancy", "Smoking During Pregnancy", "Postpartum Depression",
     "Maternal Mortality", "Mortality Rate", "Severe Maternal Morbidity", "WIC Coverage",
     "Infant Mortality", "Neonatal Mortality", "Low Birth Weight"
@@ -267,7 +267,6 @@ final_df = final_df.groupby(['State', 'Measure'], group_keys=False).apply(impute
 final_df.Value = final_df.Value.fillna(9999)
 
 final_df = final_df.sort_values(['State', 'Measure', 'Year']).reset_index(drop=True)
-# final_df.head(12)
 
 # Export Clean DataFrame
 output_dir = os.path.abspath(os.path.join(BASE_DIR, "data", "clean", "HealthRankings", "health.csv"))
