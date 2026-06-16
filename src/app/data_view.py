@@ -15,18 +15,18 @@ def render_metrics(metrics_dict=None):
         with col:
             label = metric_data['label']
             value = metric_data['value']
-            type = metric_data['type']
+            metric_type = metric_data['type']
 
             delta = metric_data.get('delta')
             delta_color = metric_data.get('delta_color')
             help_txt = metric_data.get('help')
 
-            if type == 'percentage':
-                formatted_val = f"{round(value,2)}%"
-            elif type == 'rate':
-                formatted_val = float(round(value,2))
+            if metric_type == 'percentage':
+                formatted_val = f"{value:.1f}%"
+            elif metric_type == 'rate':
+                formatted_val = f"{value:.1f}"
             elif isinstance(value, (float, int)):
-                formatted_val = float(round(value,2))
+                formatted_val = f"{value:.2f}"
             else:
                 formatted_val = str(value)
 
