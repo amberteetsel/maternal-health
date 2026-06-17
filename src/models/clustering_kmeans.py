@@ -211,6 +211,71 @@ print(cluster_means)
 # PLOTTING
 # ==================================================================================
 
+# ------ Silhouette Scores for Varying K Values ------
+k_range = [2, 3, 4, 5, 6]
+silhouette_scores = []
+
+# Test each k and get score
+for k in k_range:
+    kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+    cluster_labels = kmeans.fit_predict(X_scaled)
+
+    # calculate silhouette score
+    score = silhouette_score(X_scaled, cluster_labels)
+    silhouette_scores.append(score)
+
+# Plot scores
+plt.figure(figsize=(9,5))
+plt.plot(k_range,
+         silhouette_scores,
+         marker='o',
+         color='gray',
+         linewidth=2,
+         markersize=5
+         )
+
+# Highlight peak
+optimal_score = silhouette_scores[k_range.index(optimal_k)]
+plt.scatter(
+    optimal_k, 
+    optimal_score, 
+    color="#85d6f4",      
+    s=120,
+    marker='o', 
+    edgecolor='black',
+    linewidth=1.5,
+    zorder=2,
+    label=f'Optimal $k$ ({optimal_k})'
+)
+
+plt.annotate(
+    f'Optimal Clusters ($k={optimal_k}$)\nHighest Silhouette Score', 
+    xy=(optimal_k + 0.05, optimal_score - 0.001),                               # Coordinates for arrow point
+    xytext=(optimal_k + 0.4, optimal_score - 0.01),                             # Coordinates for text
+    fontweight='bold',
+    fontsize=10,
+    color="#56aece",
+    arrowprops=dict(
+        arrowstyle="->",                 
+        connectionstyle="arc3,rad=-0.2", 
+        color='black',
+        linewidth=1.5
+    ),
+    zorder=3
+)
+
+# Styling
+plt.title("Silhouette Score Analysis for Optimal $k$", fontsize=14, fontweight='bold', loc='left')
+plt.xlabel("Number of Clusters ($k$)", fontsize=12, labelpad=10)
+plt.ylabel("Average\nSilhouette\nScore", fontsize=12, labelpad=10,
+           rotation=0, va='center', ha='right')
+plt.xticks(k_range, fontweight='bold')
+plt.grid(axis='both', alpha=0.3, linestyle='--')
+
+plt.tight_layout()
+plt.savefig(os.path.join(BASE_DIR, "resources", "clustering", "kmeans_silhouette_scores.png"))
+# plt.show()
+
 # ------ Cluster Profile Snake Plot ------
 df_scaled_features = pd.DataFrame(X_scaled, columns=optimal_features)
 df_scaled_features['Cluster'] = cluster_labels
