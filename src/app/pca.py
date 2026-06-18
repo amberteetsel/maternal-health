@@ -20,6 +20,7 @@ def render_pca(overview: str,
                df_after: pd.DataFrame,
                data_download_url: str,
                pipeline_all: list,
+               pca_code: str,
             #    pipeline_opt: list,
                conclusion: str
             
@@ -127,7 +128,7 @@ def render_pca(overview: str,
     st.subheader("Model Run & Results")
 
     # st.markdown("#### Method 1: All Available Features")
-    st.markdown(f"👾 [View Code]()")
+    st.markdown(f"👾 [View Code]({pca_code})")
     for i, item in enumerate(pipeline_all):
         _render_pipeline_asset(item, step_index=i, unique_key_prefix="all")
 
