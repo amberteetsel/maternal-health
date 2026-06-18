@@ -633,7 +633,7 @@ with t3:
 # Clustering
 cluster_res = os.path.join(BASE_DIR, "resources", "clustering")
 # Define Text Context Blocks
-overview_md = """
+overview_md = inspect.cleandoc("""
     Clustering is a core branch of unsupervised machine learning used to discover patterns, structures, or groupings within
     unlabelled datasets. Unlike supervised learning which relies on predefined target classes, clustering algorithms 
     evaluate inherent mathematical relationships between data points to group similar observations together while separating
@@ -664,9 +664,9 @@ overview_md = """
     distinct state health profiles, helping to understand the maternal health crisis in the United States. By plotting clusters
     onto a geographic map of the US, potential spacial dependencies will emerge that either challenge or reinforce
     historical stereotypes (for example, the South is often perceived as "backwards" in terms of gender equality and healthcare.)
-"""
+""")
 
-prep_md = """
+prep_md = inspect.cleandoc("""
     Clustering algorithms require only **unlabeled, numeric data** because its primary goal is classification, not prediction.
     It relies on quantitative distance formulas and so cannot process categorical data without encoding.
 
@@ -675,12 +675,20 @@ prep_md = """
     Features were also reconstructed so that for all columns, a higher number indicated a "worse" outcome than a lower number.
     This increases interpretability of results. Z-Score standardization was also used so that varying data magnitudes would
     not have outsized influence on clusters.
-"""
+""")
 
 conclusions_md = """
-### Academic Findings
-* **Model Corroboration:** Both algorithmic approaches identified an optimal cluster cut-off at $k=3$.
-* **Cohesion:** K-Means provided tight, circular clusters optimized for absolute variance minimization, whereas Cosine Linkage group divisions effectively isolated regional trends regardless of total case volume fluctuations.
+* **Model Validation:** Both algorithmic approaches identified an optimal cluster cut-off at $k = 3$. Additionally,
+both models chose very similar optimal feature sets. The only difference was that KMeans preferred `Maternal Mortality` to
+Agglomerative's `Unintended Pregnancy`.
+
+* **Silhouette Analysis:** Neither model had a particularly strong Silhouette Score (both under 0.5), despite being heavily
+optimized to use the best available features and k value. This suggests additional data is needed to shore up the validity
+of identified clusters, or that the healthcare crisis is driven by so many diverse levers that robust clustering is not feasible.
+
+* **Geographic Findings:** Assigning clusters to states reveals some interesting patterns that should prove useful in 
+subsequent analyses. Hierarchical clustering in particular was useful for providing insight into specific drivers
+of suboptimal maternal health conditions, such as care deserts vs. family planning resources.
 """
 
 kmeans_summary_md = inspect.cleandoc("""
@@ -722,7 +730,16 @@ hclust_summary_md = inspect.cleandoc("""
 
     Review the Snake Plots below for a visual representation of these patterns. 
 """)
-
+kmeans_map_interpretation = """
+    These results somewhat reinforce traditional stereotypes about "Blue/Democratic" vs. "Red/Republican" states.
+    Democratic strongholds in the West, Great Lakes, and Northeast regions are mostly **Low Risk**, while Southern
+    and Midwestern regions are mostly **Moderate** or **High Risk.** 
+"""
+hclust_map_interpretation = """
+    These results are less predictable, though there is considerable overlap between **Strong Health Ecosystem** states
+    and **Low Risk** states from KMeans clustering. States with **Poor Family Planning** seem to be concentrated in the South,
+    while states with **Poor Access to Care** are concentrated in the Midwest.
+"""
 # Populate Section (a) Visual Array (Guarantees Room for 2+ Images)
 overview_visual_assets = [
     {
@@ -741,7 +758,7 @@ kmeans_assets = [
     {
         "title": "K-Means Parameter Sweep (Silhouette Line)",
         "fig": os.path.join(cluster_res, "kmeans_silhouette_scores.png"),
-        "caption": "Evaluating k selections [2-6]. Highlighting k=3 as our structural peak."
+        "caption": "An examination of different k values revealed that using k = 3 clusters yielded the highest silhouette score."
     },
     {
         'title': 'Cluster Characteristics',
@@ -756,14 +773,15 @@ kmeans_assets = [
     {
         "title": "KMeans: Interactive US Cluster Map",
         "fig": os.path.join(cluster_res, "kmeans_map.html"),
-        "caption": "Map of the US by KMeans Cluster"
+        "caption": "Map of the US by KMeans Cluster. Data is unavailable for Idaho, Maine, Vermont, and Alabama.",
+        'interpretation': kmeans_map_interpretation
     }
 ]
 hclust_assets = [
     {
         "title": "Hierarchical Parameter Sweep (Silhouette Line)",
         "fig": os.path.join(cluster_res, "hclust_silhouette_scores.png"),
-        "caption": "Evaluating k selections [2-6]. Highlighting k=3 as our structural peak."
+        "caption": "An examination of different k values revealed that using k = 3 clusters yielded the highest silhouette score."
     },
         {
         'title': 'Cluster Characteristics',
@@ -778,7 +796,8 @@ hclust_assets = [
     {
         "title": "Hierarchical: Interactive US Cluster Map",
         "fig": os.path.join(cluster_res, "hclust_map.html"),
-        "caption": "Map of the US by Agglomerative Cluster"
+        "caption": "Map of the US by Agglomerative Cluster. Data is unavailable for Idaho, Maine, Vermont, and Alabama.",
+        'interpretation': hclust_map_interpretation
     },
     {
         "title": "Cosine Linkage Tree Dendrogram",
