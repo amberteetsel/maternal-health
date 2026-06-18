@@ -109,7 +109,7 @@ def render_clustering_view(
     st.markdown(prep_text)
     
     st.markdown(f"🔗 **[Download Sample Unlabeled Dataset]({data_download_url})**")
-    st.markdown(f"**[View Cleaning Code]({cleaning_code})**")
+    st.markdown(f"🔍 **[View Cleaning Code]({cleaning_code})**")
     st.markdown("Numeric Input Feature Vector Preview")
     st.dataframe(df_sample, use_container_width=True)
     
@@ -139,5 +139,5 @@ def render_clustering_view(
     # ----------------------------------------------------
     # (e) CONCLUSIONS
     # ----------------------------------------------------
-    st.subheader("Operational Conclusions")
+    st.subheader("Conclusions")
     st.markdown(conclusions_text)

@@ -643,7 +643,7 @@ overview_md = """
     For a robust analysis, this study analyzes State Health Ranking data through two different clustering paradigms: 
     **Partitional** and **Hierarchical** clustering.
 
-    1. Partitional Clustering (e.g. KMeans)
+    ### 1. Partitional Clustering (e.g. KMeans)
 
     Partitional clustering algorithms construct a single, flat partition of data points into a user-specified number of clusters ($k$).
     The KMeans algorithm used for this study treats the data space as a geometric landscape and seeks to optimize clusters
@@ -651,7 +651,7 @@ overview_md = """
     **Euclidean Distance**, which calculates the traditional straight-line distance between two points in space. For this study
     it helps identify states that share similar raw numbers across healthcare measures.
 
-    2. Hierarchical Clustering (e.g. Agglomerative)
+    ### 2. Hierarchical Clustering (e.g. Agglomerative)
 
     Hierarchical clustering algorithms build a continuous, nested tree structure known as a dendrogram. The Agglomerative 
     (bottom-up) algorithm used for this study begins by treating every individual state observation as its own distinct cluster.
@@ -726,11 +726,11 @@ hclust_summary_md = inspect.cleandoc("""
 # Populate Section (a) Visual Array (Guarantees Room for 2+ Images)
 overview_visual_assets = [
     {
-        "fig": os.path.join(cluster_res, "kmeans_silhouette_scores.png"), 
+        "fig": os.path.join(cluster_res, "iris_kmeans.png"), 
         "caption": "Partitional Clustering Logic: Centroid optimization partitions."
     },
     {
-        "fig": os.path.join(cluster_res, "hclust_silhouette_scores.png"),
+        "fig": os.path.join(cluster_res, "iris_hierarchical.png"),
         "caption": "Hierarchical Dendrogram Logic: Tree branching structures."
     }
 ]
@@ -751,7 +751,7 @@ kmeans_assets = [
     {
         "title": "K-Means Attribute Snake Plot",
         "fig": os.path.join(cluster_res, "kmeans_snake_plot.png"),
-        "caption": "Compares cluster attributes to national average."
+        "caption": "Comparing cluster attributes to national average."
     },
     {
         "title": "KMeans: Interactive US Cluster Map",
@@ -773,12 +773,12 @@ hclust_assets = [
     {
         "title": "Hierarchical Attribute Snake Plot",
         "fig": os.path.join(cluster_res, "hclust_snake_plot.png"),
-        "caption": "Compares cluster attributes to national average."
+        "caption": "Comparing cluster attributes to national average."
     },
     {
         "title": "Hierarchical: Interactive US Cluster Map",
         "fig": os.path.join(cluster_res, "hclust_map.html"),
-        "caption": "Map of the US by Hierarchical Cluster"
+        "caption": "Map of the US by Agglomerative Cluster"
     },
     {
         "title": "Cosine Linkage Tree Dendrogram",
@@ -807,9 +807,9 @@ with t4:
             overview_text=overview_md,
             overview_images=overview_visual_assets,
             prep_text=prep_md,
-            cleaning_code="",
+            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/src/models/health_preprocessing.py",
             df_sample=sample_unlabeled_df,
-            data_download_url="https://github.com/your-repo/maternal-health/data/clean/HealthRankings/health_preprocessed.csv",
+            data_download_url="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/resources/clustering/cluster_input_data.csv",
             kmeans_pipeline=kmeans_assets,
             hclust_pipeline=hclust_assets,
             conclusions_text=conclusions_md
