@@ -15,12 +15,28 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import inspect
 
+# Inject global CSS to color headers and subheaders
+st.markdown(
+    """
+    <style>
+    /* Targets st.subheader and ### markdown */
+    h3 {
+        color: #b13c6c !important;
+    }
+    /* Optional: Targets st.header and ## markdown */
+    h2 {
+        color: #8f3371 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Dependencies - Helper Modules
 from data_view import data_source_section
 from stacked_maps import generate_stacked_us_maps
 from policy_maps import create_ban_limit_map, create_protection_map
 from memory import reduce_df_memory
-from clusters import render_clustering_view
 
 # Root Directory for File Paths
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -630,189 +646,18 @@ with t3:
 # TAB 4: MODELS
 ##############################################################
 
+# ========================================
 # Clustering
+# ========================================
+import clusters
+from clusters import render_clustering_view
 cluster_res = os.path.join(BASE_DIR, "resources", "clustering")
-# Define Text Context Blocks
-overview_md = inspect.cleandoc("""
-    Clustering is a core branch of unsupervised machine learning used to discover patterns, structures, or groupings within
-    unlabelled datasets. Unlike supervised learning which relies on predefined target classes, clustering algorithms 
-    evaluate inherent mathematical relationships between data points to group similar observations together while separating
-    dissimilar observations. For studying maternal health infrastructure and outcomes, clustering enables a fresh look
-    at state health profiles free from internal biases about certain states or regions.
 
-    For a robust analysis, this study analyzes State Health Ranking data through two different clustering paradigms: 
-    **Partitional** and **Hierarchical** clustering.
-
-    ### 1. Partitional Clustering (e.g. KMeans)
-
-    Partitional clustering algorithms construct a single, flat partition of data points into a user-specified number of clusters ($k$).
-    The KMeans algorithm used for this study treats the data space as a geometric landscape and seeks to optimize clusters
-    by minimizing the total variance between data points and their respective group centers (centroids). It is based on
-    **Euclidean Distance**, which calculates the traditional straight-line distance between two points in space. For this study
-    it helps identify states that share similar raw numbers across healthcare measures.
-
-    ### 2. Hierarchical Clustering (e.g. Agglomerative)
-
-    Hierarchical clustering algorithms build a continuous, nested tree structure known as a dendrogram. The Agglomerative 
-    (bottom-up) algorithm used for this study begins by treating every individual state observation as its own distinct cluster.
-    The algorithm sequentially merges the closest pairs of clusters based on **Cosine Distance** until all observations 
-    are unified into a single global tree. **Cosine Distance** measures the cosine of the angle between two multi-dimensional
-    data vectors, shifting analytical focus from magnitude to orientation and proportion.  For this study it helps group
-    states together if the relative shape or proportion of their healthcare profile matches.
-
-    This study leverages unsupervised clustering as a means of data-driven discovery. The models will identify
-    distinct state health profiles, helping to understand the maternal health crisis in the United States. By plotting clusters
-    onto a geographic map of the US, potential spacial dependencies will emerge that either challenge or reinforce
-    historical stereotypes (for example, the South is often perceived as "backwards" in terms of gender equality and healthcare.)
-""")
-
-prep_md = inspect.cleandoc("""
-    Clustering algorithms require only **unlabeled, numeric data** because its primary goal is classification, not prediction.
-    It relies on quantitative distance formulas and so cannot process categorical data without encoding.
-
-    To this end, data from *America's Health Rankings* was further processed to conform with clustering requirements. First
-    the DataFrame was melted into wide format.
-    Category labels such as `State` and `Year` were stripped away to leave only unlabelled relevant features and values.
-    Features were also reconstructed so that for all columns, a higher number indicated a "worse" outcome than a lower number.
-    For example, "Adequate Prenatal Care" was converted to "Inadequate Prenatal Care" by flipping the percentage.
-    This increases interpretability of results. Z-Score standardization was also used so that varying data magnitudes would
-    not have outsized influence on clusters.
-""")
-
-conclusions_md = """
-* **Model Validation:** Both algorithmic approaches identified an optimal cluster cut-off at $k = 3$. Additionally,
-both models chose very similar optimal feature sets. The only difference was that KMeans preferred `Maternal Mortality` to
-Agglomerative's `Unintended Pregnancy`.
-
-* **Silhouette Analysis:** Neither model had a particularly strong Silhouette Score (both under 0.5), despite being heavily
-optimized to use the best available features and k value. This suggests additional data is needed to shore up the validity
-of identified clusters, or that the healthcare crisis is driven by so many diverse levers that robust clustering is not feasible.
-
-* **Geographic Findings:** Assigning clusters to states reveals some interesting patterns that should prove useful in 
-subsequent analyses. Hierarchical clustering in particular was useful for providing insight into specific drivers
-of suboptimal maternal health conditions, such as care deserts vs. family planning resources.
-"""
-
-kmeans_summary_md = inspect.cleandoc("""
-    Optimizing for Silhouette Score lead to the selection of three optimal features: `Maternity Care Desert`, 
-    `Maternal Mortality`, and `Patients Per Doctor`. Running the KMeans model with these features produced three distinct clusters.
-    **Clusters are framed in terms of risk to potential mothers.** They are labelled according to average value of each feature.
-
-    The **Low Risk** cluster is characterized by below-average rates of women facing care deserts, maternal mortality, and
-    patients per doctor. States in this cluster have stronger maternal health ecosystems and better maternal outcomes
-    than states in other clusters.
-
-    The **Moderate Risk** cluster has below-average rates of women facing care deserts, but above-average maternal mortality and
-    patients per doctor. States in this cluster have decent maternal health ecosystems but suffer from lack of sufficient
-    doctors.
-
-    The **High Risk** cluster has above-average rates of women facing care deserts, maternal mortality, and patients per doctor.
-    People living in these states are much less likely than average to live in proximity to maternal healthcare services,
-    and have fewer available doctors.  
-
-    Review the Snake Plots below for a visual representation of these patterns. 
-""")
-hclust_summary_md = inspect.cleandoc("""
-    Optimizing for Silhouette Score lead to the selection of three optimal features: `Maternity Care Desert`, 
-    `Unplanned Pregnancy`, and `Patients Per Doctor`. Running the Hierarchical model with these features produced three distinct clusters.
-    **Clusters are framed in terms of strengths and weaknesses of maternal healthcare systems.** 
-    They are labelled according to average value of each feature.
-
-    The **Strong Health Ecosystem** cluster is characterized by below-average rates of women facing care deserts,
-    unplanned pregnancy, and patients per doctor. There is considerable overlap between this cluster and the **Low Risk**
-    cluster found during KMeans.
-
-    The **Poor Family Planning** cluster is characterized by above-average rates of unintended pregnancy despite
-    fewer women than average residing in maternity care deserts. This suggests states in this cluster do not have strong
-    family planning education or resources, but further investigation is needed to determine specific drivers.
-
-    The **Poor Access to Care** cluster is characterized by above-average rates of women residing in maternity care deserts
-    and an above-average patient to doctor ratio. This suggests states in this cluster primarily suffer from lack of healthcare
-    providers.
-
-    Review the Snake Plots below for a visual representation of these patterns. 
-""")
-kmeans_map_interpretation = """
-    These results somewhat reinforce traditional stereotypes about "Blue/Democratic" vs. "Red/Republican" states.
-    Democratic strongholds in the West, Great Lakes, and Northeast regions are mostly **Low Risk**, while Southern
-    and Midwestern regions are mostly **Moderate** or **High Risk.** 
-"""
-hclust_map_interpretation = """
-    These results are less predictable, though there is considerable overlap between **Strong Health Ecosystem** states
-    and **Low Risk** states from KMeans clustering. States with **Poor Family Planning** seem to be concentrated in the South,
-    while states with **Poor Access to Care** are concentrated in the Midwest.
-"""
-# Populate Section (a) Visual Array (Guarantees Room for 2+ Images)
-overview_visual_assets = [
-    {
-        "fig": os.path.join(cluster_res, "iris_kmeans.png"), 
-        "caption": "Partitional Clustering Logic: Centroid optimization partitions."
-    },
-    {
-        "fig": os.path.join(cluster_res, "iris_hierarchical.png"),
-        "caption": "Hierarchical Dendrogram Logic: Tree branching structures."
-    }
-]
-sample_before_df = pd.read_csv(os.path.join(BASE_DIR,"data","clean","HealthRankings","health.csv"))
-sample_after_df = pd.read_csv(os.path.join(cluster_res, 'cluster_input_data.csv'))
-kmeans_cluster_sum = pd.read_csv(os.path.join(cluster_res, 'kmeans_cluster_summary.csv'))
-hclust_cluster_sum = pd.read_csv(os.path.join(cluster_res, 'hclust_cluster_summary.csv'))
-kmeans_assets = [
-    {
-        "title": "K-Means Parameter Sweep (Silhouette Line)",
-        "fig": os.path.join(cluster_res, "kmeans_silhouette_scores.png"),
-        "caption": "An examination of different k values revealed that using k = 3 clusters yielded the highest silhouette score."
-    },
-    {
-        'title': 'Cluster Characteristics',
-        'fig': kmeans_cluster_sum,
-        'interpretation': kmeans_summary_md
-    },
-    {
-        "title": "K-Means Attribute Snake Plot",
-        "fig": os.path.join(cluster_res, "kmeans_snake_plot.png"),
-        "caption": "Comparing cluster attributes to national average."
-    },
-    {
-        "title": "KMeans: Interactive US Cluster Map",
-        "fig": os.path.join(cluster_res, "kmeans_map.html"),
-        "caption": "Map of the US by KMeans Cluster. Data is unavailable for Idaho, Maine, Vermont, and Alabama.",
-        'interpretation': kmeans_map_interpretation
-    }
-]
-hclust_assets = [
-    {
-        "title": "Hierarchical Parameter Sweep (Silhouette Line)",
-        "fig": os.path.join(cluster_res, "hclust_silhouette_scores.png"),
-        "caption": "An examination of different k values revealed that using k = 3 clusters yielded the highest silhouette score."
-    },
-        {
-        'title': 'Cluster Characteristics',
-        'fig': hclust_cluster_sum,
-        'interpretation': hclust_summary_md
-    },
-    {
-        "title": "Hierarchical Attribute Snake Plot",
-        "fig": os.path.join(cluster_res, "hclust_snake_plot.png"),
-        "caption": "Comparing cluster attributes to national average."
-    },
-    {
-        "title": "Hierarchical: Interactive US Cluster Map",
-        "fig": os.path.join(cluster_res, "hclust_map.html"),
-        "caption": "Map of the US by Agglomerative Cluster. Data is unavailable for Idaho, Maine, Vermont, and Alabama.",
-        'interpretation': hclust_map_interpretation
-    },
-    {
-        "title": "Cosine Linkage Tree Dendrogram",
-        "fig": os.path.join(cluster_res, "hclust_dendrogram.png"),
-        "caption": "Average Linkage hierarchy branch map using Cophenetic evaluation calculations."
-    }, 
-]
 
 # ========================================
 # Principal Component Analysis
 # ========================================
-from pca import overview_pca
+import pca
 
 
 with t4:
@@ -832,22 +677,22 @@ with t4:
     with t_cluster:
         # Run layout call inside app loop structure
         render_clustering_view(
-            overview_text=overview_md,
-            overview_images=overview_visual_assets,
-            prep_text=prep_md,
+            overview_text=clusters.overview_clust,
+            overview_images=clusters.clust_overview_images,
+            prep_text=clusters.prep_clust,
             cleaning_code="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/src/models/health_preprocessing.py",
-            df_raw_sample=sample_before_df,
-            df_scaled_sample=sample_after_df,
+            df_raw_sample=clusters.clust_sample_before_df,
+            df_scaled_sample=clusters.clust_sample_after_df,
             data_download_url="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/resources/clustering/cluster_input_data.csv",
-            kmeans_pipeline=kmeans_assets,
-            hclust_pipeline=hclust_assets,
-            conclusions_text=conclusions_md
+            kmeans_pipeline=clusters.kmeans_assets,
+            hclust_pipeline=clusters.hclust_assets,
+            conclusions_text=clusters.conclusions_clustering
         )
 
     # pca goes here
     with t_pca:
         st.subheader("Principal Component Analysis")
-        st.markdown(overview_pca)
+        st.markdown(pca.overview_pca)
 
 ##############################################################
 # TAB 5: REFERENCES
