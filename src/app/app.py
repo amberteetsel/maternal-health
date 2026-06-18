@@ -694,7 +694,7 @@ of suboptimal maternal health conditions, such as care deserts vs. family planni
 kmeans_summary_md = inspect.cleandoc("""
     Optimizing for Silhouette Score lead to the selection of three optimal features: `Maternity Care Desert`, 
     `Maternal Mortality`, and `Patients Per Doctor`. Running the KMeans model with these features produced three distinct clusters.
-    Clusters are framed in terms of risk to potential mothers. They are labelled according to average value of each feature.
+    **Clusters are framed in terms of risk to potential mothers.** They are labelled according to average value of each feature.
 
     The **Low Risk** cluster is characterized by below-average rates of women facing care deserts, maternal mortality, and
     patients per doctor. States in this cluster have stronger maternal health ecosystems and better maternal outcomes
@@ -713,7 +713,7 @@ kmeans_summary_md = inspect.cleandoc("""
 hclust_summary_md = inspect.cleandoc("""
     Optimizing for Silhouette Score lead to the selection of three optimal features: `Maternity Care Desert`, 
     `Unplanned Pregnancy`, and `Patients Per Doctor`. Running the Hierarchical model with these features produced three distinct clusters.
-    Clusters are framed in terms of strengths and weaknesses of maternal healthcare systems. 
+    **Clusters are framed in terms of strengths and weaknesses of maternal healthcare systems.** 
     They are labelled according to average value of each feature.
 
     The **Strong Health Ecosystem** cluster is characterized by below-average rates of women facing care deserts,
@@ -809,9 +809,9 @@ hclust_assets = [
 with t4:
     st.header("Modeling Results")
 
-    t_cluster, t_arm, t_nb, t_dt, d_svm, t_regr, t_nn = st.tabs([
+    t_cluster, t_pca, t_nb, t_dt, d_svm, t_regr, t_nn = st.tabs([
         "Clustering",
-        "Association Rule Mining (ARM)",
+        "Principle Component Analysis",
         "Naive Bayes",
         "Decision Trees",
         "Support Vector Machines (SVM)",

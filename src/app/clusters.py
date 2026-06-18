@@ -41,7 +41,7 @@ def render_clustering_view(
             
             # dataframes
             if isinstance(fig, pd.DataFrame):
-                st.dataframe(fig, use_container_width=True)
+                st.dataframe(fig, width='stretch')
                 # Render annotations if present for this DataFrame step
                 if item.get("caption"):
                     st.caption(item["caption"])
@@ -62,11 +62,11 @@ def render_clustering_view(
                     
             # local paths
             elif isinstance(fig, str):
-                st.image(fig, use_container_width=True)
+                st.image(fig, width='stretch')
                 
             # plotly go
             elif isinstance(fig, go.Figure):
-                st.plotly_chart(fig, use_container_width=True, key=f"{unique_key_prefix}_chart_{step_index}")
+                st.plotly_chart(fig, width='stretch', key=f"{unique_key_prefix}_chart_{step_index}")
                 
             # fallback
             else:
@@ -94,7 +94,7 @@ def render_clustering_view(
             with col:
                 img_data = overview_images[idx]
                 if isinstance(img_data["fig"], str):
-                    st.image(img_data["fig"], use_container_width=True)
+                    st.image(img_data["fig"], width='stretch')
                 else:
                     st.pyplot(img_data["fig"])
                 if img_data.get("caption"):
@@ -111,7 +111,7 @@ def render_clustering_view(
     st.markdown(f"🔗 **[Download Sample Unlabeled Dataset]({data_download_url})**")
     st.markdown(f"🔍 **[View Cleaning Code]({cleaning_code})**")
     st.markdown("Numeric Input Feature Vector Preview")
-    st.dataframe(df_sample, use_container_width=True)
+    st.dataframe(df_sample, width='stretch')
     
     st.markdown("---")
     
