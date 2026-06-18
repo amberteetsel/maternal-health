@@ -78,19 +78,6 @@ t1, t2, t3, t4, t5 = st.tabs([
     "References"                # citations
 ])
 
-# if "active_tab" not in st.session_state:
-#     st.session_state['active_tab'] = 'Introduction'
-
-# tab_titles = ["Introduction", 'Conclusions', 'Data Prep & EDA', 'Models', 'References']
-# active_index = tab_titles.index(st.session_state['active_tab'])
-# tabs = st.tabs(tab_titles)
-
-# # The sidebar acts as your new tab switcher controller
-# selected_section = st.sidebar.radio("Navigation", tab_titles, index=active_index, key="nav_menu")
-
-# # Callback function for footnote buttons
-# def jump_to_ref():
-#     st.session_state['active_tab'] = 'References'
 
 # Infographic - Commonwealth Fund, Maternal Mortality Comparison (international)
 infogram_embed_html1 = """
@@ -178,6 +165,28 @@ with t1:
                    Figure 2: The Commonwealth Fund National Comparison of Maternal Deaths by Abortion-Access Status.
                    There is a clear pattern of increased maternal death rates for abortion-restricted states.
                 """)
+        
+    # Legal Evolution
+    st.subheader("Legal Evolution")
+    st.write("""
+             The modern reproductive healthcare landscape is the direct result of a judicial trilogy occuring over the
+             previous half-century that mirrored broader socioeconomic and cultural transformations in American society.
+             When the Supreme Court decided *Roe v. Wade* (1973), it was amid a national push from medical professionals
+             to eliminate dangerous, "back-alley" abortions as well as second-wave feminists demanding more bodily
+             autonomy. The *Roe* decision anchored the right to abortion in the Fourteenth Amendment's implied right to
+             privacy and was celebrated as a landmark victory for gender equality and public health. However, critics 
+             opposed it as unconstitutional and immoral. Two decades later, in an environment
+             of increasing political polarization and attacks on abortion facilities, *Planned Parenthood of Southeastern
+             Pennsylvania v. Casey* (1992) attempted a compromise: it upheld *Roe*'s central tenet of legal abortion while
+             allowing states to implement restrictions such as waiting periods and parental consent. While viewed by
+             supporters as a pragmatic compromise, critics on both the left and right argued it went too far or not far
+             enough. Ultimately the socio-legal tension culminated in *Dobbs v. Jackson Women's Health Organization* (2022),
+             a decision issued by an ultraconservative majority following years of incremental legislative erosion of
+             abortion access. The *Dobbs* decision rejected both *Roe* and *Casey* in returning complete control of
+             abortion regulation to individual states. Dissenting justices warned that stripping away an established
+             constitutional right would inflict immediate, systemic harm on women's health and bodily sovereignty (Center
+             for Reproductive Rights, 2022). This study attempts to quantify that harm.
+             """)
 
     # Research Qs
     st.subheader("Research Questions")
@@ -706,6 +715,21 @@ with t4:
             # pipeline_opt=pca.pca_opt_assets,
             conclusion=pca.pca_conclusion
         )
+
+    with t_nb:
+        st.markdown("⏳ This section is in progress ⏳")
+        
+    with t_dt:
+        st.markdown("⏳ This section is in progress ⏳")
+    
+    with d_svm:
+        st.markdown("⏳ This section is in progress ⏳")
+    
+    with t_regr:
+        st.markdown("⏳ This section is in progress ⏳")
+    
+    with t_nn:
+        st.markdown("⏳ This section is in progress ⏳")
 
 
 ##############################################################

@@ -13,7 +13,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 pca_res = os.path.join(BASE_DIR, "resources", "pca")
 
 # Function
-def render_pca(overview: str,
+def render_pca(overview: list,
                prep_text: str,
                cleaning_code: str,
                df_before: pd.DataFrame,
@@ -80,10 +80,37 @@ def render_pca(overview: str,
         st.markdown("<br>", unsafe_allow_html=True)
 
     # ----------------------------------------------------
+    # internal helper function for overview rendering
+    # ----------------------------------------------------
+    def _render_overview_asset(item: dict):
+        """Processes Overview Section, displays images next to text"""
+        if item.get("title"):
+            st.markdown(f"##### {item['title']}")
+
+        try:
+            fig = item.get("image")
+        except:
+            fig = None
+        
+        if fig:
+            c1, c2 = st.columns(2)
+
+            with c1:
+                st.markdown(item['text'])
+            with c2:
+                st.image(fig, width=560, caption=item['caption'])
+        
+        else:
+            st.markdown(item['text'])
+            
+        st.markdown("<br>", unsafe_allow_html=True)
+
+    # ----------------------------------------------------
     # OVERVIEW
     # ----------------------------------------------------
     st.subheader("Principal Component Analysis (PCA) Overview")
-    st.markdown(overview)
+    for item in overview:
+        _render_overview_asset(item)
 
     # ----------------------------------------------------
     # DATA PREPARATION
@@ -146,10 +173,7 @@ def render_pca(overview: str,
 # ==========================================================
 # ACTUAL INPUTS
 # ==========================================================
-
-overview_pca = inspect.cleandoc("""
-    ##### The Curse of Dimensionality
-
+overview_pca_1 = inspect.cleandoc("""
     The Curse of Dimensionality refers to various challenges and complications that arise when analyzing and organizing
     data in high-dimensional spaces. Dimensions refer to the features or attributes of data; in the context of this study,
     dimensions of the Health Rankings dataset include measures of poverty, unemployment, preventative care, maternal
@@ -159,9 +183,9 @@ overview_pca = inspect.cleandoc("""
     dissimilar data points and the distance between two highly similar points look mathematically identical. Humans
     cannot visualize beyond three dimensions (3D) so it's also difficult for analysts to conceive of and understand
     high-dimensional feature spaces.
-
-    ##### Dimensionality Reduction
-
+""")
+overview_pca_1_image = os.path.join(pca_res, "dimensionality_curse.png")
+overview_pca_2 = inspect.cleandoc("""
     Dimensionality reduction is the process of compressing high-dimensional feature spaces into a lower-dimensional
     subspace, typically 2D or 3D, while retaining as much structural variation as possible. Dimensionality reduction
     is crucial to address the problems caused by high dimensionality:
@@ -177,9 +201,9 @@ overview_pca = inspect.cleandoc("""
     algorithms. By compressing the data, it drastically improves computational efficiency while solving the issues of data
     sparsity and data visualization by turning a multi-variable matrix into a clear, interpretable landscape in two or
     three dimensions.
+""")
 
-    ##### Principal Component Analysis
-
+overview_pca_3 = inspect.cleandoc("""
     Principal Component Analysis (PCA) is an unsupervised linear transformation technique for dimensionality reduction
     that projects data onto brand-new, uncorrelated axes known as *Principal Components*. Rather than selecting or
     deleting specific raw variables, PCA uses all original features to calculate a completely new coordinate system.
@@ -191,9 +215,10 @@ overview_pca = inspect.cleandoc("""
 
     In this way, the first few components generated should contain the vast majority of a dataset's information (variance),
     allowing analysts to discard additional components wtih minimal information loss.
+""")
+overview_pca_3_image = os.path.join(pca_res, "pca_projection.png")
 
-    ##### Eigenvalues and Eigenvectors
-
+overview_pca_4 = inspect.cleandoc("""
     In practice, PCA is based on the decomposition of a dataset's *covariance matrix*, which tracks how each feature
     moves in relation to every other feature. PCA uses linear algebra to extract critical information from this matrix:
     **Eigenvectors** and **Eigenvalues**.
@@ -205,6 +230,33 @@ overview_pca = inspect.cleandoc("""
     measures the absolute magnitude of variance captured along that specific principal component axis. The principal
     component with the largest eigenvalue represents the axis of maximum variance, or PC1.
 """)
+
+overview_pca = [
+    {
+        'title': "The Curse of Dimensionality",
+        'text': overview_pca_1,
+        'image': overview_pca_1_image,
+        'caption': "As the number of features increases, the classifier's performance also increases until it reaches the optimal dimensionality."
+    },
+    {
+        'title': "Dimensionality Reduction",
+        'text': overview_pca_2,
+        'image': None,
+        'caption': None
+    },
+    {
+        'title': "Principal Component Analysis (PCA)",
+        'text': overview_pca_3,
+        'image': overview_pca_3_image,
+        'caption': "PCA finds the optimal 2D plane to project 3D data while preserving maximum variance."
+    },
+    {
+        'title': "Eigenvalues and Eigenvectors",
+        'text': overview_pca_4,
+        'image': None,
+        'caption': None
+    }
+]
 
 prep_pca = inspect.cleandoc("""
     PCA requires continuous numerical variables.
