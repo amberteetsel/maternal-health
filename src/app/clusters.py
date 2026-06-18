@@ -52,7 +52,7 @@ def render_clustering_view(
     def _render_pipeline_asset(item: dict, step_index: int, unique_key_prefix: str):
         """Processes and handles titles, figures, maps, dataframes, captions, and interpretations."""
         if item.get("title"):
-            # removed numbered index prefixing to keep layout unnumbered
+            # numbered index
             st.markdown(f"**{step_index + 1}. {item['title']}**")
             
         fig = item.get("fig")
@@ -102,7 +102,7 @@ def render_clustering_view(
     # ----------------------------------------------------
     # OVERVIEW
     # ----------------------------------------------------
-    st.subheader("Clustering Overview & Discovery")
+    st.subheader("Clustering Overview")
     st.markdown(overview_text)
     
     if overview_images:
@@ -123,7 +123,7 @@ def render_clustering_view(
     # ----------------------------------------------------
     # Data preparation
     # ----------------------------------------------------
-    st.subheader("Data Preparation & Requirements")
+    st.subheader("Data Preparation")
     st.markdown(prep_text)
     
     st.markdown(f"🔗 **[Download Sample Unlabeled Dataset]({data_download_url})**")
@@ -133,7 +133,7 @@ def render_clustering_view(
     prep_col1, prep_col2 = st.columns(2)
     
     with prep_col1:
-        st.markdown("📋 **Original Contextual Ground Dataset (With Metadata/Labels)**")
+        st.markdown("📋 **Original Contextually Grounded Dataset**")
         st.dataframe(df_raw_sample, width='stretch')
         
         # schema info rendered within a clean layout expander

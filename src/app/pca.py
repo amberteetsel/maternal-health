@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import inspect
 import streamlit as st
+import plotly.graph_objects as go
 
 # Root Directory for File Paths
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -17,7 +18,9 @@ def render_pca(overview: str,
                cleaning_code: str,
                df_before: pd.DataFrame,
                df_after: pd.DataFrame,
-               data_download_url: str
+               data_download_url: str,
+               pipeline_all: list,
+            #    pipeline_opt: list
                ):
     # ----------------------------------------------------
     # internal helper function for pipeline/results rendering
@@ -53,7 +56,8 @@ def render_pca(overview: str,
                 
         # check for local image paths
         elif isinstance(fig, str):
-            st.image(fig, width='stretch')
+            # st.image(fig, width='stretch')
+            st.image(fig, width='content')
             
         # check for interactive plotly go instances
         elif isinstance(fig, go.Figure):
@@ -73,13 +77,13 @@ def render_pca(overview: str,
         st.markdown("<br>", unsafe_allow_html=True)
 
     # ----------------------------------------------------
-    # Overview
+    # OVERVIEW
     # ----------------------------------------------------
     st.subheader("Principal Component Analysis (PCA) Overview")
     st.markdown(overview)
 
     # ----------------------------------------------------
-    # Data preparation
+    # DATA PREPARATION
     # ----------------------------------------------------
     st.subheader("Data Preparation")
     st.markdown(prep_text)
@@ -115,14 +119,23 @@ def render_pca(overview: str,
             
     st.markdown("---")
 
-
     # ----------------------------------------------------
-    # Data preparation
+    # MODELING & RESULTS
     # ----------------------------------------------------
     st.subheader("Model Run & Results")
 
+    # st.markdown("#### Method 1: All Available Features")
+    st.markdown(f"👾 [View Code]()")
+    for i, item in enumerate(pipeline_all):
+        _render_pipeline_asset(item, step_index=i, unique_key_prefix="all")
+
+    # st.markdown("#### Method 2: Optimal Features Only")
+    # st.markdown(f"👾 [View Code]()")
+    # for i, item in enumerate(pipeline_opt):
+    #     _render_pipeline_asset(item, step_index=i, unique_key_prefix="opt")
+
     # ----------------------------------------------------
-    # Data preparation
+    # CONCLUSION
     # ----------------------------------------------------
     st.subheader("Conclusions")
 
@@ -201,3 +214,68 @@ prep_pca = inspect.cleandoc("""
 """)
 
 pca_df_after = pd.read_csv(os.path.join(pca_res, "pca_input_data.csv"))
+
+pca_model_features_all = list(pca_df_after.columns)
+pca_model_intro_all = """
+    To begin, Principal Component Analysis was applied to the full set of 17 features:
+    `{pca_model_features_all}`
+"""
+pca_all_scree_interpret = """
+    Upon executing PCA across all available public health metrics, Principal Component 1 (PC1) and Principal Component 2 (PC2)
+    were revealed to explain a cumulative total of only 45.18 percent of the dataset's variance. In public health analytics, 
+    this low dimensionality compression indicates a high degree of systemic complexity. Rather than being driven by a 
+    singular, underlying socioeconomic factor, state-level healthcare landscapes are deeply fragmented; a state's capacity
+    in clinical provider retention does not linearly predict its performance in maternal care or preventative wellness 
+    visits. To capture the standard 70% threshold of total system information, the model must be expanded to include 5 or
+    6 components.
+"""
+pca_all_loading_interpet = inspect.cleandoc("""
+                                            
+    **Most Influential Features, PC1:**
+                                            
+    * Positive: `Maternal Mortality`, `Infant Mortality`, `Patients Per Doctor`, `Poverty`
+    * Negative: None
+
+    Principal Component 1 (PC1) is an axis of Systemic Healthcare Deprivation and Vulnerability. PC1 has no meaningful
+    negative loading coefficients, indicating this component captures a unified, compounding directional force. The
+    positive pole is driven by a mix of structural resource strain (poverty, patients per doctor) and severe medical
+    failures (maternal and infant mortality). This makes PC1 a useful index of compounding public health dangers. States
+    with high scores on this axis are stuck in a system where economic deprivation and shortage of healthcare providers
+    directly relate to elevated risk of maternal and infant death. Conversely, states with low scores on this axis tend
+    to have well-resourced, protective health infrastructure and better outcomes.
+
+    **Most Influential Features, PC2:**
+                                            
+    * Positive: `No Postpartum Visit`, `Inadequate Prenatal Care`, `No Preventative`
+    * Negative: `Smoking During Pregnancy`, `Gender Pay Gap`
+
+    Principal Component 2 (PC2) can be characterized as an axis of Preventative Care Underutilization vs. Socio-Behavioral
+    Risk. The positive pole is heavily influenced by clinical non-attendance metrics (no postpartum or preventative visits,
+    inadequate prenatal care), capturing environments where system barriers prevent patients from utilizing available care.
+    Conversely, the negative pole reveals an inverse relationship with `Smoking During Pregnancy` and the `Gender Pay Gap`.
+    This means states suffering from high behavioral risks (smoking) and economic disparities (wage gaps) often exhibit
+    *paradoxically higher* rates of prenatal and postpartum utilization.
+
+    Notably, the feature `Maternity Care Desert` exhibits a nearly identical loading magnitude across both primary axes
+    but in opposite directions (+0.297 for PC1, -0.278 for PC2). This indicates that `Maternity Care Desert` acts as a 
+    structural pivot: it shares equal amount of variance with both components, moving in direct alignment with system
+    traits of PC1 while simultaneously moving inversely with dynamics captured by PC2.
+""")
+pca_all_assets = [
+    {
+        'title': "Cumulative Variance Analysis",
+        'fig': os.path.join(pca_res, "pca_scree_all.png"),
+        'caption': 'Shows the cumulative variance captured by $n$ principal components. In this context, variance is a proxy for information',
+        'interpretation': pca_all_scree_interpret
+    },
+    {
+        'title': "Loadings Plot",
+        'fig': os.path.join(pca_res, "pca_loading_all.png"),
+        'caption': "Shows correlations between raw features and a principal component. A loading coefficient close to +1.0 or -1.0 means that feature has a massive influence on direction of component. A loading coefficient close to 0.0 means the feature has almost no impact on that component.",
+        'interpretation': pca_all_loading_interpet
+    }
+]
+
+
+pca_opt_assets = []
+
