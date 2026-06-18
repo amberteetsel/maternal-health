@@ -22,6 +22,8 @@ def render_clustering_view(
     df_raw_sample: pd.DataFrame,    # raw dataset sample matrix (with labels)
     df_scaled_sample: pd.DataFrame, # pure numeric, scaled input matrix
     data_download_url: str,
+    kmeans_code: str,
+    hclust_code: str,
     kmeans_pipeline: list,
     hclust_pipeline: list,
     conclusions_text: str
@@ -38,6 +40,7 @@ def render_clustering_view(
     df_raw_sample : pd.DataFrame -> Raw dataset matrix sample containing labels/strings.
     df_scaled_sample : pd.DataFrame -> Purely numeric, scaled input matrix used for modeling.
     data_download_url : str -> Target dataset source string/link.
+    kmeans_code/hclust_code: str --> Link to code on GitHub
     kmeans_pipeline : list -> Visual pipeline dictionaries for the K-Means column.
     hclust_pipeline : list -> Visual pipeline dictionaries for the Hierarchical column.
     conclusions_text : str -> Final evaluation insights.
@@ -166,12 +169,14 @@ def render_clustering_view(
     # left column: k-means execution pipeline
     with col_km:
         st.markdown("#### Method 1: Partitional K-Means")
+        st.markdown(f"👾 [View Code]({kmeans_code})")
         for i, item in enumerate(kmeans_pipeline):
             _render_pipeline_asset(item, step_index=i, unique_key_prefix="km")
             
     # right column: hierarchical execution pipeline
     with col_hc:
         st.markdown("#### Method 2: Cosine Hierarchical")
+        st.markdown(f"👾 [View Code]({hclust_code})")
         for i, item in enumerate(hclust_pipeline):
             _render_pipeline_asset(item, step_index=i, unique_key_prefix="hc")
             
@@ -249,6 +254,7 @@ clust_sample_before_df = pd.read_csv(os.path.join(BASE_DIR,"data","clean","Healt
 clust_sample_after_df = pd.read_csv(os.path.join(cluster_res, 'cluster_input_data.csv'))
 
 # KMEANS CLUSTERING
+kmeans_code = "https://github.com/amberteetsel/maternal-health/blob/8a84b89fd23314b95894810c7781565d1933442e/src/models/clustering_kmeans.py"
 kmeans_summary_md = inspect.cleandoc("""
     Optimizing for Silhouette Score lead to the selection of three optimal features: `Maternity Care Desert`, 
     `Maternal Mortality`, and `Patients Per Doctor`. Running the KMeans model with these features produced three distinct clusters.
@@ -300,6 +306,7 @@ kmeans_assets = [
 
 
 # HIERARCHICAL CLUSTERING
+hclust_code = "https://github.com/amberteetsel/maternal-health/blob/8a84b89fd23314b95894810c7781565d1933442e/src/models/clustering_hier.py"
 hclust_summary_md = inspect.cleandoc("""
     Optimizing for Silhouette Score lead to the selection of three optimal features: `Maternity Care Desert`, 
     `Unplanned Pregnancy`, and `Patients Per Doctor`. Running the Hierarchical model with these features produced three distinct clusters.

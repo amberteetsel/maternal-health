@@ -11,7 +11,7 @@ import inspect
 # ==========================================================
 
 overview_pca = """
-    ### The Curse of Dimensionality
+    ##### The Curse of Dimensionality
 
     The Curse of Dimensionality refers to various challenges and complications that arise when analyzing and organizing
     data in high-dimensional spaces. Dimensions refer to the features or attributes of data; in the context of this study,
@@ -23,7 +23,7 @@ overview_pca = """
     cannot visualize beyond three dimensions (3D) so it's also difficult for analysts to conceive of and understand
     high-dimensional feature spaces.
 
-    ### Dimensionality Reduction
+    ##### Dimensionality Reduction
 
     Dimensionality reduction is the process of compressing high-dimensional feature spaces into a lower-dimensional
     subspace, typically 2D or 3D, while retaining as much structural variation as possible. Dimensionality reduction
@@ -41,7 +41,7 @@ overview_pca = """
     sparsity and data visualization by turning a multi-variable matrix into a clear, interpretable landscape in two or
     three dimensions.
 
-    ### Principal Component Analysis
+    ##### Principal Component Analysis
 
     Principal Component Analysis (PCA) is an unsupervised linear transformation technique for dimensionality reduction
     that projects data onto brand-new, uncorrelated axes known as *Principal Components*. Rather than selecting or
@@ -55,7 +55,7 @@ overview_pca = """
     In this way, the first few components generated should contain the vast majority of a dataset's information (variance),
     allowing analysts to discard additional components wtih minimal information loss.
 
-    ### Eigenvalues and Eigenvectors
+    ##### Eigenvalues and Eigenvectors
 
     In practice, PCA is based on the decomposition of a dataset's *covariance matrix*, which tracks how each feature
     moves in relation to every other feature. PCA uses linear algebra to extract critical information from this matrix:

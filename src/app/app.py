@@ -684,6 +684,8 @@ with t4:
             df_raw_sample=clusters.clust_sample_before_df,
             df_scaled_sample=clusters.clust_sample_after_df,
             data_download_url="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/resources/clustering/cluster_input_data.csv",
+            kmeans_code=clusters.kmeans_code,
+            hclust_code=clusters.hclust_code,
             kmeans_pipeline=clusters.kmeans_assets,
             hclust_pipeline=clusters.hclust_assets,
             conclusions_text=clusters.conclusions_clustering
