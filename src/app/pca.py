@@ -20,7 +20,9 @@ def render_pca(overview: str,
                df_after: pd.DataFrame,
                data_download_url: str,
                pipeline_all: list,
-            #    pipeline_opt: list
+            #    pipeline_opt: list,
+               conclusion: str
+            
                ):
     # ----------------------------------------------------
     # internal helper function for pipeline/results rendering
@@ -138,6 +140,7 @@ def render_pca(overview: str,
     # CONCLUSION
     # ----------------------------------------------------
     st.subheader("Conclusions")
+    st.markdown(conclusion)
 
 # ==========================================================
 # ACTUAL INPUTS
@@ -276,6 +279,22 @@ pca_all_assets = [
         'interpretation': pca_all_loading_interpet
     }
 ]
+
+pca_conclusion = """
+    The deployment of Principal Component Analysis on the state health rankings data yielded important structural insights
+    to shape understanding and honestly diagnose US maternal healthcare deficiencies.
+
+    ##### A Fragmented System
+
+    In an ideal machine learning scenario, PCA is expected to denerate a PC1 and PC2 that capture the majority of a
+    dataset's information (70 - 90 percent). However, applying PCA to the full set of 17 features revealed that PC1 and
+    PC2 accounted for a cumulative variance of only 45.18%. From a data-reduction standpoint, forcing a flat 2D compression
+    is not worth the substantial loss of information (54.82%). 
+
+    ##### Takeaways
+
+    Additional feature optimization or data manipulation may be needed to effectively reduce dimensionality.
+"""
 
 
 pca_opt_assets = []
