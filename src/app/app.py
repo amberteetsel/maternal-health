@@ -809,12 +809,18 @@ hclust_assets = [
     }, 
 ]
 
+# ========================================
+# Principal Component Analysis
+# ========================================
+from pca import overview_pca
+
+
 with t4:
     st.header("Modeling Results")
 
     t_cluster, t_pca, t_nb, t_dt, d_svm, t_regr, t_nn = st.tabs([
         "Clustering",
-        "Principle Component Analysis",
+        "Principal Component Analysis (PCA)",
         "Naive Bayes",
         "Decision Trees",
         "Support Vector Machines (SVM)",
@@ -839,6 +845,9 @@ with t4:
         )
 
     # pca goes here
+    with t_pca:
+        st.subheader("Principal Component Analysis")
+        st.markdown(overview_pca)
 
 ##############################################################
 # TAB 5: REFERENCES
