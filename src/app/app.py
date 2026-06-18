@@ -658,6 +658,7 @@ cluster_res = os.path.join(BASE_DIR, "resources", "clustering")
 # Principal Component Analysis
 # ========================================
 import pca
+from pca import render_pca
 
 
 with t4:
@@ -693,8 +694,14 @@ with t4:
 
     # pca goes here
     with t_pca:
-        st.subheader("Principal Component Analysis")
-        st.markdown(pca.overview_pca)
+        render_pca(
+            overview=pca.overview_pca,
+            prep_text=pca.prep_pca,
+            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/src/models/health_preprocessing.py",
+            df_before=clusters.clust_sample_before_df,
+            df_after=pca.pca_df_after
+        )
+
 
 ##############################################################
 # TAB 5: REFERENCES
