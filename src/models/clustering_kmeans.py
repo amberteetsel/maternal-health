@@ -204,7 +204,7 @@ dfc['Cluster Label'] = dfc['Cluster'].map(cluster_names)
 cols_to_analyze = ['Cluster', "Cluster Label"] + optimal_features
 
 cluster_means = dfc[cols_to_analyze].groupby(['Cluster', 'Cluster Label']).mean().reset_index()
-cluster_means.to_csv(os.path.join(BASE_DIR, "resources", "clustering", "kmeans_cluster_summary.csv"))
+cluster_means.to_csv(os.path.join(BASE_DIR, "resources", "clustering", "kmeans_cluster_summary.csv"), index=False)
 print(cluster_means)
 
 # ==================================================================================
@@ -269,7 +269,7 @@ plt.title("Silhouette Score Analysis for Optimal $k$", fontsize=14, fontweight='
 plt.xlabel("Number of Clusters ($k$)", fontsize=12, labelpad=10)
 plt.ylabel("Average\nSilhouette\nScore", fontsize=12, labelpad=10,
            rotation=0, va='center', ha='right')
-plt.xticks(k_range, fontweight='bold')
+plt.xticks(k_range)
 plt.grid(axis='both', alpha=0.3, linestyle='--')
 
 plt.tight_layout()
@@ -394,12 +394,12 @@ fig = px.choropleth(
     color_discrete_map=cluster_colors_hex,
     category_orders={"Cluster Label": ["Low Risk", "Moderate Risk", "High Risk"]},
     scope='usa',
-    title=f"US Health Clusters"
+    # title=f"US Health Clusters"
 )
 
 fig.update_layout(
     margin={"r":0,"t":50,"l":0,"b":0},
-    legend_title_text='Health Cluster'
+    legend_title_text='Maternal Risk Cluster'
 )
 
 fig.write_html(os.path.join(BASE_DIR, "resources", "clustering", f"kmeans_map.html"))
