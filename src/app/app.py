@@ -702,6 +702,7 @@ with t4:
             df_after=pca.pca_df_after,
             data_download_url="https://github.com/amberteetsel/maternal-health/blob/3f403042d1bbd90522052614b4c8c976c54e329f/resources/pca/pca_input_data.csv",
             pipeline_all=pca.pca_all_assets,
+            pca_code="https://github.com/amberteetsel/maternal-health/blob/e7ef492c02a7a6f021a7b4c374cff6d7c7d5e6ba/src/models/pca_all.py",
             # pipeline_opt=pca.pca_opt_assets,
             conclusion=pca.pca_conclusion
         )
