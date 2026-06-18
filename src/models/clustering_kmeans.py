@@ -52,6 +52,12 @@ features_all = ['Gender Pay Gap',
 
 X_all = X[features_all]
 
+# Save preview of numeric unlabeled scaled data for site
+scaler = StandardScaler()
+X_all_scaled = scaler.fit_transform(X_all)
+tmp = pd.DataFrame(columns=features_all, data=X_all_scaled)
+tmp.to_csv(os.path.join(BASE_DIR, "resources", "clustering", "cluster_input_data.csv"), index=False)
+
 # Custom Function to Find Optimal Features and K Value
 def find_best_feature_combination(df, available_features, min_features=3, max_features=6, k_values=[3, 4, 5]):
     """

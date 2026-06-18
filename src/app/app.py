@@ -751,7 +751,8 @@ overview_visual_assets = [
         "caption": "Hierarchical Dendrogram Logic: Tree branching structures."
     }
 ]
-sample_unlabeled_df = pd.read_csv(os.path.join(cluster_res, 'cluster_input_data.csv'))
+sample_before_df = pd.read_csv(os.path.join(BASE_DIR,"data","clean","HealthRankings","health.csv"))
+sample_after_df = pd.read_csv(os.path.join(cluster_res, 'cluster_input_data.csv'))
 kmeans_cluster_sum = pd.read_csv(os.path.join(cluster_res, 'kmeans_cluster_summary.csv'))
 hclust_cluster_sum = pd.read_csv(os.path.join(cluster_res, 'hclust_cluster_summary.csv'))
 kmeans_assets = [
@@ -827,7 +828,8 @@ with t4:
             overview_images=overview_visual_assets,
             prep_text=prep_md,
             cleaning_code="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/src/models/health_preprocessing.py",
-            df_sample=sample_unlabeled_df,
+            df_raw_sample=sample_before_df,
+            df_scaled_sample=sample_after_df,
             data_download_url="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/resources/clustering/cluster_input_data.csv",
             kmeans_pipeline=kmeans_assets,
             hclust_pipeline=hclust_assets,
