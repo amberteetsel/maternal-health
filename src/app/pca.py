@@ -261,6 +261,7 @@ pca_all_loading_interpet = inspect.cleandoc("""
     structural pivot: it shares equal amount of variance with both components, moving in direct alignment with system
     traits of PC1 while simultaneously moving inversely with dynamics captured by PC2.
 """)
+
 pca_all_assets = [
     {
         'title': "Cumulative Variance Analysis",

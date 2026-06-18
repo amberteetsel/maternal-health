@@ -701,7 +701,7 @@ with t4:
             df_before=clusters.clust_sample_before_df,
             df_after=pca.pca_df_after,
             data_download_url="https://github.com/amberteetsel/maternal-health/blob/3f403042d1bbd90522052614b4c8c976c54e329f/resources/pca/pca_input_data.csv",
-            pipeline_all=pca.pca_all_assets,
+            pipeline_all=pca.pca_all_assets
             # pipeline_opt=pca.pca_opt_assets
         )
 
