@@ -670,7 +670,8 @@ prep_md = inspect.cleandoc("""
     Clustering algorithms require only **unlabeled, numeric data** because its primary goal is classification, not prediction.
     It relies on quantitative distance formulas and so cannot process categorical data without encoding.
 
-    To this end, data from *America's Health Rankings* was further processed to conform with clustering requirements.
+    To this end, data from *America's Health Rankings* was further processed to conform with clustering requirements. First
+    the DataFrame was melted into wide format.
     Category labels such as `State` and `Year` were stripped away to leave only unlabelled relevant features and values.
     Features were also reconstructed so that for all columns, a higher number indicated a "worse" outcome than a lower number.
     This increases interpretability of results. Z-Score standardization was also used so that varying data magnitudes would

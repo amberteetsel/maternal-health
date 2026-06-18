@@ -56,7 +56,7 @@
 #                     with open(fig, 'r', encoding='utf-8') as f:
 #                         html_data = f.read()
 #                     height = item.get("html_height", 460)
-#                     st.components.v1.html(html_data, height=height, scrolling=True)
+#                     iframecsrc = omponents.v1.html(html_d=height, scrolling=True)
 #                 else:
 #                     st.error(f"Missing map component: {fig}")
                     
@@ -204,7 +204,7 @@ def render_clustering_view(
                 with open(fig, 'r', encoding='utf-8') as f:
                     html_data = f.read()
                 height = item.get("html_height", 460)
-                st.components.v1.html(html_data, height=height, scrolling=True)
+                st.iframe(src = html_data, height=height)
             else:
                 st.error(f"Missing map component: {fig}")
                 
