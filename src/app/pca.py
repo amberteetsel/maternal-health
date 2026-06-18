@@ -200,4 +200,4 @@ prep_pca = inspect.cleandoc("""
     analysis.
 """)
 
-pca_df_after = pd.read_csv(os.path.join(pca_res, "pca_input_data.csvs"))
+pca_df_after = pd.read_csv(os.path.join(pca_res, "pca_input_data.csv"))
