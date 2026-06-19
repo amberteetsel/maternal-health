@@ -109,8 +109,9 @@ def render_pca(overview: list,
     # OVERVIEW
     # ----------------------------------------------------
     st.subheader("Principal Component Analysis (PCA) Overview")
-    for item in overview:
-        _render_overview_asset(item)
+    with st.expander("Read About PCA", expanded=True):
+        for item in overview:
+            _render_overview_asset(item)
 
     # ----------------------------------------------------
     # DATA PREPARATION

@@ -103,22 +103,23 @@ def render_clustering_view(
     # OVERVIEW
     # ----------------------------------------------------
     st.subheader("Clustering Overview")
-    st.markdown(overview_text)
-    
-    if overview_images:
-        # automatically split the layout into columns depending on how many images are supplied
-        img_cols = st.columns(len(overview_images))
-        for idx, col in enumerate(img_cols):
-            with col:
-                img_data = overview_images[idx]
-                if isinstance(img_data["fig"], str):
-                    st.image(img_data["fig"], width='stretch')
-                else:
-                    st.pyplot(img_data["fig"])
-                if img_data.get("caption"):
-                    st.caption(img_data["caption"])
+    with st.expander("Read About Clustering", expanded=True):
+        st.markdown(overview_text)
+        
+        if overview_images:
+            # automatically split the layout into columns depending on how many images are supplied
+            img_cols = st.columns(len(overview_images))
+            for idx, col in enumerate(img_cols):
+                with col:
+                    img_data = overview_images[idx]
+                    if isinstance(img_data["fig"], str):
+                        st.image(img_data["fig"], width='stretch')
+                    else:
+                        st.pyplot(img_data["fig"])
+                    if img_data.get("caption"):
+                        st.caption(img_data["caption"])
                     
-    st.markdown("---")
+    # st.markdown("---")
     
     # ----------------------------------------------------
     # Data preparation
