@@ -1,0 +1,6 @@
+Metric,Score/Value,Interpretation
+Overall Accuracy,89%,"Model correctly classifies 89% of cases overall, though this metric is heavily driven by the majority class ('No ICU')"
+ROC AUC Score,0.8630,Strong overall discriminative ability; the model is capable of separating high-risk mothers from low-risk mothers
+ICU Class Precision,74%,"When the model predicts a mother will require the ICU, it is correct 74% of the time"
+ICU Class Recall,50%,"The model successfully identifies only 50% of the mothers who actually require the ICU, missing the other 50%"
+ICU Class F-1 Score,59%,The harmonic mean of precision and recall highlights a severe operational imbalance

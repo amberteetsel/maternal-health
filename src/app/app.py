@@ -669,6 +669,11 @@ cluster_res = os.path.join(BASE_DIR, "resources", "clustering")
 import pca
 from pca import render_pca
 
+# ========================================
+# Naive Bayes
+# ========================================
+import nbayes
+from nbayes import render_nb
 
 with t4:
     st.header("Modeling Results")
@@ -717,7 +722,21 @@ with t4:
         )
 
     with t_nb:
-        st.markdown("⏳ This section is in progress ⏳")
+        render_nb(overview_text=nbayes.overview_nb,
+                prep_text=nbayes.data_prep_nb,
+                cleaning_code_url=nbayes.cleaning_code_nb,
+                sample_data_url=nbayes.sample_data_url,
+                sample_data=nbayes.input_data_nb,
+                train_test_text=nbayes.train_test_nb,
+                train_data=nbayes.train_data,
+                test_data=nbayes.test_data,
+                model_code_url=nbayes.model_code_url,   # placeholder val right now, must update
+                results_intro=nbayes.results_intro_nb,
+                result_table=nbayes.result_table_nb,
+                confusion_matrix=nbayes.cm_nb,
+                results_text=nbayes.results_interpret_nb,
+                conclusion_text=nbayes.conclusion_nb
+        )
         
     with t_dt:
         st.markdown("⏳ This section is in progress ⏳")
