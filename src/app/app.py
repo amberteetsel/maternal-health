@@ -730,7 +730,7 @@ with t4:
                 train_test_text=nbayes.train_test_nb,
                 train_data=nbayes.train_data,
                 test_data=nbayes.test_data,
-                model_code_url=nbayes.model_code_url,   # placeholder val right now, must update
+                model_code_url=nbayes.model_code_url,
                 results_intro=nbayes.results_intro_nb,
                 result_table=nbayes.result_table_nb,
                 confusion_matrix=nbayes.cm_nb,

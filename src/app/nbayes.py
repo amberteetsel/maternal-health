@@ -138,7 +138,7 @@ train_data = pd.read_csv(os.path.join(nb_res, "X_train_nb.csv"))
 test_data = pd.read_csv(os.path.join(nb_res, "X_test_nb.csv"))
 
 # Code
-model_code_url = "https://github.com/amberteetsel/maternal-health"
+model_code_url = "https://github.com/amberteetsel/maternal-health/blob/e19201223962c7a42d3fd0e95a19dad191d28469/src/models/naive_bayes.py"
 
 # Results
 class_report_nb = pd.read_csv(os.path.join(nb_res, "nb_report.csv"))
