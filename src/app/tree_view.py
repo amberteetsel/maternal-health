@@ -242,7 +242,7 @@ three_trees = [
         'text': cm_deep_interpret
     }
 ]
-performance_df_dt = pd.read_csv(os.path.join(tree_res, "df_results.csv"))
+performance_df_dt = pd.read_csv(os.path.join(tree_res, "dt_results.csv"))
 
 # Conclusion
 conclusion_text_dt = """
