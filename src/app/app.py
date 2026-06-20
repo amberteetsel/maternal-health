@@ -670,10 +670,12 @@ import pca
 from pca import render_pca
 
 # ========================================
-# Naive Bayes
+# Naive Bayes, Decision Trees
 # ========================================
 import nbayes
 from nbayes import render_nb
+import tree_view
+from tree_view import render_dt
 
 with t4:
     st.header("Modeling Results")
@@ -721,6 +723,7 @@ with t4:
             conclusion=pca.pca_conclusion
         )
 
+    # naive bayes
     with t_nb:
         render_nb(overview_text=nbayes.overview_nb,
                 prep_text=nbayes.data_prep_nb,
@@ -737,9 +740,19 @@ with t4:
                 results_text=nbayes.results_interpret_nb,
                 conclusion_text=nbayes.conclusion_nb
         )
-        
+
+    # decision trees    
     with t_dt:
-        st.markdown("⏳ This section is in progress ⏳")
+        render_dt(
+            overview_text=tree_view.overview_dt,
+            prep_text=tree_view.data_prep_dt,
+            cleaning_code_url=tree_view.cleaning_code_dt,
+            sample_data_url=tree_view.sample_data_url,
+            sample_data=tree_view.input_data_dt,
+            train_test_text=tree_view.train_test_dt,
+            train_data=tree_view.train_data,
+            test_data=tree_view.test_data
+        )
     
     with d_svm:
         st.markdown("⏳ This section is in progress ⏳")

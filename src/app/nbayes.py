@@ -32,7 +32,7 @@ def render_nb(overview_text: str,
     
     # Overview
     st.subheader("Naive Bayes Classification Overview")
-    with st.expander("Read About Naive Bayes"):
+    with st.expander("Read About Naive Bayes", expanded=True):
         st.markdown(overview_text)
     # st.markdown("---")
 
