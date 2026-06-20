@@ -199,7 +199,7 @@ for i, (label, value) in enumerate(zip(top_rfv.index, top_rfv.values)):
 fig.tight_layout()
 
 # Save
-fig.savefig(os.path.join(viz_path, "er_v1.png"))
+fig.savefig(os.path.join(viz_path, "er_v1.png"), dpi=300)
 
 # Top Diagnoses
 fig, ax = plt.subplots(figsize=(8, 4))
@@ -239,4 +239,4 @@ for i, (label, value) in enumerate(zip(top_diag.index, top_diag.values)):
 fig.tight_layout()
 
 # Save
-fig.savefig(os.path.join(viz_path, "er_v2.png"))
+fig.savefig(os.path.join(viz_path, "er_v2.png"), dpi=300)

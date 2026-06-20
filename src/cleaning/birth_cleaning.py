@@ -214,7 +214,7 @@ plt.xticks(rotation=0)
 fig.tight_layout()
 
 # Save
-fig.savefig(os.path.join(viz_path, "birth_v1.png"))
+fig.savefig(os.path.join(viz_path, "birth_v1.png"), dpi=300)
 
 # Visual 2, icu admissions by maternal age
 fig, ax = plt.subplots(figsize=(8, 6))
@@ -271,4 +271,4 @@ plt.xticks(rotation=0)
 fig.tight_layout()
 
 # Save
-fig.savefig(os.path.join(viz_path, "birth_v2.png"))
+fig.savefig(os.path.join(viz_path, "birth_v2.png"), dpi=300)

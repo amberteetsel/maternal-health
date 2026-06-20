@@ -162,7 +162,7 @@ ax.set_xlim(national_trends['year'].min(), national_trends['year'].max() + 2)
 fig.tight_layout()
 
 # Save
-fig.savefig(os.path.join(viz_path, "preg_v1.png"))
+fig.savefig(os.path.join(viz_path, "preg_v1.png"), dpi=300)
 
 # Visual 2: abortions and miscarriages per pregnancy by age group
 fig, ax = plt.subplots(figsize=(8, 6))
@@ -238,4 +238,4 @@ for p in ax.patches:
 fig.tight_layout()
 
 # Save
-fig.savefig(os.path.join(viz_path, "preg_v2.png"))
+fig.savefig(os.path.join(viz_path, "preg_v2.png"), dpi=300)
