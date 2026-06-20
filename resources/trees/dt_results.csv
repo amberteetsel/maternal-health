@@ -1,0 +1,10 @@
+Metric,Shallow Tree (Depth=3),Medium Tree (Depth=5),Deep Tree (Depth=10)
+Overall Accuracy,69%,84%,79%
+ICU Class Recall,85%,63%,76%
+ICU Class Precision,31%,50%,41%
+ROC AUC Score,0.7545,0.7577,0.7767
+True Negatives,"33,690","45,387","40,996"
+False Positives (False Alarms),"17,663","5,966","10,357"
+False Negatives (Missed Patients),"1,377","3,449","2,292"
+True Positives,"7,983","5,911","7,068"
+Total Structural Splits,7,31,"1,023"

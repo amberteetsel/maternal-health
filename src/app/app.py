@@ -745,13 +745,17 @@ with t4:
     with t_dt:
         render_dt(
             overview_text=tree_view.overview_dt,
+            overview_cols=tree_view.goodness_of_fit,
             prep_text=tree_view.data_prep_dt,
             cleaning_code_url=tree_view.cleaning_code_dt,
             sample_data_url=tree_view.sample_data_url,
             sample_data=tree_view.input_data_dt,
             train_test_text=tree_view.train_test_dt,
             train_data=tree_view.train_data,
-            test_data=tree_view.test_data
+            test_data=tree_view.test_data,
+            model_code_url=tree_view.model_code_url_dt,
+
+            conclusion_text=tree_view.conclusion_text_dt
         )
     
     with d_svm:

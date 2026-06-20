@@ -172,7 +172,7 @@ results_interpret_nb = """
 
 # Conclusions
 conclusion_nb = """
-    Though the Categorical Naive Bayes model exhibited strong baseline discriminative capabilities \(ROC AUC 0.8630\), this
+    Though the Categorical Naive Bayes model exhibited strong baseline discriminative capabilities (ROC AUC 0.8630), this
     was largely achieved through the intentional stratified sampling approach during data preparation.
     The independence assumption makes Naive Bayes models fundamentally ill-suited for maternal risk classification.
 """

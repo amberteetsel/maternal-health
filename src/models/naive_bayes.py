@@ -101,7 +101,7 @@ for i in range(cm.shape[0]):
 plt.title("Confusion Matrix", fontweight='bold', pad=15)
 plt.xlabel("Prediction", labelpad=10)
 plt.ylabel("Actual", ha='right', rotation=0, labelpad=10)
-plt.savefig(os.path.join(nb_rec, "nb_cm.png"))
+plt.savefig(os.path.join(nb_rec, "nb_cm.png"), dpi=300)
 
 # Save and export classification report
 report_dict = classification_report(
