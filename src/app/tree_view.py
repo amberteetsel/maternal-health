@@ -18,9 +18,7 @@ tree_res = os.path.join(BASE_DIR, "resources", "trees")
 def render_dt(
         overview_text: str,
         overview_cols: list,
-
         # placeholder space for rest of intro
-
         prep_text: str,
         cleaning_code_url: str,
         sample_data_url: str,
@@ -29,7 +27,9 @@ def render_dt(
         train_data: pd.DataFrame,
         test_data: pd.DataFrame,
         model_code_url: str,
-
+        tree_list: list,
+        tree_pics: list,
+        performance_stats: pd.DataFrame,
         conclusion_text: str
         ):
     
@@ -46,8 +46,25 @@ def render_dt(
                 label = item.get('title')
                 words = item.get('description')
 
-                st.markdown(f"### {label}")
+                st.markdown(f"##### {label}")
                 st.write(words)
+
+    # Helper Function: Render Three Trees
+    def _render_trees(tree_list=None):
+        if not tree_list:
+            return
+        
+        n = len(tree_list)
+        cols = st.columns(n)
+
+        for col, item in zip(cols, tree_list):
+            cm = item.get("cm")
+            descript = item.get('text')
+            with col:
+                st.markdown(f"##### {item.get('title')}")
+                st.write(f"Max Depth = {item.get('max_depth')}")
+                st.image(cm, width='stretch')
+                st.write(descript)
 
 
     # Overview
@@ -56,7 +73,7 @@ def render_dt(
         st.markdown(overview_text)
 
         # goodness of fit metrics
-
+        _render_gof(overview_cols)
 
     # Data Preparation
     st.subheader("Data Preparation")
@@ -79,6 +96,14 @@ def render_dt(
     # Modeling & Results
     st.subheader("Model Results")
     st.markdown(f"👾 [View Code]({model_code_url})")
+
+    st.table(performance_df_dt)
+
+    _render_trees(tree_list)
+
+    with st.expander("View Trees", expanded=True):
+        for pic in tree_pics:
+            st.image(pic, width='stretch')
 
     # Conclusion
     st.subheader("Conclusions")
@@ -166,6 +191,7 @@ model_code_url_dt = "https://github.com/amberteetsel/maternal-health"
 # Results
 shallow_tree_image = os.path.join(tree_res, "shallow_tree.png")
 medium_tree_image = os.path.join(tree_res, "medium_tree.png")
+tree_images = [shallow_tree_image, medium_tree_image]
 
 cm_shallow_interpret = """
     This tree is highly compact, containing 8 terminal leaf nodes. The root split starts on `diabetes`; if `diabetes` is
@@ -216,6 +242,7 @@ three_trees = [
         'text': cm_deep_interpret
     }
 ]
+performance_df_dt = pd.read_csv(os.path.join(tree_res, "df_results.csv"))
 
 # Conclusion
 conclusion_text_dt = """

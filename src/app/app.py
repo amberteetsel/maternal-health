@@ -754,7 +754,9 @@ with t4:
             train_data=tree_view.train_data,
             test_data=tree_view.test_data,
             model_code_url=tree_view.model_code_url_dt,
-
+            tree_list=tree_view.three_trees,
+            tree_pics=tree_view.tree_images,
+            performance_stats=tree_view.performance_df_dt,
             conclusion_text=tree_view.conclusion_text_dt
         )
     
