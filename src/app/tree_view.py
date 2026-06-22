@@ -187,7 +187,7 @@ train_data = pd.read_csv(os.path.join(nb_res, "X_train_nb.csv"))
 test_data = pd.read_csv(os.path.join(nb_res, "X_test_nb.csv"))
 
 # Code
-model_code_url_dt = "https://github.com/amberteetsel/maternal-health"
+model_code_url_dt = "https://github.com/amberteetsel/maternal-health/blob/91f040824709ee16af462abc011b262c182afd50/src/models/trees.py"
 
 # Results
 shallow_tree_image = os.path.join(tree_res, "shallow_tree.png")
