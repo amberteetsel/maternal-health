@@ -92,34 +92,13 @@ infogram_embed_html2 = """
 ##############################################################
 # TAB 1: INTRODUCTION
 ##############################################################
+import intro
 
 with t1:
     st.header("Introduction")
 
     st.subheader("Background & Policy Context")
-    st.write("""
-            In June 2022, the Supreme Court of the United States issued its controversial ruling in 
-             Dobbs v. Jackson Women's Health Organization, a historic decision that overturned nearly half a century of 
-             federal precedent established by Roe v. Wade (1973).
-             The Dobbs ruling eliminated the national right to abortion, effectively reverting authority to 
-             regulate, restrict, and outlaw the practice back to individual states.
-             As a result, the United States has become a fractured patchwork of reproductive healthcare access where 
-             an individual's legal rights and medical choices are dependent on geographic location.
-             According to policy tracking by the Guttmacher Institute (2024), more than a dozen states immediately 
-             enacted total or near-total bans on abortion. 
-             Conversely, many states moved to enshrine abortion protections in state law or state constitutions. This divergence
-              in policy has created severe clinical confusion and legal gridlock, with healthcare providers left to navigate 
-             vague and sometimes contradictory language regarding exceptions for the life or health of the mother.
-
-             The Dobbs decision occurred during a worsening maternal health crisis in the United States, further exacerbating the issue.
-             Data from the Centers for Disease Control and Prevention (CDC, 2023) indicate that the United States has the highest maternal 
-             mortality rate among developed nations. There are also severe disparities affecting maternal mortality 
-             for Black and Indigenous populations.
-             Longitudinal tracking by the Guttmacher Institute demonstrates that unintended pregnancy rates fluctuate closely 
-             with access to comprehensive family planning resources including contraceptive affordability and abortion services. 
-             By exploring how changing state-level abortion restrictions intersect with existing maternal health infrasstructure 
-             and maternal health outcomes, researchers can begin to quantify the real ramifications of restrictive abortion policies.
-        """)
+    st.write(intro.intro_p1)
     
     # Figure 1: Maternal Deaths, International Comparison
     left_spacer, center_column, right_spacer = st.columns([1, 2, 1])
@@ -133,28 +112,7 @@ with t1:
                 """)
     
     st.subheader("Research Significance")
-    st.write("""
-            Examining the direct correlation between restrictive healthcare policies and maternal health outcomes is critically 
-             important because legislative interventions carry profound, life-altering consequences for pregnant individuals, 
-             infants, and medical networks. Public health research consistently warns that the implementation of strict 
-             abortion bans and narrow gestational limits can inadvertently increase maternal morbidity by delaying essential care 
-             for obstetric complications, such as ectopic pregnancies, premature rupture of membranes, or incomplete miscarriages. 
-             Furthermore, states enacting the most stringent restrictions often exhibit pre-existing systemic vulnerabilities, 
-             such as high rates of uninsured residents, severe shortages of obstetricians and gynecologists, 
-             and widespread "maternity care deserts." For example, the restriction of reproductive healthcare services 
-             frequently leads to the closure of local clinics and rural labor units, compounding barriers to 
-             routine prenatal care and leading to higher rates of low-birth-weight infants and preterm births. 
-             The economic and psychological strains placed on individuals forced to carry unintended pregnancies to term, 
-             or travel thousands of miles across state lines for care, introduce significant socioeconomic stressors that 
-             undermine long-term household and community stability.<sup><b>[1]</b></sup>
-             Additionally, the chilling effect on medical education and physician recruitment in states with
-              severe criminal penalties for doctors threatens to destabilize the broader OB/GYN and pediatric healthcare
-              workforce for decades to come. Quantitative data analysis provides an objective framework to move past polarized 
-             political rhetoric and systematically evaluate the empirical impacts of these legal shifts on 
-             tangible medical outcomes. By aligning longitudinal datasets tracking policy status—such as total bans,
-              heartbeat bans, and protections—with public health records covering infant birth metrics and 
-             emergency room utilization, this study establishes a clear, data-driven narrative.
-        """, unsafe_allow_html=True)
+    st.write(intro.intro_p2, unsafe_allow_html=True)
     
     # Figure 2: 
     left_spacer, center_column, right_spacer = st.columns([1, 2, 1])
@@ -168,25 +126,7 @@ with t1:
         
     # Legal Evolution
     st.subheader("Legal Evolution")
-    st.write("""
-             The modern reproductive healthcare landscape is the direct result of a judicial trilogy occuring over the
-             previous half-century that mirrored broader socioeconomic and cultural transformations in American society.
-             When the Supreme Court decided *Roe v. Wade* (1973), it was amid a national push from medical professionals
-             to eliminate dangerous, "back-alley" abortions as well as second-wave feminists demanding more bodily
-             autonomy. The *Roe* decision anchored the right to abortion in the Fourteenth Amendment's implied right to
-             privacy and was celebrated as a landmark victory for gender equality and public health. However, critics 
-             opposed it as unconstitutional and immoral. Two decades later, in an environment
-             of increasing political polarization and attacks on abortion facilities, *Planned Parenthood of Southeastern
-             Pennsylvania v. Casey* (1992) attempted a compromise: it upheld *Roe*'s central tenet of legal abortion while
-             allowing states to implement restrictions such as waiting periods and parental consent. While viewed by
-             supporters as a pragmatic compromise, critics on both the left and right argued it went too far or not far
-             enough. Ultimately the socio-legal tension culminated in *Dobbs v. Jackson Women's Health Organization* (2022),
-             a decision issued by an ultraconservative majority following years of incremental legislative erosion of
-             abortion access. The *Dobbs* decision rejected both *Roe* and *Casey* in returning complete control of
-             abortion regulation to individual states. Dissenting justices warned that stripping away an established
-             constitutional right would inflict immediate, systemic harm on women's health and bodily sovereignty (Center
-             for Reproductive Rights, 2022). This study attempts to quantify that harm.
-             """)
+    st.write(intro.intro_p3)
 
     # Research Qs
     st.subheader("Research Questions")
@@ -207,6 +147,10 @@ with t1:
                     9. How did the 1992 decision in *Planned Parenthood v. Casey* impact abortion restrictions and maternal health outcomes?
                     10. How did the 2022 decision in *Dobbs v. Jackson* impact reproductive infrastructure usage and maternal health outcomes?
                 """)
+        
+    # Real-World Consequences
+    st.subheader("Real Women, Real Consequences")
+    st.write(intro.intro_p4)
         
 
 ##############################################################
