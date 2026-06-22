@@ -160,6 +160,7 @@ goodness_of_fit = [
         'description': info_gain_descript
     }
 ]
+# !!!!! need an example of information gain/goodness of fit calculation
 
 # Data Preparation
 cleaning_code_dt = "https://github.com/amberteetsel/maternal-health/blob/8c2f89b8fbb9202b46e08dc31e631522d8d9850a/src/cleaning/birth_preproccessing.py"
