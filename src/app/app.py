@@ -128,6 +128,10 @@ with t1:
     st.subheader("Legal Evolution")
     st.write(intro.intro_p3)
 
+    # Real-World Consequences
+    st.subheader("Real Women, Real Consequences")
+    st.write(intro.intro_p4)
+
     # Research Qs
     st.subheader("Research Questions")
     with st.container():
@@ -147,11 +151,6 @@ with t1:
                     9. How did the 1992 decision in *Planned Parenthood v. Casey* impact abortion restrictions and maternal health outcomes?
                     10. How did the 2022 decision in *Dobbs v. Jackson* impact reproductive infrastructure usage and maternal health outcomes?
                 """)
-        
-    # Real-World Consequences
-    st.subheader("Real Women, Real Consequences")
-    st.write(intro.intro_p4)
-        
 
 ##############################################################
 # TAB 3: DATA SOURCES, EDA
