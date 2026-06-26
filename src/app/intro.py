@@ -1,6 +1,16 @@
 # Text Sections for Website Introduction
 import inspect
 
+# Infographic - Commonwealth Fund, Maternal Mortality Comparison (international)
+infogram_embed_html1 = """
+<div class="infogram-embed" data-id="80a84092-43ff-46f5-a159-5ec782d8f07b" data-type="interactive" data-title="Insights into the U.S. Maternal Mortality Crisis: An International Comparison: Exhibit 1"></div>
+<script>!function(e,n,i,s){var d="InfogramEmbeds";var o=e.getElementsByTagName(n)[0];if(window[d]&&window[d].initialized)window[d].process&&window[d].process();else if(!e.getElementById(i)){var r=e.createElement(n);r.async=1,r.id=i,r.src=s,o.parentNode.insertBefore(r,o)}}(document,"script","infogram-async","https://e.infogram.com/js/dist/embed-loader-min.js");</script>
+"""
+infogram_embed_html2 = """
+<div class="infogram-embed" data-id="ef6762be-4964-4388-bac2-58cbb2d821ae" data-type="interactive" data-title="The U.S. Maternal Health Divide: The Limited Maternal Health Services and Worse Outcomes of States Proposing New Abortion Restrictions: Exhibit 4"></div>
+<script>!function(e,n,i,s){var d="InfogramEmbeds";var o=e.getElementsByTagName(n)[0];if(window[d]&&window[d].initialized)window[d].process&&window[d].process();else if(!e.getElementById(i)){var r=e.createElement(n);r.async=1,r.id=i,r.src=s,o.parentNode.insertBefore(r,o)}}(document,"script","infogram-async","https://e.infogram.com/js/dist/embed-loader-min.js");</script>
+"""
+
 intro_p1 = inspect.cleandoc("""
     In June 2022, the Supreme Court of the United States issued its controversial ruling in 
     Dobbs v. Jackson Women's Health Organization, a historic decision that overturned nearly half a century of 
@@ -89,4 +99,8 @@ intro_p4 = """
 
     Amber and Josseli were both women of color, as were many women who suffered similar fates. Their stories underline
     that reproductive healthcare policy is not an abstract exercise: it has very real implications for all mothers.
+"""
+
+intro_p5 = """
+    # add 5th paragraph here
 """
