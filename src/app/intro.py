@@ -101,6 +101,22 @@ intro_p4 = """
     that reproductive healthcare policy is not an abstract exercise: it has very real implications for all mothers.
 """
 
+# data sources in more detail, hypotheses for the study
 intro_p5 = """
-    # add 5th paragraph here
+    Anecdotal evidence is powerful, but insufficient to make a case to policymakers for a national law protecting the right to abortion.
+    Rigorous quantification is required to prove Thurman's and Barnica's stories were not isolated incidents but rather the 
+    inevitable result of current law. To that end, this study uses longitudinal health and policy-tracking data to evaluate the
+    hypothesis that abortion bans and restrictions lead to worse outcomes for mothers. The Centers for Disease Control and Prevention (CDC)
+    contributes multiple sources through their National Center for Health Statistics (NCHS), including emergency room records (filtered
+    for pregnancy-related visits) and birth records. The emergency room data spans 2018 - 2022, providing a look at common issues and
+    diagnoses for pregnant women of varying demographics (race, age, etc.) The birth records, spanning 2018 - 2024, are particularly useful;
+    they report detailed maternal demographic information, track risk factors like eclampsia and hypertension, and record complications
+    such as perineal lacerations, unplanned hysterectomies, and maternal morbidity. This data is supplemented by America's Health Rankings
+    annual *Health of Women and Children Report, 2018 - 2025* which includes comprehensive state-level data on maternal health metrics like
+    rates of unintended pregnancy, adequacy of maternal health infrastructure, maternal mortality. By examining health outcomes in relation
+    to reproductive policy, this study expects to find a relationship between abortion bans and maternal morbidity. State-level policy
+    data comes from Temple University's Center for Public Health Law Research and includes indicators for total bans and gestational limits
+    as well as for explicit statutory or constitutional protections. Finally, the Guttmacher Institute has longitudinal data on national
+    and state-level rates of pregnancy, birth, abortion, and miscarriage from 1973 to present day. Taken together, these sources provide
+    a comprehensive look at reproductive health in the United States.
 """
