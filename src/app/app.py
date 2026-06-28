@@ -503,7 +503,10 @@ with t4:
     # support vector machines (svm)
     with d_svm:
         render_svm(
+            overview_text=svm.overview_text_svm,
+            overview_pipeline=svm.overview_pipeline_svm,
             sample_data_url=svm.sample_data_url_svm,
+            data_reqs=svm.data_reqs_svm,
             sample_data=svm.sample_data_svm,
             train_test_text=svm.train_test_text_svm,
             train_data=svm.train_data_svm,
