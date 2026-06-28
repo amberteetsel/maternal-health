@@ -396,9 +396,9 @@ with t3:
             data_link="https://github.com/amberteetsel/maternal-health/blob/cebd0bc60d68f180778fcbd9e47e027b2fd5df7a/data/raw/NCHS-Birth/births2024_raw.txt"
         )
 
-##############################################################
+############################################################################################################################
 # TAB 4: MODELS
-##############################################################
+############################################################################################################################
 
 # Clustering
 import clusters
@@ -413,6 +413,9 @@ from nbayes import render_nb
 # Decision Tree
 import tree_view
 from tree_view import render_dt
+# SVM
+import svm
+from svm import render_svm
 
 with t4:
     st.header("Modeling Results")
@@ -427,7 +430,7 @@ with t4:
         "Neural Networks"
     ])
 
-    # clustering goes here
+    # clustering
     with t_cluster:
         # Run layout call inside app loop structure
         render_clustering_view(
@@ -445,7 +448,7 @@ with t4:
             conclusions_text=clusters.conclusions_clustering
         )
 
-    # pca goes here
+    # pca
     with t_pca:
         render_pca(
             overview=pca.overview_pca,
@@ -497,8 +500,12 @@ with t4:
             conclusion_text=tree_view.conclusion_text_dt
         )
     
+    # support vector machines (svm)
     with d_svm:
-        st.markdown("⏳ This section is in progress ⏳")
+        render_svm(
+
+            model_code_url=svm.model_code_url_svm,
+        )
     
     with t_regr:
         st.markdown("⏳ This section is in progress ⏳")
