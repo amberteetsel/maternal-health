@@ -123,7 +123,7 @@ with t1:
     st.write(intro.intro_p4)
 
     # 5th Paragraph
-    st.subheader("another paragraph")
+    st.subheader("Research Foundations")
     st.write(intro.intro_p5)
 
     # Research Qs
