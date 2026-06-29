@@ -208,7 +208,7 @@ test_data_svm = pd.read_csv(os.path.join(svm_rec, "test_display.csv"))
 # ==============================================================================
 # Code
 # ==============================================================================
-model_code_url_svm = os.path.join(BASE_DIR, "src", "models", "svm.py")
+model_code_url_svm = "https://github.com/amberteetsel/maternal-health/blob/1e46a07d0df0bee1839984d5195185808c28472e/src/models/svm_model.py"
 
 # ==============================================================================
 # Results
