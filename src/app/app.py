@@ -503,12 +503,23 @@ with t4:
     # support vector machines (svm)
     with d_svm:
         render_svm(
+            overview_text=svm.overview_text_svm,
+            overview_pipeline=svm.overview_pipeline_svm,
             sample_data_url=svm.sample_data_url_svm,
+            data_reqs=svm.data_reqs_svm,
             sample_data=svm.sample_data_svm,
             train_test_text=svm.train_test_text_svm,
             train_data=svm.train_data_svm,
             test_data=svm.test_data_svm,
             model_code_url=svm.model_code_url_svm,
+            result_summary=svm.result_summary_svm,
+            result_details=svm.result_details_svm,
+            result_df=svm.result_df_svm,
+            result_viz=svm.result_plot_svm,
+            confusion_matrix=svm.confusion_matrices_svm,
+            conclusion_text=svm.conclusion_text_svm,
+            conclusion_df=svm.feature_mean_df,
+            final_takeaway=svm.final_takeaway_svm
         )
     
     with t_regr:
