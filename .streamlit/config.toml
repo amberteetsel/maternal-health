@@ -14,3 +14,7 @@ textColor = "#212529"
 # Font type customization
 # Options include: "sans serif", "serif", or "monospace"
 font = "sans serif"
+
+# DataFrames
+## Header Row Background color
+dataframeHeaderBackgroundColor = "#f8eaf3"

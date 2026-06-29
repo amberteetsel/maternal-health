@@ -512,6 +512,14 @@ with t4:
             train_data=svm.train_data_svm,
             test_data=svm.test_data_svm,
             model_code_url=svm.model_code_url_svm,
+            result_summary=svm.result_summary_svm,
+            result_details=svm.result_details_svm,
+            result_df=svm.result_df_svm,
+            result_viz=svm.result_plot_svm,
+            confusion_matrix=svm.confusion_matrices_svm,
+            conclusion_text=svm.conclusion_text_svm,
+            conclusion_df=svm.feature_mean_df,
+            final_takeaway=svm.final_takeaway_svm
         )
     
     with t_regr:
