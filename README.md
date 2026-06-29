@@ -16,3 +16,31 @@ The *Dobbs* decision occurred during a worsening maternal health crisis in the U
 ### Legal Evolution
 
 The modern reproductive healthcare landscape is the direct result of a judicial trilogy occuring over the previous half-century that mirrored broader socioeconomic and cultural transformations in American society. When the Supreme Court decided *Roe v. Wade* (1973), it was amid a national push from medical professionals to eliminate dangerous, "back-alley" abortions as well as second-wave feminists demanding more bodily autonomy. The *Roe* decision anchored the right to abortion in the Fourteenth Amendment's implied right to privacy and was celebrated as a landmark victory for gender equality and public health. However, critics opposed it as unconstitutional and immoral. Two decades later, in an environment of increasing political polarization and attacks on abortion facilities, *Planned Parenthood of Southeastern Pennsylvania v. Casey* (1992) attempted a compromise: it upheld *Roe*'s central tenet of legal abortion while allowing states to implement restrictions such as waiting periods and parental consent. While viewed by supporters as a pragmatic compromise, critics on both the left and right argued it went too far or not far enough. Ultimately the socio-legal tension culminated in *Dobbs v. Jackson Women's Health Organization* (2022), a decision issued by an ultraconservative majority following years of incremental legislative erosion of abortion access. The *Dobbs* decision rejected both *Roe* and *Casey* in returning complete control of abortion regulation to individual states. Dissenting justices warned that stripping away an established constitutional right would inflict immediate, systemic harm on women's health and bodily sovereignty (Center for Reproductive Rights, 2022). This study attempts to quantify that harm.
+
+### Real Women, Real Consequences
+
+As noted, the drastic divergence in individual states' reproductive healthcare policies has led to clinical
+confusion and legal gridlock. Healthcare providers are under immense pressure to obey restrictive abortion policies,
+in some states facing legal or even criminal repercussions for even appearing to violate these laws. If there is
+an exception for the health or life of the mother, doctors are forced to decide when a mother is 'close enough' to
+death or irreversible health complications in order to perform a life-saving abortion. In practice, this quagmire
+has had devastating and sometimes fatal consequences for American women.
+
+In Georgia, 28-year old Amber Nicole Thurman developed acute sepsis after an incomplete medication abortion. However,
+the routine procedure to resolve this issue, called dilation and curettage (D&C), was made a felony with few
+exceptions. Amber's condition worsened in a hospital bed as doctors delayed the procedure by over 20 hours while 
+navigating the legal boundaries of Georgia's 6-week abortion ban. Amber died from preventable septic shock
+(ProPublica).
+
+Texas resident Josseli Barnica was pregnant when the state's six-week abortion ban went into effect. She suffered
+a miscarriage at 27 weeks, but was denied standard medical care for 40 hours, until the fetal heartbeat ceased. 
+Doctors cited abortion law as the reason for delayed care. Josseli died a preventable death from an infection three
+days later. Texas law threatens up to 99 years in prison for doctors who provide abortions (ProPublica).
+
+Amber and Josseli were both women of color, as were many women who suffered similar fates. Their stories underline
+that reproductive healthcare policy is not an abstract exercise: it has very real implications for all mothers.
+
+### Research Foundations
+
+Anecdotal evidence is powerful, but insufficient to make a case to policymakers for a national law protecting the right to abortion. Rigorous quantification is required to prove Thurman's and Barnica's stories were not isolated incidents but rather the inevitable result of current law. To that end, this study uses longitudinal health and policy-tracking data to evaluate the
+hypothesis that abortion bans and restrictions lead to worse outcomes for mothers. The Centers for Disease Control and Prevention (CDC) contributes multiple sources through their National Center for Health Statistics (NCHS), including emergency room records (filtered for pregnancy-related visits) and birth records. The emergency room data spans 2018 - 2022, providing a look at common issues and diagnoses for pregnant women of varying demographics (race, age, etc.) The birth records, spanning 2018 - 2024, are particularly useful; they report detailed maternal demographic information, track risk factors like eclampsia and hypertension, and record complications such as perineal lacerations, unplanned hysterectomies, and maternal morbidity. This data is supplemented by America's Health Rankings annual *Health of Women and Children Report, 2018 - 2025* which includes comprehensive state-level data on maternal health metrics like rates of unintended pregnancy, adequacy of maternal health infrastructure, maternal mortality. By examining health outcomes in relation to reproductive policy, this study expects to find a relationship between abortion bans and maternal morbidity. State-level policy data comes from Temple University's Center for Public Health Law Research and includes indicators for total bans and gestational limits as well as for explicit statutory or constitutional protections. Finally, the Guttmacher Institute has longitudinal data on national and state-level rates of pregnancy, birth, abortion, and miscarriage from 1973 to present day. Taken together, these sources provide a comprehensive look at reproductive health in the United States.
