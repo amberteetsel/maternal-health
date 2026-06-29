@@ -144,18 +144,18 @@ overview_text_svm_4 = """
     instead of manually transforming data into a massive higher-dimensional space, a kernel function computes the similarity or
     **dot product** between points as if they were in that higher-dimensional space.
 
-    The dot product $\mathbf{x_i} \cdot \mathbf{x_j}$ between vectors $i$ and $j$ is key because the mathematics of SVMs rely on *only* the dot
+    The dot product ${x_i} \cdot {x_j}$ between vectors $i$ and $j$ is key because the mathematics of SVMs rely on *only* the dot
     products between vectors, not the individual coordinates, allowing analysts to bypass the actual coordinate transformation.
 
     **Common Kernel Functions**
 
     * Polynomial Kernel
 
-    $$K(\mathbf{x}, \mathbf{z}) = (\mathbf{x} \cdot \mathbf{z} + r)^d$$
+    $$K({x}, {z}) = ({x} \cdot {z} + r)^d$$
 
     * Radial Basis Function (RBF) Kernel
 
-    $$K(\mathbf{x}, \mathbf{z}) = \exp(-\gamma \|\mathbf{x} - \mathbf{z}\|^2)$$
+    $$K({x}, {z}) = \exp(-\gamma \|{x} - {z}\|^2)$$
 """
 overview_pipeline_svm = {
     "Linear Separators and the Maximum Margin": {
