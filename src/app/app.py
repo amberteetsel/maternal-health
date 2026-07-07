@@ -420,13 +420,12 @@ from svm import render_svm
 with t4:
     st.header("Modeling Results")
 
-    t_cluster, t_pca, t_nb, t_dt, d_svm, t_regr, t_nn = st.tabs([
+    t_cluster, t_pca, t_nb, t_dt, d_svm, t_nn = st.tabs([
         "Clustering",
         "Principal Component Analysis (PCA)",
         "Naive Bayes",
         "Decision Trees",
         "Support Vector Machines (SVM)",
-        "Regression",
         "Neural Networks"
     ])
 
@@ -521,9 +520,6 @@ with t4:
             conclusion_df=svm.feature_mean_df,
             final_takeaway=svm.final_takeaway_svm
         )
-    
-    with t_regr:
-        st.markdown("⏳ This section is in progress ⏳")
     
     with t_nn:
         st.markdown("⏳ This section is in progress ⏳")
