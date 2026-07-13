@@ -30,6 +30,13 @@ data/raw/NCHS-Birth/births2020_raw.txt
 data/raw/NCHS-Birth/births2021_raw.txt
 data/raw/NCHS-Birth/births2022_raw.txt
 data/raw/NCHS-Birth/births2023_raw.txt
+data/raw/NCHS-Birth/Nat1989.zip
+data/raw/NCHS-Birth/Nat1990.zip
+data/raw/NCHS-Birth/Nat1991.zip
+data/raw/NCHS-Birth/Nat1992.zip
+data/raw/NCHS-Birth/Nat1993.zip
+data/raw/NCHS-Birth/Nat1994.zip
+data/raw/NCHS-Birth/Nat1995.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
