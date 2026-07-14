@@ -15,7 +15,8 @@ def render_nn(
         sample_data: pd.DataFrame,
         train_test_text: str,
         train_data: pd.DataFrame,
-        test_data: pd.DataFrame
+        test_data: pd.DataFrame,
+        model_code_url: str
 ):
     
     # Overview
@@ -41,6 +42,17 @@ def render_nn(
 
     st.markdown("---")
 
+    # Code/Results
+    st.subheader("Model Results")
+    st.markdown(f"👾 [View Code]({model_code_url})")
+    
+
+    st.markdown("---")
+
+    # Conclusion
+    st.subheader('Conclusions')
+
+
 # ==============================================================================
 # Overview
 # ==============================================================================
@@ -58,7 +70,7 @@ overview_text_nn = """
 # ==============================================================================
 # Data Prep
 # ==============================================================================
-sample_data_url_nn = "https://github.com/amberteetsel/maternal-health"      ### PLACEHOLDER - REPLACE!!!!!!!!
+sample_data_url_nn = "https://github.com/amberteetsel/maternal-health/blob/6e9119dbf12c6714d364bcef9e25ecb8d01aef09/resources/neural_net/nn_preprocessed.csv"
 data_reqs_nn = """
     In this instance, a neural network is being used to perform supervised learning (classification).
     Supervised modeling requires **labeled** data, meaning every row must have a known target outcome (`Abortion_Restricted`).
@@ -76,16 +88,16 @@ sample_data_nn = pd.read_csv(os.path.join(nn_rec, 'nn_preprocessed.csv'))
 train_test_text_nn = """
     Because the dataset is relatively small (250 rows), a random split could result in all 'Restricted' states assigned to
     training and the non-Restricted states assigned to testing. Instead, stratified splitting was employed to maintain the
-    same proportional mix of protected vs. restricted states in the training set ($80\%$ of data) and the testing set
-    ($20\%$ of data).
+    same proportional mix of protected vs. restricted states in the training set ($80\\%$ of data) and the testing set
+    ($20\\%$ of data).
 """
-train_data_nn = pd.read_csv(os.path.join(nn_rec, 'X_training.csv'))
-test_data_nn = pd.read_csv(os.path.join(nn_rec, 'X_testing.csv'))
+train_data_nn = pd.read_csv(os.path.join(nn_rec, 'nn_train_display.csv'))
+test_data_nn = pd.read_csv(os.path.join(nn_rec, 'nn_test_display.csv'))
 
 # ==============================================================================
 # Code
 # ==============================================================================
-
+model_code_url_nn = "https://github.com/amberteetsel/maternal-health"   ## PLACEHOLDER - REPLACE!!!
 
 # ==============================================================================
 # Results
