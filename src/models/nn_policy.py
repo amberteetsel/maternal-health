@@ -1,7 +1,10 @@
+# import first to fix mac bug
+import tensorflow as tf
+tf.config.set_visible_devices([], 'GPU')
+
 import os
 import pandas as pd
 import numpy as np
-import tensorflow as tf
 from tensorflow.keras import layers, models
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -126,6 +129,7 @@ early_stop = tf.keras.callbacks.EarlyStopping(
 )
 
 # Training
+print('Starting model training...')
 history = nn_model.fit(
     X_train_scaled, y_train,
     validation_split = 0.15,
@@ -134,6 +138,7 @@ history = nn_model.fit(
     batch_size = 16,
     verbose=1
 )
+print('Success! Model training complete.')
 
 # Test Evaluation & Confusion Matrix
 test_loss, test_acc = nn_model.evaluate(X_test_scaled, y_test, verbose=0)
@@ -142,21 +147,6 @@ test_loss, test_acc = nn_model.evaluate(X_test_scaled, y_test, verbose=0)
 y_pred_probs = nn_model.predict(X_test_scaled)
 ## convert probs into binary classification
 y_pred_classes = (y_pred_probs > 0.5).astype(int).flatten()
-
-# # Temporary df from unscaled test features
-# test_analysis = X_test.copy()
-# test_analysis['state'] = df.loc[X_test.index, 'state']
-# test_analysis['year'] = df.loc[X_test.index, 'year']        # get original ID cols
-# test_analysis['actual_policy'] = y_test.astype(int)
-# test_analysis['predicted_policy'] = y_pred_classes
-# test_analysis['confidence_score'] = y_pred_probs
-# misclassified_row = test_analysis[test_analysis['actual_policy'] != test_analysis['predicted_policy']]
-
-# # Display the culprit
-# print("\n=================== MISCLASSIFIED STATE-YEAR ===================")
-# import IPython
-# display(misclassified_row[['state', 'year', 'actual_policy', 'predicted_policy', 'confidence_score'] + health_cols])
-# print("\n")
 
 # CONFUSION MATRIX
 cm = confusion_matrix(y_test, y_pred_classes)
@@ -181,4 +171,6 @@ cdf = cdf.rename(columns={"0.0": 'Target Class: Protected (0)',
 cdf = cdf.iloc[:3, [0,1,3]]
 cdf.index = cdf.index.str.capitalize()
 cdf = round(cdf,4)
-cdf.to_csv(os.path.join(nn_rec, "classification_report_nn.csv"))
+cdf = cdf.reset_index()
+cdf = cdf.rename(columns={'index': 'Evaluation Metric'})
+cdf.to_csv(os.path.join(nn_rec, "classification_report_nn.csv"), index=False)
