@@ -1,4 +1,4 @@
-,Target Class: Protected (0),Target Class: Restricted (1),Macro Average
-Precision,0.9565,1.0,0.9783
-Recall,1.0,0.9706,0.9853
-F1-score,0.9778,0.9851,0.9814
+Evaluation Metric,Target Class: Protected (0),Target Class: Restricted (1),Macro Average
+Precision,0.9545,0.9706,0.9626
+Recall,0.9545,0.9706,0.9626
+F1-score,0.9545,0.9706,0.9626
