@@ -151,7 +151,7 @@ overview_text_svm_4 = """
 
     * Polynomial Kernel
 
-    $$K({x}, {z}) = ({x} \cdot {z} + r)^d$$
+    $$K({x}, {z}) = ({x} * {z} + r)^d$$
 
     * Radial Basis Function (RBF) Kernel
 
