@@ -416,6 +416,9 @@ from tree_view import render_dt
 # SVM
 import svm
 from svm import render_svm
+# NN
+import nn
+from nn import render_nn
 
 with t4:
     st.header("Modeling Results")
@@ -522,7 +525,15 @@ with t4:
         )
     
     with t_nn:
-        st.markdown("⏳ This section is in progress ⏳")
+        render_nn(
+            overview_text=nn.overview_text_nn,
+            sample_data_url=nn.sample_data_url_nn,
+            data_reqs=nn.data_reqs_nn,
+            sample_data=nn.sample_data_nn,
+            train_test_text=nn.train_test_text_nn,
+            train_data=nn.train_data_nn,
+            test_data=nn.test_data_nn
+        )
 
 
 ##############################################################
