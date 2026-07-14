@@ -200,7 +200,7 @@ train_test_text_svm = """
 
     The training and testing sets are disjoint (non-overlapping) because otherwise the model can simply 'memorize' the test
     data answers rather than learning general patterns. This would lead to overfitting and poor model performance on unseen data.
-    The feature columnsn in sample training/testing sets below have been z-score normalized. 
+    The feature columns in sample training/testing sets below have been z-score normalized. 
 """
 train_data_svm = pd.read_csv(os.path.join(svm_rec, "train_display.csv"))
 test_data_svm = pd.read_csv(os.path.join(svm_rec, "test_display.csv"))
@@ -275,6 +275,7 @@ conclusion_text_svm = """
     Note that features have been engineered such that a higher relative value always means a worse outcome.
 """
 feature_mean_df = pd.read_csv(os.path.join(svm_rec, "feature_means.csv"))
+feature_mean_df.index.name == "Health Metric"
 final_takeaway_svm = """
     Whether abortion restrictions directly degrade the healthcare system or whether the political landscape that enacts
     restrictions simultaneously underfunds public health, the mathematical conclusion is concrete:
