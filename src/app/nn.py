@@ -16,7 +16,8 @@ def render_nn(
         train_test_text: str,
         train_data: pd.DataFrame,
         test_data: pd.DataFrame,
-        model_code_url: str
+        model_code_url: str,
+        results_pipeline: list
 ):
     
     # Overview
@@ -46,6 +47,19 @@ def render_nn(
     st.subheader("Model Results")
     st.markdown(f"👾 [View Code]({model_code_url})")
     
+    for x in results_pipeline:
+        st.markdown(f"##### {x.get('name')}")
+        fig = x.get('fig')
+        if isinstance(fig, pd.DataFrame):
+            st.dataframe(fig)
+            st.caption(x.get('caption'))
+        elif isinstance(fig, str):
+            st.image(fig, width='content')
+            st.caption(x.get('caption'))
+        else:
+            pass
+        
+        st.markdown(x.get('text'))
 
     st.markdown("---")
 
@@ -102,7 +116,27 @@ model_code_url_nn = "https://github.com/amberteetsel/maternal-health"   ## PLACE
 # ==============================================================================
 # Results
 # ==============================================================================
+report_text_nn = """
+    place
+"""
+cm_text_nn = """
+    confusion matrix jksdfghjkadfg
+"""
+results_nn = [
+    {
+        'name': 'Quantitative Model Performance',
+        'fig': pd.read_csv(os.path.join(nn_rec, 'classification_report_nn.csv')),
+        'text': report_text_nn,
+        'caption': "Neural Network Classification Report"
+    },
 
+    {
+        'name': 'Confusion Matrix Diagnostics',
+        'fig': os.path.join(nn_rec, 'nn_confusion_matrix.png'),
+        'text': cm_text_nn,
+        'caption': "The confusion matrix for test evaluation shows extremely strong model performance."
+    }
+]
 
 # ==============================================================================
 # Conclusion
