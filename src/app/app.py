@@ -532,7 +532,9 @@ with t4:
             sample_data=nn.sample_data_nn,
             train_test_text=nn.train_test_text_nn,
             train_data=nn.train_data_nn,
-            test_data=nn.test_data_nn
+            test_data=nn.test_data_nn,
+            model_code_url=nn.model_code_url_nn,
+            results_pipeline=nn.results_nn
         )
 
 
