@@ -48,6 +48,11 @@ features_all = [
     'Patients Per Doctor',
     ]
 df = df[['State', 'Year', 'Abortion_Restricted'] + features_all]
+# saving copy for neural network modeling
+nn_output_dir = os.path.join(BASE_DIR, "resources", "neural_net")
+if not os.path.exists(nn_output_dir):
+    os.makedirs(nn_output_dir)
+df.to_csv(os.path.join(nn_output_dir, "health_x_policy.csv"), index=False)
 # Post-Dobbs filter
 df = df.loc[df.Year >= 2022].reset_index(drop=True)
 # Save Copy of Data for Site

@@ -144,7 +144,7 @@ overview_text_svm_4 = """
     instead of manually transforming data into a massive higher-dimensional space, a kernel function computes the similarity or
     **dot product** between points as if they were in that higher-dimensional space.
 
-    The dot product ${x_i} \cdot {x_j}$ between vectors $i$ and $j$ is key because the mathematics of SVMs rely on *only* the dot
+    The dot product ${x_i} * {x_j}$ between vectors $i$ and $j$ is key because the mathematics of SVMs rely on *only* the dot
     products between vectors, not the individual coordinates, allowing analysts to bypass the actual coordinate transformation.
 
     **Common Kernel Functions**
