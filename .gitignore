@@ -14,6 +14,7 @@
 # Specific Files to Ignore
 data/raw/CDC-ER/icd10cm-04012026.txt
 # data/raw/NCHS-Birth/births2024_raw.txt
+src/cleaning/birth_casey_cleaning.py
 
 # Large Files
 data/clean/NCHS-Birth/births2024.csv
@@ -30,6 +31,22 @@ data/raw/NCHS-Birth/births2020_raw.txt
 data/raw/NCHS-Birth/births2021_raw.txt
 data/raw/NCHS-Birth/births2022_raw.txt
 data/raw/NCHS-Birth/births2023_raw.txt
+data/raw/NCHS-Birth/Nat1989.zip
+data/raw/NCHS-Birth/Nat1990.zip
+data/raw/NCHS-Birth/Nat1991.zip
+data/raw/NCHS-Birth/Nat1992.zip
+data/raw/NCHS-Birth/Nat1993.zip
+data/raw/NCHS-Birth/Nat1994.zip
+data/raw/NCHS-Birth/Nat1995.zip
+data/clean/NCHS-Birth/births_casey.csv
+data/clean/NCHS-Birth/birth_casey.csv
+data/raw/NCHS-Birth/births1989_raw.txt
+data/raw/NCHS-Birth/births1990_raw.txt
+data/raw/NCHS-Birth/births1991_raw.txt
+data/raw/NCHS-Birth/births1992_raw.txt
+data/raw/NCHS-Birth/births1993_raw.txt
+data/raw/NCHS-Birth/births1994_raw.txt
+data/raw/NCHS-Birth/births1995_raw.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
