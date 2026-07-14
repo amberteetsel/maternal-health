@@ -426,7 +426,7 @@ with t4:
         "Naive Bayes",
         "Decision Trees",
         "Support Vector Machines (SVM)",
-        "Neural Networks"
+        "Neural Networks (NN)"
     ])
 
     # clustering
