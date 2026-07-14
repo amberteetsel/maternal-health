@@ -129,7 +129,7 @@ test_data_nn = pd.read_csv(os.path.join(nn_rec, 'nn_test_display.csv'))
 # ==============================================================================
 # Code
 # ==============================================================================
-model_code_url_nn = "https://github.com/amberteetsel/maternal-health"   ## PLACEHOLDER - REPLACE!!!
+model_code_url_nn = "https://github.com/amberteetsel/maternal-health/blob/cd0a7ac135275dfde3d2a46195d2439ebb2be823/src/models/nn_policy.py"   ## PLACEHOLDER - REPLACE!!!
 
 # ==============================================================================
 # Results
