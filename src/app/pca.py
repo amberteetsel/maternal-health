@@ -279,11 +279,11 @@ pca_model_intro_all = """
 """
 pca_all_scree_interpret = """
     Upon executing PCA across all available public health metrics, Principal Component 1 (PC1) and Principal Component 2 (PC2)
-    were revealed to explain a cumulative total of only 45.18 percent of the dataset's variance. In public health analytics, 
+    were revealed to explain a cumulative total of only $45.18\\%$ of the dataset's variance. In public health analytics, 
     this low dimensionality compression indicates a high degree of systemic complexity. Rather than being driven by a 
     singular, underlying socioeconomic factor, state-level healthcare landscapes are deeply fragmented; a state's capacity
     in clinical provider retention does not linearly predict its performance in maternal care or preventative wellness 
-    visits. To capture the standard 70% threshold of total system information, the model must be expanded to include 5 or
+    visits. To capture the standard $70\\%$ threshold of total system information, the model must be expanded to include 5 or
     6 components.
 """
 pca_all_loading_interpet = inspect.cleandoc("""
@@ -314,7 +314,7 @@ pca_all_loading_interpet = inspect.cleandoc("""
     *paradoxically higher* rates of prenatal and postpartum utilization.
 
     Notably, the feature `Maternity Care Desert` exhibits a nearly identical loading magnitude across both primary axes
-    but in opposite directions (+0.297 for PC1, -0.278 for PC2). This indicates that `Maternity Care Desert` acts as a 
+    but in opposite directions ($+0.297$ for PC1, $-0.278$ for PC2). This indicates that `Maternity Care Desert` acts as a 
     structural pivot: it shares equal amount of variance with both components, moving in direct alignment with system
     traits of PC1 while simultaneously moving inversely with dynamics captured by PC2.
 """)
@@ -340,10 +340,10 @@ pca_conclusion = """
 
     ##### A Fragmented System
 
-    In an ideal machine learning scenario, PCA is expected to denerate a PC1 and PC2 that capture the majority of a
+    In an ideal machine learning scenario, PCA is expected to generate a PC1 and PC2 that capture the majority of a
     dataset's information (70 - 90 percent). However, applying PCA to the full set of 17 features revealed that PC1 and
-    PC2 accounted for a cumulative variance of only 45.18%. From a data-reduction standpoint, forcing a flat 2D compression
-    is not worth the substantial loss of information (54.82%). 
+    PC2 accounted for a cumulative variance of only $45.18\\%$. From a data-reduction standpoint, forcing a flat 2D compression
+    is not worth the substantial loss of information ($54.82\\%$). 
 
     ##### Takeaways
 

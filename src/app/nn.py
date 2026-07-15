@@ -68,7 +68,7 @@ def render_nn(
             st.dataframe(fig, hide_index=True)
             st.caption(x.get('caption'))
         elif isinstance(fig, str):
-            st.image(fig, width='content')
+            st.image(fig, width=600)
             st.caption(x.get('caption'))
         else:
             pass
