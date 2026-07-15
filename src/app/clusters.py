@@ -192,9 +192,61 @@ def render_clustering_view(
 
 def render_cluster_preg(
         overview_text: str,
+        prep_text: str,
+        pca_text: str,
+        pca_resources: dict,
+        raw_data_link: str,
+        clean_data_link: str,
+        raw_data: pd.DataFrame,
+        clean_data: pd.DataFrame,
+        model_code_url: str,
+        model_pipeline: list,
+        conclusion_text: str
 
 ):
-    return
+    
+    # overview
+    st.subheader("Clustering Overview")
+    st.markdown(overview_text_preg)
+
+    # data prep
+    st.subheader("Data Preparation")
+    st.markdown(f"🔍 **[View Cleaning Code]({model_code_url})**")
+    st.markdown(prep_text)
+    st.markdown(pca_text)
+    st.markdown(f"**{pca_resources.get('title')}**")
+    st.write(f"{pca_resources.get('text')}")
+    st.image(pca_resources.get('fig'), width=800)
+    st.caption(pca_resources.get('caption'))
+
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("📋 **Original Contextually Grounded Dataset**")
+        st.markdown("[Download]({raw_data_link})")
+        st.dataframe(raw_data, hide_index=True)
+
+    with c2:
+        st.markdown("🔢 **Mathematical Input Feature Space**")
+        st.markdown("[Download]({clean_data_link})")
+        st.dataframe(clean_data, hide_index=True)
+
+    # modeling results
+    st.subheader("Model Results")
+    st.markdown(f"👾 [View Code]({model_code_url})")
+    for i, x in enumerate(model_pipeline):
+        st.markdown(f"**{i+1}. {x.get('title')}**")
+        st.markdown(x.get('text'))
+        if x.get('fig') and x.get('width'):
+            st.image(x.get('fig'), width=x.get('width'))
+        elif x.get('fig'):
+            st.image(x.get('fig'), width='content')
+        if x.get('caption'):
+            st.caption(x.get('caption'))
+
+    # conclusions
+    st.subheader("Conclusions")
+    st.markdown(conclusion_text)
+    
 
 # ==========================================================
 # ACTUAL INPUTS - NATIONAL PREGNANCY TRENDS
@@ -202,14 +254,17 @@ def render_cluster_preg(
 overview_text_preg = """
     This analysis uses data from the Guttmacher Institute to answer the questions:
 
-    ###### How did historical national trends in pregnany, birth, abortion, and miscarriage rates cluster across time? Do these
-    temporal clusters align with major federal judicial milestones (*1973 Roe, 1992 Casey, 2022 Dobbs*)?
+    ##### How did historical national trends in pregnany, birth, abortion, and miscarriage rates cluster across time? 
+    
+    ##### Do these temporal clusters align with major federal judicial milestones (*1973 Roe, 1992 Casey, 2022 Dobbs*)?
 
     Using **K-Means Clustering** on time-series data (treating years as samples and rates as features) will provide insight
     to whether the timeline naturally breaks into distinct historical "eras" corresponding to Supreme Court Decisions.
 """
-data_raw_preg = pd.read_csv(os.path.join(BASE_DIR, "data", "raw", "NatStatePregnancy.csv"))
-data_processed_preg = pd.read_csv(os.path.join(cluster_res, "preg_data_pca.csv"))
+data_raw_preg = pd.read_csv(os.path.join(BASE_DIR, "data", "raw", "Guttmacher", "NatStatePregnancy.csv"))
+data_processed_preg = pd.read_csv(os.path.join(cluster_res, "preg_data_pca.csv"))[['PC1', 'PC2', 'PC3']]
+data_raw_preg_link = "https://github.com/amberteetsel/maternal-health/blob/5ca15e86603aaa10e516b619a7dce9f080d172a1/data/raw/Guttmacher/NatStatePregnancy.csv"
+data_processed_preg_link = "https://github.com/amberteetsel/maternal-health/blob/5ca15e86603aaa10e516b619a7dce9f080d172a1/resources/clustering/preg_data_pca.csv"
 prep_text_preg = """
     Clustering requires only unlabeled, scaled, numeric data. To this end, the following data preprocessing steps were implemented:
 
@@ -232,14 +287,12 @@ pca_text_preg = """
 
     *For a more robust discussion of Principal Component Analysis, please see the PCA tab.*
 """
-pca_pipeline_preg = [
-    {
+pca_pipeline_preg = {
         'title': 'Explained Variance',
-        'text': "placeholder",
+        'text': "This cumulative explained variance plot shows how many Principal Components are needed to capture a target threshold of at least 90% overall variance.",
         'fig': os.path.join(cluster_res, "preg_pca_expvar.png"),
         'caption': "To capture at least 90% of overall variance, 3 principal components are needed. Together they capture almost 95% of overall variance."
     }
-]
 opt_k_text = """
     The optimal number of clusters was determined to be $k = 4$. Looking at the plot below, there is a clear elbow and
     a local maximum of silhouette score at $k=4$ and $k=7$. Using seven clusters to group about 50 years will result in too-granular
@@ -308,30 +361,35 @@ trend_text_preg = """
     access for large swathes of the country. 2020 sits at the terminal of this line, showing the final, most extreme state of the
     reproductive landscape that would lead into the *Dobbs* decision in 2022.
 """
+model_code_link_preg = "https://github.com/amberteetsel/maternal-health" ## PLACEHOLDER, RREPLACE!!!!!!!!!!!
 kmeans_pipeline_preg = [
     {
         'title': "Finding Optimal Number of Clusters (k)",
         'text': opt_k_text,
         'fig': os.path.join(cluster_res, "preg_kmeans_eval.png"),
-        'caption': "Both the Elbow method and Silhouette method were implemented to determine the optimal number of clusters."
+        'caption': "Both the Elbow method and Silhouette method were implemented to determine the optimal number of clusters.",
+        'width': 900
     },
     {
         'title': "Final Model",
         'text': timeline_text,
         'fig': os.path.join(cluster_res, "preg_timeline.png"),
-        'caption': "Clusters are perfectly chronological despite the model never seeing the year variable."
+        'caption': "Clusters are perfectly chronological despite the model never seeing the year variable.",
+        'width': 800
     },
     {
         'title': "Cluster Interpretation",
         'text': cluster_text_preg,
         'fig': None,
-        'caption': None
+        'caption': None,
+        'width': None
     },
     {
         'title': "U.S. Reproductive Health Trajectory",
         'text': trend_text_preg,
         'fig': os.path.join(cluster_res, "preg_viz_final.png"),
-        'caption': "The timeline flows like a physical trajectory through space, with sharp 'pivot points' that align with major historical shifts"
+        'caption': "The timeline flows like a physical trajectory through space, with sharp 'pivot points' that align with major historical shifts",
+        'width': 1200
     }
 ]
 conclusion_text_preg = """

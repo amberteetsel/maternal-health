@@ -403,6 +403,7 @@ with t3:
 # Clustering
 import clusters
 from clusters import render_clustering_view
+from clusters import render_cluster_preg
 cluster_res = os.path.join(BASE_DIR, "resources", "clustering")
 # PCA
 import pca
@@ -452,7 +453,19 @@ with t4:
             )
 
         with st.expander("National Pregnancy Trends", expanded=False):
-            st.write("in progress ")
+            render_cluster_preg(
+                overview_text=clusters.overview_text_preg,
+                prep_text=clusters.prep_text_preg,
+                pca_text=clusters.pca_text_preg,
+                pca_resources=clusters.pca_pipeline_preg,
+                raw_data_link=clusters.data_raw_preg_link,
+                clean_data_link=clusters.data_processed_preg_link,
+                raw_data=clusters.data_raw_preg,
+                clean_data=clusters.data_processed_preg,
+                model_code_url=clusters.model_code_link_preg,
+                model_pipeline=clusters.kmeans_pipeline_preg,
+                conclusion_text=clusters.conclusion_text_preg
+            )
 
     # pca
     with t_pca:
