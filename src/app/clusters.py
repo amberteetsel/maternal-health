@@ -190,9 +190,168 @@ def render_clustering_view(
     st.markdown(conclusions_text)
 
 
+def render_cluster_preg(
+        overview_text: str,
+
+):
+    return
 
 # ==========================================================
-# ACTUAL INPUTS
+# ACTUAL INPUTS - NATIONAL PREGNANCY TRENDS
+# ==========================================================
+overview_text_preg = """
+    This analysis uses data from the Guttmacher Institute to answer the questions:
+
+    ###### How did historical national trends in pregnany, birth, abortion, and miscarriage rates cluster across time? Do these
+    temporal clusters align with major federal judicial milestones (*1973 Roe, 1992 Casey, 2022 Dobbs*)?
+
+    Using **K-Means Clustering** on time-series data (treating years as samples and rates as features) will provide insight
+    to whether the timeline naturally breaks into distinct historical "eras" corresponding to Supreme Court Decisions.
+"""
+data_raw_preg = pd.read_csv(os.path.join(BASE_DIR, "data", "raw", "NatStatePregnancy.csv"))
+data_processed_preg = pd.read_csv(os.path.join(cluster_res, "preg_data_pca.csv"))
+prep_text_preg = """
+    Clustering requires only unlabeled, scaled, numeric data. To this end, the following data preprocessing steps were implemented:
+
+    * Filtering for national data instead of state-by-state
+    * Dropping non-essential, non-numeric columns (`state`, `notes`, `versiondate`)
+    * Feature engineering to calculate miscarriage rates (original data only provided counts)
+    * Feature selection: restricting input data to specific group of metrics representing Rates per 1,000 women broken down
+    sequentially by age bands across four clinical vectors
+        * Pregnancy Rates
+        * Abortion Rates
+        * Birth Rates
+        * Miscarriage Rates
+    * Linear interpolation to fill missing values and ensure perfectly continuous statistical structure across all years
+    * Feature scaling with z-score scaling (`StandardScaler`)
+"""
+pca_text_preg = """
+    In addition, dimensionality was reduced using Principal Component Analysis (PCA). The original data contained dozens of highly
+    correlated features (rates mentioned above) across multiple granular age bands over nearly 50 years. PCA was implemented to
+    capture the majority of variance and project the information into a lower-dimensional space.
+
+    *For a more robust discussion of Principal Component Analysis, please see the PCA tab.*
+"""
+pca_pipeline_preg = [
+    {
+        'title': 'Explained Variance',
+        'text': "placeholder",
+        'fig': os.path.join(cluster_res, "preg_pca_expvar.png"),
+        'caption': "To capture at least 90% of overall variance, 3 principal components are needed. Together they capture almost 95% of overall variance."
+    }
+]
+opt_k_text = """
+    The optimal number of clusters was determined to be $k = 4$. Looking at the plot below, there is a clear elbow and
+    a local maximum of silhouette score at $k=4$ and $k=7$. Using seven clusters to group about 50 years will result in too-granular
+    cluster assignments, so using four clusters is the optimal approach. 
+"""
+timeline_text = """
+    K-Means clustering worked exactly as intended: though the algorithm had absolutely no access to the `Year` column during clustering
+    and only received standardized clinical and demographic rates, it partitioned the data into **four perfectly consecutive,
+    unbroken chronological eras.** This proves that national reproductive behavior, outcomes, and healthcare trends do not fluctuate
+    randomly but exist in distinct, stable historical states.
+"""
+cluster_text_preg = """
+    **Cluster 2 (1973 - 1976): The Immediate Post-*Roe* Era**
+    * Following the *Roe v. Wade* ruling in January 1973, the U.S. underwent a massive structural transition. This 4-year block
+    represents the initial baseline shift of when legal abortion infrastructure was rapidly established after decades of criminalization.
+
+    **Cluster 3 (1977 - 1996): The Stablization Era**
+    * This 20-year era captures the long-term stabilization of national birth, pregnany, abortion, and miscarriage rates. It includes
+    the 1992 *Planned Parenthood v. Casey* decision.
+    * Rather than showing immediate changes after 1992, the data reveals that the "undue burden" framework introduced by *Casey*
+    took years to subtly shift national baseline outcomes.
+
+    **Cluster 1 (1997 - 2010): The Contraceptive Era**
+    * This era represents the shift in public health brought characterized by a historic drop in teen pregnancy and abortion rates.
+    This was driven by the introduction and widespread adoption of long-acting contraception such as IUDs and implants, as well as
+    Clinton/Bush-era public health campaigns targeting teen pregnancy.
+
+    **Cluster 0 (2011 - 2020): The TRAP Era**
+    * After the 2010 midterm elections, conservative state legislatures began aggressively passing Targeted Regulation of Abortion
+    Providers (TRAP) laws. Common TRAP laws included requiring clinics to meet strict, costly surgical center standards, forcing 
+    doctors to have local hospital admitting privileges, and mandating specific unnecessary staff qualifications. This led to large
+    numbers of clinic closures, predominantly in the South and the Midwest, and a major divergence in abortion access that set the stage
+    for the *Dobbs* decision in 2022.
+"""
+trend_text_preg = """
+    Projecting 48 years of national reproductive metrics onto the first two Principal Components reveals a highly structured,
+    non-linear evolutionary path. Rather than random annual fluctuations, the physical movement of the years from the bottom-right
+    (1973) to the far-left (2020) maps a clear transformation in the landscape of American public health.
+
+    1. Component Interpretation
+
+    * **Principal Compnent 1 (Horizontal Axis) - Overall Trend & Volume:** Represents the broad, long-term decline in overall
+    pregnancy and birth rates across almost all age groups. Years on the far right (1970s, 1980s) are eras of high baseline
+    fertility and higher overall volumes of reproductive events. Years on the far left show the midern era of low birth and pregnancy
+    rates.
+
+    * **Principal Component 2 (Vertical Axis) - Outcome Divergence:** Captures the relative balance of how pregnancies resolved,
+    specifically the ratio of births to legal abortions. Higher values (e.g. peak in early '90s) represent eras where abortion rates
+    and ratios reached their historical peak relative to live births. Lower values represent eras of lower relative abortion rates.
+
+    2. Cluster Interpretation
+
+    * **1973 - 1976 (Immediate Post-*Roe* Era):** The vertical climb on the plot reflects rapid legalization and integration of
+    abortion services nationwide, causing a large immediate change in national outcome resolution profile (PC2).
+
+    * **1977 - 1996 (Stabilization Era):** The plot reveals that the *Casey* decision in 1992 did not have an immediate effect 
+    on national metrics. Instead, 1992 sits near the apex of this cluster, showing the "undue burden" framework took half a decade
+    to manifest as a structural break in national trends.
+
+    * **1997 - 2010 (Contraceptive Era):** The sharp left turn in 1997 marks a public health success: a simultaneous decline in
+    unintended pregnancies and abortion rates, particularly among teenagers, driven by popularization of highly effective long-acting
+    contraceptives.
+
+    * **2011 - 2020 (TRAP Era):** 2011 sees the start of a highly linear, downward-sloping shift to the far left. This represents
+    the wave of Targeted Regulation of Abortion Providers (TRAP) laws that forced many clinic closures and greatly reduced abortion
+    access for large swathes of the country. 2020 sits at the terminal of this line, showing the final, most extreme state of the
+    reproductive landscape that would lead into the *Dobbs* decision in 2022.
+"""
+kmeans_pipeline_preg = [
+    {
+        'title': "Finding Optimal Number of Clusters (k)",
+        'text': opt_k_text,
+        'fig': os.path.join(cluster_res, "preg_kmeans_eval.png"),
+        'caption': "Both the Elbow method and Silhouette method were implemented to determine the optimal number of clusters."
+    },
+    {
+        'title': "Final Model",
+        'text': timeline_text,
+        'fig': os.path.join(cluster_res, "preg_timeline.png"),
+        'caption': "Clusters are perfectly chronological despite the model never seeing the year variable."
+    },
+    {
+        'title': "Cluster Interpretation",
+        'text': cluster_text_preg,
+        'fig': None,
+        'caption': None
+    },
+    {
+        'title': "U.S. Reproductive Health Trajectory",
+        'text': trend_text_preg,
+        'fig': os.path.join(cluster_res, "preg_viz_final.png"),
+        'caption': "The timeline flows like a physical trajectory through space, with sharp 'pivot points' that align with major historical shifts"
+    }
+]
+conclusion_text_preg = """
+    ##### How did historical national trends in pregnany, birth, abortion, and miscarriage rates cluster across time?
+
+    The historical national trends clustered into four highly distinct, strictly sequential chronological eras rather than fragmenting
+    or jumping back and forth over time.
+
+    ##### Do these temporal clusters align with major federal judicial milestones (*1973 Roe, 1992 Casey, 2022 Dobbs*)?
+
+    Yes. Legal and policy climates are not isolated events; they dictate the macro-level behavior of national reproductive
+    healthcare. The fact that the years partition so cleanly and sequentially supports that judicial milestones and state legislative
+    movements are primary structural forces shaping health outcomes for pregnany people in the United States. That the trends along
+    principal component axes are not consistent or linear over the 48-year span proves that the distinct clusters are not simply
+    tracking inherent improvements in healthcare that come with time and medical advancements.
+"""
+
+
+# ==========================================================
+# ACTUAL INPUTS - STATE HEALTH RANKINGS
 # ==========================================================
 
 # CLUSTERING INTRO/OVERVIEW
