@@ -302,7 +302,7 @@ data_raw_birth = pd.read_csv(os.path.join(pca_res, "birth_data_raw.csv"))
 data_clean_birth = pd.read_csv(os.path.join(pca_res, "birth_data_processed.csv"))
 
 # Model Results
-model_code_url_birth = "https://github.com/amberteetsel/maternal-health"    #### PLACEHOLDERS!!!!!!REPLACE!!!!!!!!!!!
+model_code_url_birth = "https://github.com/amberteetsel/maternal-health/blob/8c8e3732c9a2f4b6902021251e488fdfd3c56562/src/models/birth_pca_race_age.py"
 exp_var_text = """
     The scree plot below demonstrates that when running PCA on 8 clinical risk and morbidity features, a single, unified profile
     of risk did not emerge. If that were the case, $PC_1$ and perhaps $PC_2$ together would explain a significant portion of overall
