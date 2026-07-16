@@ -408,6 +408,7 @@ cluster_res = os.path.join(BASE_DIR, "resources", "clustering")
 # PCA
 import pca
 from pca import render_pca
+from pca import render_pca_birth
 # Naive Bayes
 import nbayes
 from nbayes import render_nb
@@ -469,18 +470,34 @@ with t4:
 
     # pca
     with t_pca:
-        render_pca(
-            overview=pca.overview_pca,
-            prep_text=pca.prep_pca,
-            cleaning_code="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/src/models/health_preprocessing.py",
-            df_before=clusters.clust_sample_before_df,
-            df_after=pca.pca_df_after,
-            data_download_url="https://github.com/amberteetsel/maternal-health/blob/3f403042d1bbd90522052614b4c8c976c54e329f/resources/pca/pca_input_data.csv",
-            pipeline_all=pca.pca_all_assets,
-            pca_code="https://github.com/amberteetsel/maternal-health/blob/e7ef492c02a7a6f021a7b4c374cff6d7c7d5e6ba/src/models/pca_all.py",
-            # pipeline_opt=pca.pca_opt_assets,
-            conclusion=pca.pca_conclusion
-        )
+        with st.expander("State Health Rankings", expanded=False):
+            render_pca(
+                overview=pca.overview_pca,
+                prep_text=pca.prep_pca,
+                cleaning_code="https://github.com/amberteetsel/maternal-health/blob/7b502ade0260152992815f5a7a3fcd8791a0b3c1/src/models/health_preprocessing.py",
+                df_before=clusters.clust_sample_before_df,
+                df_after=pca.pca_df_after,
+                data_download_url="https://github.com/amberteetsel/maternal-health/blob/3f403042d1bbd90522052614b4c8c976c54e329f/resources/pca/pca_input_data.csv",
+                pipeline_all=pca.pca_all_assets,
+                pca_code="https://github.com/amberteetsel/maternal-health/blob/e7ef492c02a7a6f021a7b4c374cff6d7c7d5e6ba/src/models/pca_all.py",
+                # pipeline_opt=pca.pca_opt_assets,
+                conclusion=pca.pca_conclusion
+            )
+
+        with st.expander("National Birth Records", expanded=False):
+            render_pca_birth(
+                overview_text=pca.overview_text_birth,
+                overview_figs=pca.overview_figs_birth,
+                overview_figs_text=pca.overview_fig_text_birth,
+                cleaning_text=pca.data_prep_birth,
+                data_raw_link=pca.data_raw_link_birth,
+                data_clean_link=pca.data_clean_link_birth,
+                data_raw=pca.data_raw_birth,
+                data_clean=pca.data_clean_birth,
+                model_code_url=pca.model_code_url_birth,
+                results_pipeline=pca.pca_pipeline_birth,
+                conclusion_text=pca.conclusions_text_birth
+            )
 
     # naive bayes
     with t_nb:
