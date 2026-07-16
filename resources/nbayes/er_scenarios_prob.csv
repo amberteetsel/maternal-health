@@ -1,0 +1,13 @@
+Age Group,Race/Ethnicity,P(SMM | Northeast),P(SMM | South),Relative Risk (South vs NE)
+Average Maternal Age (20-34),Non-Hispanic Other,3.71%,4.95%,1.33x
+Average Maternal Age (20-34),Hispanic,3.28%,4.38%,1.34x
+Average Maternal Age (20-34),Non-Hispanic Black,2.71%,3.62%,1.34x
+Average Maternal Age (20-34),Non-Hispanic White,2.45%,3.28%,1.34x
+Teens (15-19),Non-Hispanic Other,1.53%,2.06%,1.34x
+Teens (15-19),Hispanic,1.35%,1.82%,1.34x
+Teens (15-19),Non-Hispanic Black,1.11%,1.50%,1.35x
+Teens (15-19),Non-Hispanic White,1.00%,1.35%,1.35x
+Advanced Maternal Age (35-49),Non-Hispanic Other,0.78%,1.06%,1.35x
+Advanced Maternal Age (35-49),Hispanic,0.69%,0.93%,1.35x
+Advanced Maternal Age (35-49),Non-Hispanic Black,0.57%,0.76%,1.35x
+Advanced Maternal Age (35-49),Non-Hispanic White,0.51%,0.69%,1.35x

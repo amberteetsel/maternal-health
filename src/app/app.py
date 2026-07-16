@@ -412,6 +412,7 @@ from pca import render_pca_birth
 # Naive Bayes
 import nbayes
 from nbayes import render_nb
+from nbayes import render_nb_er
 # Decision Tree
 import tree_view
 from tree_view import render_dt
@@ -501,21 +502,33 @@ with t4:
 
     # naive bayes
     with t_nb:
-        render_nb(overview_text=nbayes.overview_nb,
-                prep_text=nbayes.data_prep_nb,
-                cleaning_code_url=nbayes.cleaning_code_nb,
-                sample_data_url=nbayes.sample_data_url,
-                sample_data=nbayes.input_data_nb,
-                train_test_text=nbayes.train_test_nb,
-                train_data=nbayes.train_data,
-                test_data=nbayes.test_data,
-                model_code_url=nbayes.model_code_url,
-                results_intro=nbayes.results_intro_nb,
-                result_table=nbayes.result_table_nb,
-                confusion_matrix=nbayes.cm_nb,
-                results_text=nbayes.results_interpret_nb,
-                conclusion_text=nbayes.conclusion_nb
-        )
+        with st.expander("Emergency Room: ICU Admission", expanded=False):
+            render_nb(overview_text=nbayes.overview_nb,
+                    prep_text=nbayes.data_prep_nb,
+                    cleaning_code_url=nbayes.cleaning_code_nb,
+                    sample_data_url=nbayes.sample_data_url,
+                    sample_data=nbayes.input_data_nb,
+                    train_test_text=nbayes.train_test_nb,
+                    train_data=nbayes.train_data,
+                    test_data=nbayes.test_data,
+                    model_code_url=nbayes.model_code_url,
+                    results_intro=nbayes.results_intro_nb,
+                    result_table=nbayes.result_table_nb,
+                    confusion_matrix=nbayes.cm_nb,
+                    results_text=nbayes.results_interpret_nb,
+                    conclusion_text=nbayes.conclusion_nb
+            )
+
+        with st.expander("Emergency Room: Severe Maternal Morbidity", expanded=False):
+            render_nb_er(
+                overview_text=nbayes.overview_text_er,
+                data_prep_text=nbayes.data_prep_text_er,
+                data_raw_link=nbayes.data_raw_link_er,
+                data_clean_link=nbayes.data_clean_link_er,
+                data_raw=nbayes.data_raw_er,
+                data_clean=nbayes.data_clean_er
+            )
+
 
     # decision trees    
     with t_dt:

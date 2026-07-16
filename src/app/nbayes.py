@@ -73,8 +73,79 @@ def render_nb(overview_text: str,
     st.markdown(conclusion_text)
 
 
+# Display Function for Severe Maternal Morbidity Analysis
+def render_nb_er(
+        overview_text: str,
+        data_prep_text: str,
+        data_raw_link: str,
+        data_clean_link: str,
+        data_raw: pd.DataFrame,
+        data_clean: pd.DataFrame
+):
+    
+    # overview
+    st.subheader("Overview")
+    st.markdown(overview_text)
+
+    # data prep
+    st.subheader("Data Preparation")
+    st.markdown(data_prep_text)
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("**Raw Dataset (First 100 Rows)**")
+        st.markdown(f"🔗 **[Download Dataset]({data_raw_link})**")
+        st.dataframe(data_raw, hide_index=True)
+
+    with c2:
+        st.markdown("**Encoded Input Data (First 100 Rows)**")
+        st.markdown(f"🔗 **[Download Dataset]({data_clean_link})**")
+        st.dataframe(data_clean, hide_index=True)
+
+    # model results
+    st.subheader("Model Results")
+
+    # conclusions
+    st.subheader("Conclusions")
+
+
 # ==========================================================
-# ACTUAL INPUTS
+# ACTUAL INPUTS - E.R. SEVERE MATERNAL MORBIDITY
+# ==========================================================
+overview_text_er = """
+    The primary objective of this analysis is to answer the following research question:
+
+    #### Given an emergency room patient's demographic profile, what is the conditional probability of them presenting with a severe pregnancy-related complication based on their geographic macro-region's reproductive legal status (Highly Restricted South vs. Highly Protected Northeast)?
+
+    To that end, a Categorical Naive Bayes classifier was trained on 12,174 clean patient records extracted from the CDC's
+    National Hospital Ambulatory Medical Care Survey (NHAMCS) Emergency Department data (2018 - 2022). The target label,
+    Severe Maternal Morbidity (SMM) was flagged using a variety of ICD-10-CM codes for severe, acute obstetric crises including
+    ectopic pregnancies, pre-eclampsia, hemorrhage, placenta previa, and sepsis.
+
+    By evaluating the conditional probability $P(\\text{SMM} | \\text{Demographics, Region})$ the model isolates the baseline
+    impact of geographic policy standards on acute maternal emergencies.
+"""
+data_prep_text_er = """
+   Categorical Naive Bayes requires features to be categorical and encoded as discrete integer values. During preprocessing,
+   the continuous feature `Age` was binned to discrete categories representing Teens (15-19), Average Maternal Age (20-34), and
+   Advanced Maternal Age (35-49). Data was filted by `Sex` to only include female patients.
+   Records were filtered by region to isolate the Northeast and the South. These regions were
+   selected because the states within tend to be more consistently ideologically aligned in terms of abortion law than states
+   in the West or Midwest. A flag for the target SMM was calculated by checking if any diagnostic codes for each entry
+   belonged to a pre-defined list of codes signaling acute obstetric emergencies. This revealed a class imbalance aligned with
+   typical clinical findings: the overall probability of a patient presenting to the emergency room with an SMM-flagged crisis is
+   only $2.01\\%$, while the probability of presenting without such a crisis is $97.99\\%$. 
+
+   Naive Bayes also assumes class-conditional independence, meaning the value of any single feature is independent of any other
+   feature given the class label. The selected data from NHAMCS meets this requirement as Age, Race/Ethnicity, and Region are
+   completely unrelated.
+"""
+data_raw_link_er = "https://github.com/amberteetsel/maternal-health"        # PLACEHOLDER---REPLACE!!!!!
+data_clean_link_er = "https://github.com/amberteetsel/maternal-health"        # PLACEHOLDER---REPLACE!!!!!
+data_raw_er = pd.read_csv(os.path.join(nb_res, "er_data_raw.csv"))
+data_clean_er = pd.read_csv(os.path.join(nb_res, "er_data_clean.csv"))
+
+# ==========================================================
+# ACTUAL INPUTS - ICU ADMISSION
 # ==========================================================
 
 # Overview

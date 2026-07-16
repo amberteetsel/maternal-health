@@ -296,8 +296,8 @@ data_prep_birth = """
     high-frequency conditions to dominate the principal component analysis. Standardizing features into z-scores with mean of 0.0 and
     standard deviation of 1.0 levels the playing field and allows the covariance of rarer, more serious complications to be detected.
 """
-data_raw_link_birth = "https://github.com/amberteetsel/maternal-health"     #### PLACEHOLDERS!!!!!!REPLACE!!!!!!!!!!!
-data_clean_link_birth = "https://github.com/amberteetsel/maternal-health"   #### PLACEHOLDERS!!!!!!REPLACE!!!!!!!!!!!
+data_raw_link_birth = "https://github.com/amberteetsel/maternal-health/blob/22d25c792adeb876b699b9b450bfa27e1525bc3e/resources/pca/birth_data_raw.csv"
+data_clean_link_birth = "https://github.com/amberteetsel/maternal-health/blob/22d25c792adeb876b699b9b450bfa27e1525bc3e/resources/pca/birth_data_processed.csv"
 data_raw_birth = pd.read_csv(os.path.join(pca_res, "birth_data_raw.csv"))
 data_clean_birth = pd.read_csv(os.path.join(pca_res, "birth_data_processed.csv"))
 
