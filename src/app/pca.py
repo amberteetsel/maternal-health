@@ -171,8 +171,255 @@ def render_pca(overview: list,
     st.subheader("Conclusions")
     st.markdown(conclusion)
 
+# Function to display PCA on Birth Records
+def render_pca_birth(
+        overview_text: str,
+        overview_figs: list,
+        overview_figs_text: list,
+        cleaning_text: str,
+        data_raw_link: str,
+        data_clean_link: str,
+        data_clean: pd.DataFrame,
+        data_raw: pd.DataFrame,
+        model_code_url: str,
+        results_pipeline: list,
+        conclusion_text: str
+):
+    
+    # overview
+    st.subheader("PCA Overview")
+    st.markdown(overview_text)
+    st.markdown("##### Exploratory Data Analysis")
+    o1, o2 = st.columns(2)
+    with o1:
+        st.markdown(overview_figs_text[0])
+        st.image(overview_figs[0], width='stretch')
+        st.caption("Maternal morbidity and delivery complication features are far less common among U.S. mothers than risk factors like diabetes and hypertension.")
+    
+    with o2:
+        st.markdown(overview_figs_text[1])
+        st.image(overview_figs[1], width='stretch')
+        st.caption("AIAN and NHOPI mothers comprise only 1% of the population in the dataset.")
+
+    # data prep
+    st.subheader("Data Preparation")
+    st.markdown(cleaning_text)
+
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("**Unscaled Dataset (First 100 Rows)**")
+        st.markdown(f"🔗 **[Download Dataset]({data_raw_link})**")
+        st.dataframe(data_raw, hide_index=True)
+
+    with c2:
+        st.markdown("**Scaled Input Data**")
+        st.markdown(f"🔗 **[Download Dataset]({data_clean_link})**")
+        st.dataframe(data_clean, hide_index=True)
+    
+    st.markdown("---")
+
+    # modeling/results
+    st.subheader("Model Results")
+    st.markdown(f"👾 [View Code]({model_code_url})")
+
+    for x in results_pipeline:
+        st.markdown(f"##### {x.get('title')}")
+        fig = x.get('fig')
+        if isinstance(fig, pd.DataFrame):
+            st.dataframe(fig, hide_index=True)
+        elif isinstance(fig, str):
+            if x.get('width'):
+                st.image(fig, width=x.get('width'))
+            else:
+                st.image(fig, width='content')
+        if x.get('caption'):
+            st.caption(x.get('caption'))
+        
+        st.markdown(x.get('text'))
+        
+    st.markdown("---")
+
+    # conclusions
+    st.subheader("Conclusions")
+    st.markdown(conclusion_text)
+
 # ==========================================================
-# ACTUAL INPUTS
+# ACTUAL INPUTS - BIRTH DATA
+# ==========================================================
+overview_text_birth = """
+    The primary purpose of this analysis is to answer the following research questions using national birth records from 2018 to 2024:
+
+    #### Can national clinical risk factors and complications be compressed into a unified Maternal Clinical Risk Profile?
+
+    #### How does this profile vary across racial and age demographics nationally?
+
+    By isolating demographic data (Race/Ethnicity, Age) before fitting the PCA model, these characteristics are prevented from
+    mathematically biasing the clinical components (Risk Factors, Complications). This enables projecting the resulting
+    patient-level clinical risk scores back onto demographic groups to expose systematic national health disparities.
+
+    The following binary clinical data was collected for analysis:
+
+    **Risk Factors Analyzed:**
+    * Gestational Diabetes (`rf_gdb`)
+    * Gestational Hypertension (`rf_ghyp`)
+    * Hypertension Eclampsia (`rf_ehyp`)
+
+    **Morbidity/Complications Analyzed:**
+    * Maternal Transfusion (`mm_trans`)
+    * Perineal Laceration (`mm_plac`)
+    * Ruptured Uterus (`mm_rupt`)
+    * Unplanned Hysterectomy (`mm_uhyst`)
+    * Intensive Care Unit (ICU) Admission (`mm_icu`)
+
+"""
+feature_means_birth = os.path.join(pca_res, "birth_clinical_prevalence.png")
+race_distr_birth = os.path.join(pca_res, "race_distribution.png")
+overview_figs_birth = [feature_means_birth, race_distr_birth]
+feature_means_text = """
+    The chart below shows prevalence of each clinical feature within the dataset. In general, risk factors are far more common
+    than severe complications. Of severe complications, perineal lacerations are the most common while a ruptured uterus is
+    relatively rare (experienced by fewer than 1 woman out of 2,000). For risk factors, hypertension eclampsia is the rarest. 
+"""
+race_distr_text = """
+    The chart below shows the distribution of maternal race and ethnicity within the dataset. Non-Hispanic White and Hispanic mothers comprise 3/4 of the data
+    (Non-Hispanic White $50\\%$, Hispanic $25\\%$). Black and Asian mothers make up another $20\\%$ while American Indian/Alaska Native and Native Hawaiian/Pacific
+    Islander mothers represent just $1\\%$ of the population.
+"""
+overview_fig_text_birth = [feature_means_text, race_distr_text]
+data_prep_birth = """
+    Data for this analysis comes from the [CDC's National Center for Health Statistics Birth records](https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm).
+    After extracting a representative 5% sample of these records from 2018 to 2024, data was cleaned by mapping numeric codes for race
+    and ethnicity to text descriptors and filling in missing binary clinical data as "No".
+
+    A critical preparation step was scaling the clinical data. Because clinical complications occur at different baseline rates (for
+    example, gestational diabetes is fairly common while a ruptured uterus is rare), unstandardized variables would cause the
+    high-frequency conditions to dominate the principal component analysis. Standardizing features into z-scores with mean of 0.0 and
+    standard deviation of 1.0 levels the playing field and allows the covariance of rarer, more serious complications to be detected.
+"""
+data_raw_link_birth = "https://github.com/amberteetsel/maternal-health"     #### PLACEHOLDERS!!!!!!REPLACE!!!!!!!!!!!
+data_clean_link_birth = "https://github.com/amberteetsel/maternal-health"   #### PLACEHOLDERS!!!!!!REPLACE!!!!!!!!!!!
+data_raw_birth = pd.read_csv(os.path.join(pca_res, "birth_data_raw.csv"))
+data_clean_birth = pd.read_csv(os.path.join(pca_res, "birth_data_processed.csv"))
+
+# Model Results
+model_code_url_birth = "https://github.com/amberteetsel/maternal-health"    #### PLACEHOLDERS!!!!!!REPLACE!!!!!!!!!!!
+exp_var_text = """
+    The scree plot below demonstrates that when running PCA on 8 clinical risk and morbidity features, a single, unified profile
+    of risk did not emerge. If that were the case, $PC_1$ and perhaps $PC_2$ together would explain a significant portion of overall
+    variance. In this scenario $PC_1$ captures just $18.02\\%$ and $PC_2$ captures just $13.3\\%$. It would take at least seven 
+    principal components to capture $90\\%$ of overall explained variance.
+"""
+loadings_text = """
+    The loadings for each principal component reveal a clear, clinically logical split between $PC_1$ and $PC_2$. 
+
+    **1. $PC_1$: Acute Trauma Index**
+    
+    The loadings for all maternal morbidity columns (excluding Perineal Laceration) are relatively high, ranging from $0.341$ for
+    Ruptured Uterus to $0.575$ for an Unplanned Hysterectomy. On the other hand, loadings for all risk factor columns are close
+    to zero (all under $0.06$). This means $PC_1$ is not a general measure of routine pregnancy complications, but rather a highly
+    specific index of **severe, acutre maternal morbidity and delivery trauma.** A high $PC_1$ score indicates a patient who
+    experienced a catastrophic delivery event involving a blood transfusion, ruptured uterus, unplanned hysterectomy, and intensive
+    care. Recalling feature prevalence, it is intuitive that Perineal Laceration would not be a primary driver of $PC_1$ because
+    it's a fairly common symptom and can be much less severe than the other delivery complications.
+
+    **2. $PC_2$: Gestational Cardio-Metabolic Risk**
+
+    $PC_2$ represents a completely separate pathway. It's mathematical structure is almost entirely orthogonal to $PC_1$.
+    The weights for risk factors shifted dramatically, from near zero to at least
+    0.68 for the more common gestational risks and to 0.22 for the less frequent eclampsia. In contrast, the acute delivery traumas
+    drop to near-zero or even slightly negative loadings. This makes $PC_2$ a measure of gestational metabolic and cardiovascular
+    dysfunction. A high $PC_2$ score indicates a patient managing chronic prenatal conditions (diabetes and high blood pressure) that
+    develop during pregnancy without necessarily triggering a delivery emergency. Again, it makes intuitive sense that eclampsia has
+    a lower relative weight for this component because it is a very severe, life-threatening condition more akin to the acute delivery
+    traumas in nature than general risk factors like diabetes.
+
+"""
+rq2_text_birth = """
+    Mapping each patient's individual $PC_1$ and $PC_2$ scores back onto their demographic information reveals stark, systemic
+    national disparities across maternal ages and racial/ethnic groups.
+
+    ##### Acute Delivery Trauma ($PC_1$)
+
+    Plotting Mean $PC_1$ score against Maternal Age reveals two distinct trends:
+
+    **1. Late-Life Age Risk**
+
+    For the majority of the population (represented by the consolidated "Other" baseline and the lowest-risk group, Hispanic mothers),
+    the risk of acute delivery trauma remains flat and near national average through early and mid-reproductive years. However,
+    past age 35 (and accelerating exponentially past age 40) the $PC_1$ scores climb steeply. This provides clear mathematical and visual
+    confirmation of heightened physical delivery risks associated with advanced maternal age.
+    
+    **2. Extreme Outliers**
+
+    The visual highlights that acute trauma is not distributed evenly but concentrated within a very small portion of the data ($1\\%$), 
+    recalling the distribution of maternal race and ethnicity). American Indian / Alaka Native (AIAN) mothers represent
+    the highest-risk national outlier in acute delivery trauma, experiencing a volatile surge in $PC_1$ scores beginning as early
+    as age 25 and peaking around age 43. Native Hawaiian / Pacific Islander (NHOPI) mothers also exhibit an elevated baseline risk
+    that spikes much earlier than the national average. Hispanic mothers consistently track as the lowest relative risk group.
+
+    ##### Gestational Cardio-Metabolic Risk ($PC_2$)
+
+    The trajectory of $PC_2$ tells a different story.
+
+    **1. Linear Aging Process**
+
+    Unlike the acute trauma index, which remains flat before spiking later in life, cario-metabolic risk shows a steady, linear
+    and universal upward march across the entire maternal lifespan. Regardless of race or ethnicity, older mothers are progressively
+    more likely to experience gestational diabetes and hypertension.
+
+    **2. Racial Divergence**
+
+    Although the upward slope is universal, the vertical starting baselines are unequal. AIAN and Asian mothers carry the highest
+    national burdens of gestational cardio-metabolic risk across virtually the entire age spectrum. Hispanic mothers consistently
+    track at the bottom of the cardio-metabolic risk index.
+"""
+pca_pipeline_birth = [
+    {
+        'title': "Cumulative Explained Variance of Principal Components",
+        'text': exp_var_text,
+        'fig': os.path.join(pca_res, "birth_scree_plot.png"),
+        'caption': "Principal Component 1 captures just 18% of overall variance, which is to be expected because the severe complications driving it are sparse among the data.",
+        'width': 850
+    },
+    {
+        'title': "Feature Loadings for $PC_1$ and $PC_2$",
+        'text': loadings_text,
+        'fig': pd.read_csv(os.path.join(pca_res, "birth_pc1_pc2.csv")),
+        'caption': None,
+        'width': None,
+    },
+    {
+        'title': "Demographic Trends",
+        'text': rq2_text_birth,
+        'fig': os.path.join(pca_res, "birth_pca_race_plots.png"),
+        'caption': "Comparing PC1 and PC2 scores for different racial/ethnic groups by maternal age.",
+        'width': 'stretch'
+    }
+]
+
+conclusions_text_birth = """
+    #### Can national clinical risk factors and complications be compressed into a unified Maternal Clinical Risk Profile?
+
+    No. Though PCA was applied effectively, the first two principal components ($PC_1, PC_2$) only explained $31.31\\%$ of
+    overall variance in the dataset so they cannot be considered to comprise a "unified" risk profile. However, the exercise
+    still provided valuable insight; the data naturally splits into two highly distinct, logical dimensions of maternal health
+    risks and complications. These are Acute Delivery Trauma ($PC_1$) and Gestational Cardio-Metabolic Risk ($PC_2$).
+
+    #### How does this profile vary across racial and age demographics nationally?
+
+    The structural variance of each profile across demographic lines offers sociological and clinical insight. While the
+    physical effects of aging lead to universal, steady increase in gestational cardio-metabolic risks ($PC_2$) for all pregnant
+    people, the translation of those baseline risks into catastrophic, life-threatending delivery-room trauma ($PC_1$) is
+    unequal.
+
+    The sharp early-onset spikes in acute trauma ($PC_1$) observed for American Indian / Alaska Native (AIAN) and Native Hawaiian /
+    Pacific Islander (NHOPI) mothers, even at younger ages, suggests that systemic healthcare disparities, structural prejudice,
+    and unequal access to quality, timely prenatal and obstetric care can fail to resolve manageable cardio-metabolic risks 
+    before they cascade into catastrophic delivery emergencies.
+"""
+
+# ==========================================================
+# ACTUAL INPUTS - HEALTH RANKINGS
 # ==========================================================
 overview_pca_1 = inspect.cleandoc("""
     The Curse of Dimensionality refers to various challenges and complications that arise when analyzing and organizing
