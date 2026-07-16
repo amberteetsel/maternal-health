@@ -254,9 +254,9 @@ def render_cluster_preg(
 overview_text_preg = """
     This analysis uses data from the Guttmacher Institute to answer the questions:
 
-    ##### How did historical national trends in pregnany, birth, abortion, and miscarriage rates cluster across time? 
+    #### How did historical national trends in pregnany, birth, abortion, and miscarriage rates cluster across time? 
     
-    ##### Do these temporal clusters align with major federal judicial milestones (*1973 Roe, 1992 Casey, 2022 Dobbs*)?
+    #### Do these temporal clusters align with major federal judicial milestones (*1973 Roe, 1992 Casey, 2022 Dobbs*)?
 
     Using **K-Means Clustering** on time-series data (treating years as samples and rates as features) will provide insight
     to whether the timeline naturally breaks into distinct historical "eras" corresponding to Supreme Court Decisions.

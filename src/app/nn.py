@@ -10,6 +10,7 @@ if not os.path.exists(nn_rec):
 
 def render_nn(
         overview_text: str,
+        rqs: str,
         sample_data_url: str,
         data_reqs: str,
         sample_data: pd.DataFrame,
@@ -26,6 +27,8 @@ def render_nn(
     st.subheader('Neural Network Overview')
     with st.expander('Read About Neural Networks', expanded=True):
         st.write(overview_text)
+
+    st.markdown(rqs)
 
     # Data Prep
     st.subheader("Data Preparation")
@@ -96,6 +99,13 @@ overview_text_nn = """
     output layer. The output layer generates a final prediction. During training, the NN uses an optimization process
     known as backpropagation to 'learn'. It evaluates its prediction errors against the true values using a loss function,
     calculates updates, and systematically adjusts internal weights to improve its accuracy over successive training 'epochs'.
+"""
+rqs_nn = """
+    The purpose of this analysis is to answer the following research questions:
+
+    #### Can distinct clusters of states/geographic regions be identified based on reproductive policies?
+
+    #### Do clusters reliably predict disparities in maternal health outcomes?
 """
 
 # ==============================================================================
