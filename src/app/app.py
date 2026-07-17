@@ -70,12 +70,11 @@ st.title("Exploring Maternal Health Outcomes in Relation to Healthcare Policy")
 st.markdown("---")
 
 # Initialize Tabs
-t1, t2, t3, t4, t5 = st.tabs([
+t1, t2, t3, t4 = st.tabs([
     "Introduction",
     "Conclusions",
     "Data Prep & EDA",          # add sub-tabs inside for each data source
     "Models",                   # add sub-tabs inside for each model type
-    "References"                # citations
 ])
 
 
@@ -83,6 +82,8 @@ t1, t2, t3, t4, t5 = st.tabs([
 # TAB 1: INTRODUCTION
 ##############################################################
 import intro
+import questions
+from questions import render_questions
 
 with t1:
     st.header("Introduction")
@@ -126,25 +127,22 @@ with t1:
     st.subheader("Research Foundations")
     st.write(intro.intro_p5)
 
+    ###### Q&A SECTION ######
     # Research Qs
-    st.subheader("Research Questions")
-    with st.container():
-        st.markdown("""
-                    1. Is there a statistically significant difference in maternal mortality/morbidity rates between states
-                        with explicit constitutional/legal protections and states with abortion bans or severe restrictions?
-                    2. Does the enactment of a heartbeat ban or total ban correlate with an increase in emergency room 
-                        visits related to pregnancy complications?
-                    3. What is the average lag between legal enactment of abortion restrictions and measurable changes
-                        in statewide birth outcomes?
-                    4. Do shifts in reproductive policy correspond with changes in prenatal care utilization or
-                        timing of first prenatal visits?
-                    5. Can distinct clusters of states/geographic regions be identified based on reproductive policies?
-                    6. Do clusters reliably predict disparities in maternal health outcomes?
-                    7. What policy features are linked to a decline in rural reproductive healthcare infrastructure?
-                    8. How did the 1973 decision in *Roe v. Wade* impact reproductive infrastructure usage and maternal health outcomes?
-                    9. How did the 1992 decision in *Planned Parenthood v. Casey* impact abortion restrictions and maternal health outcomes?
-                    10. How did the 2022 decision in *Dobbs v. Jackson* impact reproductive infrastructure usage and maternal health outcomes?
-                """)
+    st.header("Q & A")
+    st.subheader("Research Questions and Insights")
+    st.markdown("##### The Big Picture: A state's legal environment is inseparable from its maternal health outcomes.")
+    render_questions(questions.q_and_a)
+
+##############################################################
+# TAB 2: CONCLUSIONS
+##############################################################
+import conclusion
+from conclusion import render_conclusion
+with t2:
+    st.header("Conclusions")
+    st.markdown("#### The Big Picture: A state's legal environment is inseparable from its maternal health outcomes.")
+    render_conclusion(conclusion.conclusion_all)
 
 ##############################################################
 # TAB 3: DATA SOURCES, EDA
@@ -593,58 +591,58 @@ with t4:
         )
 
 
-##############################################################
-# TAB 5: REFERENCES
-##############################################################
+# ##############################################################
+# # TAB 5: REFERENCES
+# ##############################################################
 
-from references import raw_citations
-sorted_citations = sorted(raw_citations, key=lambda x: x['footnote'])
+# from references import raw_citations
+# sorted_citations = sorted(raw_citations, key=lambda x: x['footnote'])
 
-with t5:
-    st.header("References")
-    st.markdown("---")
+# with t5:
+#     st.header("References")
+#     st.markdown("---")
 
-    # CSS styles
-    st.markdown(
-        """
-        <style>
-            .footnote-container {
-                display: flex;
-                align-items: flex-start;
-                margin-bottom: 22px;
-                font-family: 'Roboto', sans-serif;
-                font-size: 14.5px;
-                line-height: 1.6;
-            }
-            .footnote-number {
-                min-width: 32px;
-                font-weight: bold;
-                color: #b44391; /* Matches your 'flare' palette index [4] color */
-            }
-            .footnote-body {
-                flex-grow: 1;
-                padding-left: 4px;
-                text-indent: -24px; /* Creates clean secondary alignment hanging indent */
-                margin-left: 24px;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+#     # CSS styles
+#     st.markdown(
+#         """
+#         <style>
+#             .footnote-container {
+#                 display: flex;
+#                 align-items: flex-start;
+#                 margin-bottom: 22px;
+#                 font-family: 'Roboto', sans-serif;
+#                 font-size: 14.5px;
+#                 line-height: 1.6;
+#             }
+#             .footnote-number {
+#                 min-width: 32px;
+#                 font-weight: bold;
+#                 color: #b44391; /* Matches your 'flare' palette index [4] color */
+#             }
+#             .footnote-body {
+#                 flex-grow: 1;
+#                 padding-left: 4px;
+#                 text-indent: -24px; /* Creates clean secondary alignment hanging indent */
+#                 margin-left: 24px;
+#             }
+#         </style>
+#         """,
+#         unsafe_allow_html=True
+#     )
 
-    for cite in sorted_citations:
-        # Safely extract dynamic volume details if they are declared in the map
-        details_str = f", {cite['details']}." if cite['details'] else "."
+#     for cite in sorted_citations:
+#         # Safely extract dynamic volume details if they are declared in the map
+#         details_str = f", {cite['details']}." if cite['details'] else "."
         
-        html_block = f"""
-        <div class="footnote-container">
-            <div class="footnote-number">[{cite['footnote']}]</div>
-            <div class="footnote-body">
-                {cite['authors']} ({cite['year']}). {cite['title']} 
-                <i>{cite['publication']}</i>{details_str} 
-                <a href="{cite['url']}" target="_blank">{cite['url']}</a>
-            </div>
-        </div>
-        """
-        st.markdown(html_block, unsafe_allow_html=True)
+#         html_block = f"""
+#         <div class="footnote-container">
+#             <div class="footnote-number">[{cite['footnote']}]</div>
+#             <div class="footnote-body">
+#                 {cite['authors']} ({cite['year']}). {cite['title']} 
+#                 <i>{cite['publication']}</i>{details_str} 
+#                 <a href="{cite['url']}" target="_blank">{cite['url']}</a>
+#             </div>
+#         </div>
+#         """
+#         st.markdown(html_block, unsafe_allow_html=True)
 
