@@ -1,6 +1,12 @@
 streamlit
 pandas
 numpy
+scipy
 seaborn
 matplotlib
 plotly
+scikit-learn
+xgboost
+geopandas
+shapely
+tensorflow
