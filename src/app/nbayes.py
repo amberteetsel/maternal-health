@@ -80,7 +80,12 @@ def render_nb_er(
         data_raw_link: str,
         data_clean_link: str,
         data_raw: pd.DataFrame,
-        data_clean: pd.DataFrame
+        data_clean: pd.DataFrame,
+        model_code_url: str,
+        result_df: pd.DataFrame,
+        result_plots: list,
+        result_text: list,
+        conclusion_text: str,
 ):
     
     # overview
@@ -101,11 +106,36 @@ def render_nb_er(
         st.markdown(f"🔗 **[Download Dataset]({data_clean_link})**")
         st.dataframe(data_clean, hide_index=True)
 
+    st.markdown('---')
+
     # model results
     st.subheader("Model Results")
+    st.markdown(f"👾 [View Code]({model_code_url})")
+    st.write("When the trained Naive Bayes classifier projected risk probabilities across identical demographic pairs in contrasting regions, the following probabilistic profiles emerged:")
+    st.dataframe(result_df, hide_index=True)
+    st.markdown(result_text[0])
+    st.markdown("##### Insight 2: Racial Disparities")
+    st.image(result_plots[3], width=800)
+    st.markdown(result_text[1])
 
+    st.markdown("##### Insight 3: Age Paradox")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.markdown(f"**Teen (15-19) Risk Profiles**")
+        st.image(result_plots[0], width='stretch')
+    
+    with c2:
+        st.markdown(f"**Average Age (20-34) Risk Profiles**")
+        st.image(result_plots[1], width='stretch')
+    
+    with c3:
+        st.markdown(f"**Advanced Age (35-49) Risk Profiles**")
+        st.image(result_plots[2], width='stretch')
+    st.markdown(result_text[2])
+            
     # conclusions
     st.subheader("Conclusions")
+    st.markdown(conclusion_text)
 
 
 # ==========================================================
@@ -139,10 +169,65 @@ data_prep_text_er = """
    feature given the class label. The selected data from NHAMCS meets this requirement as Age, Race/Ethnicity, and Region are
    completely unrelated.
 """
-data_raw_link_er = "https://github.com/amberteetsel/maternal-health"        # PLACEHOLDER---REPLACE!!!!!
-data_clean_link_er = "https://github.com/amberteetsel/maternal-health"        # PLACEHOLDER---REPLACE!!!!!
+data_raw_link_er = "https://github.com/amberteetsel/maternal-health/blob/f8e06291876ca7889c27ccb462986ad3f0618af3/resources/nbayes/er_data_raw.csv"
+data_clean_link_er = "https://github.com/amberteetsel/maternal-health/blob/f8e06291876ca7889c27ccb462986ad3f0618af3/resources/nbayes/er_data_clean.csv"
 data_raw_er = pd.read_csv(os.path.join(nb_res, "er_data_raw.csv"))
 data_clean_er = pd.read_csv(os.path.join(nb_res, "er_data_clean.csv"))
+model_code_url_er = "https://github.com/amberteetsel/maternal-health" ##PLACEHOLDER---REPLACE!!!!!!!
+df_scenarios_er = pd.read_csv(os.path.join(nb_res, "er_scenarios_prob.csv"))
+result_plots_er = [os.path.join(nb_res, "smm_risk_teens_15_19.png"),
+                     os.path.join(nb_res, "smm_risk_average_maternal_age_20_34.png"),
+                     os.path.join(nb_res, "smm_risk_advanced_maternal_age_35_49.png"),
+                     os.path.join(nb_res, "smm_racial_disparities.png")]
+result_text_1 = """
+    ##### Insight 1: Systemic Geographic Policy Shift
+
+    The most striking and mathematically rigorous finding of this model is the **universal relative risk multiplier of $1.33x$ to
+    $1.35x$ associated with the Southern region.** Because Naive Bayes calculates conditional probabilities independently based
+    on individual feature likelihoods, this model reveals that simply seeking care in the South increases a patient's probability
+    of presenting with SMM by roughly $33\\%$ to $35\\%$ regardless of race or age.
+
+    This confirms that regional differences in healthcare policy and infrastructure serve as a systemic, environmental risk factor.
+    Patients in highly restrictive legal and medical environments experience acute, emergency-room severe maternal morbidity crises
+    at a substantially higher rate than patients in protected regions. This may be due to delayed prenatal interventions, fewer
+    clinics, and narrower clinical criteria for handling early-pregnancy complications that all contribute to pushing standard
+    pregnancy complications into medical emergencies.
+"""
+result_text_2 = """
+    Even when holding geographic region constant, the model exposes several racial disparities in emergency-room SMM:
+
+    * Within every age tier, Non-Hispanic White patients consistently display the lowest conditional probability of SMM
+    * In contrast, Hispanic and Non-Hispanic Other groups exhibit the highest risk profiles
+    * When systemic regional pressure (the South) is overlaid with racial disparities, a compounding risk profile is created. For
+    example, an Average Maternal Age Non-Hispanic White patient in the Northeast has an SMM probability of $2.45\\%$ but a
+    demographic peer in the South has double the risk at $4.95\\%$. 
+"""
+result_text_3 = """
+    A close read of the conditional probability results reveals an apparent paradox: Advanced Maternal Age (35-49) has a lower
+    absolute probability of SMM than the Average Maternal Age (20-34) and Teen (15-19) groups. For example, a Hispanic mother
+    in the South has a $4.38\\%$ probability of SMM if she is 20-34, but only a $0.93\\%$ probability if she is over 35.
+
+    While counterintuitive to typical ideas about biological aging, the finding makes sense when considering the realities of patients
+    navigating modern healthcare systems. Older pregnant patients (35+) are automatically pre-classified as "high-risk" pregnancies
+    by the medical establishment. This means they are more likely to have established, frequent prenatal check-ins and care that
+    may reduce the risk of severe complications later on. They are more likely to have a dedicated obstetrician who can help them
+    bypass the emergency department and report directly to specialist labor and delivery medical services.
+
+    Conversely, younger age groups are more likely to experience unplanned pregnancies, to lack quality prenatal care, and to not have
+    insurance. Without a dedicated obstetrician or insurance, pregnant patients will typically turn to the emergency room. Therefore
+    the conditional probabilities generated by the model are only representative of people reporting to the E.R., not the general
+    pregnant population at large, because the ER sees a disproportionately lower amount of older mothers.
+
+"""
+results_text_er = [result_text_1, result_text_2, result_text_3]
+conclusion_text_er = """
+    ##### Given an emergency room patient's demographic profile, what is the conditional probability of them presenting to the E.R. with a severe pregnancy-related complication based on their geographic macro-region's reproductive legal status (Highly Restricted South vs. Highly Protected Northeast)?
+
+    The analysis concludes that **geographic region acts as a powerful independent predictor of severe maternal complications
+    in American emergency departments.** The consistent $1.33x$ to $1.35x$ relative risk multiplier in the South represents clear
+    mathematical proof that a highly restrictive healthcare environment significantly increases the likelihood that a maternal
+    complications will escalate into a life-threatening situation requiring the emergency room.
+"""
 
 # ==========================================================
 # ACTUAL INPUTS - ICU ADMISSION
