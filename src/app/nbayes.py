@@ -173,7 +173,7 @@ data_raw_link_er = "https://github.com/amberteetsel/maternal-health/blob/f8e0629
 data_clean_link_er = "https://github.com/amberteetsel/maternal-health/blob/f8e06291876ca7889c27ccb462986ad3f0618af3/resources/nbayes/er_data_clean.csv"
 data_raw_er = pd.read_csv(os.path.join(nb_res, "er_data_raw.csv"))
 data_clean_er = pd.read_csv(os.path.join(nb_res, "er_data_clean.csv"))
-model_code_url_er = "https://github.com/amberteetsel/maternal-health" ##PLACEHOLDER---REPLACE!!!!!!!
+model_code_url_er = "https://github.com/amberteetsel/maternal-health/blob/5cfd959c422583ec4fc1accd42e29e9e1deb3b5e/src/models/nb_er_smm.py"
 df_scenarios_er = pd.read_csv(os.path.join(nb_res, "er_scenarios_prob.csv"))
 result_plots_er = [os.path.join(nb_res, "smm_risk_teens_15_19.png"),
                      os.path.join(nb_res, "smm_risk_average_maternal_age_20_34.png"),
