@@ -526,7 +526,12 @@ with t4:
                 data_raw_link=nbayes.data_raw_link_er,
                 data_clean_link=nbayes.data_clean_link_er,
                 data_raw=nbayes.data_raw_er,
-                data_clean=nbayes.data_clean_er
+                data_clean=nbayes.data_clean_er,
+                model_code_url=nbayes.model_code_url_er,
+                result_df=nbayes.df_scenarios_er,
+                result_plots=nbayes.result_plots_er,
+                result_text=nbayes.results_text_er,
+                conclusion_text=nbayes.conclusion_text_er
             )
 
 
