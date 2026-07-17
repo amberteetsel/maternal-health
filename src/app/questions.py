@@ -79,7 +79,7 @@ a8 = """
     * Seeking care in the highly restricted South acts as a systemic environment risk factor, adding a **1.33x to 1.35x relative
     risk multiplier** across *all* demographic profiles.
     * For example, a White patient of average maternal age has a **2.45%** probability of presenting with Severe Maternal Morbidity (SMM) in
-    the Northeast, but this risk doubles to **4.95%** for her demographic peer in the South.
+    the Northeast, but this risk jumps to **3.28%** for her demographic peer in the South.
 """
 
 a9 = """
